@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.xdaocloud.futurechain</groupId>
+    <artifactId>xdaocloud-futurechain</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0-SNAPSHOT</version>
+    <modules>
+       <!-- <module>xdaocloud-futurechain-api-gateway</module>-->
+        <module>xdaocloud-futurechain-common</module>
+        <module>xdaocloud-futurechain-utils</module>
+        <module>xdaocloud-futurechain-service</module>
+        <module>xdaocloud-futurechain-app</module>
+        <module>xdaocloud-futurechain-model</module>
+        <module>xdaocloud-futurechain-web</module>
+        <module>xdaocloud-futurechain-mapper</module>
+        <module>xdaocloud-futurechain-eos</module>
+        <module>xdaocloud-futurechain-huanxin</module>
+        <module>xdaocloud-futurechain-eth</module>
+    </modules>
+
+
+    <properties>
+        <java.version>1.8</java.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <springboot.version>1.5.4.RELEASE</springboot.version>
+        <springcloud.version>Dalston.RELEASE</springcloud.version>
+        <springloaded.version>1.2.7.RELEASE</springloaded.version>
+        <swagger2.version>2.6.1</swagger2.version>
+        <alibaba.fastjson.version>1.2.17</alibaba.fastjson.version>
+        <quartz.version>2.3.0</quartz.version>
+        <druid.version>1.0.29</druid.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${springboot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+           <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${springcloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+     <!--   <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <optional>true</optional>
+        </dependency>-->
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.6</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.ocpsoft.prettytime</groupId>
+            <artifactId>prettytime</artifactId>
+            <version>4.0.1.Final</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>${alibaba.fastjson.version}</version>
+        </dependency>
+
+       <!-- <dependency>
+            <groupId>com.github.danielwegener</groupId>
+            <artifactId>logback-kafka-appender</artifactId>
+            <version>0.1.0</version>
+            <scope>runtime</scope>
+        </dependency>-->
+
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
+       <!-- <dependency>
+            <groupId>org.apache.kafka</groupId>
+            <artifactId>kafka-clients</artifactId>
+            <version>0.11.0.0</version>
+        </dependency>-->
+
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>0.9.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.11</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.5.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpcore</artifactId>
+            <version>4.4.5</version>
+        </dependency>
+        <dependency>
+            <groupId>net.sf.json-lib</groupId>
+            <artifactId>json-lib</artifactId>
+            <version>2.4</version>
+            <classifier>jdk15</classifier>
+        </dependency>
+        <!--<dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-netflix-core</artifactId>
+            <version>1.4.0.RELEASE</version>
+        </dependency>-->
+        <!--<dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-netflix-eureka-client</artifactId>
+            <version>1.4.0.RELEASE</version>
+        </dependency>-->
+       <!-- <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-commons</artifactId>
+            <version>1.3.0.RELEASE</version>
+        </dependency>-->
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-netflix-eureka-client</artifactId>
+            <version>1.4.0.RELEASE</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-feign</artifactId>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <!-- mvn dependency:copy-dependencies -DoutputDirectory=lib -DincludeScope=compile -->
+    <repositories>
+        <repository>
+            <snapshots>
+                <enabled>false</enabled>
+                <updatePolicy>always</updatePolicy>
+                <checksumPolicy>warn</checksumPolicy>
+            </snapshots>
+            <id>public</id>
+            <name>Public Repositories</name>
+            <url>http://192.168.1.253:8081/nexus/content/groups/public/</url>
+        </repository>
+    </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>public</id>
+            <name>Public Repositories</name>
+            <url>http://192.168.1.253:8081/nexus/content/groups/public/</url>
+        </pluginRepository>
+    </pluginRepositories>
+
+    <distributionManagement>
+        <repository>
+            <id>nexus-releases</id>
+            <name>Nexus Releases Repository</name>
+            <url>http://192.168.1.253:8081/nexus/content/repositories/releases/</url>
+        </repository>
+
+        <snapshotRepository>
+            <id>nexus-snapshots</id>
+            <name>Nexus Snapshots Repository</name>
+            <url>http://192.168.1.253:8081/nexus/content/repositories/snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
+
+</project>

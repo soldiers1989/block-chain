@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xdaocloud.futurechain.mapper.UnlockEosMapper">
+    <resultMap id="BaseResultMap" type="com.xdaocloud.futurechain.model.UnlockEos">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="user_id" jdbcType="BIGINT" property="userId"/>
+        <result column="eos_amount" jdbcType="DECIMAL" property="eosAmount"/>
+        <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate"/>
+        <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified"/>
+        <result column="is_deleted" jdbcType="BIT" property="isDeleted"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, user_id, eos_amount, gmt_create, gmt_modified, is_deleted
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_unlock_eos
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_unlock_eos
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+    <insert id="insert" parameterType="com.xdaocloud.futurechain.model.UnlockEos">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into t_unlock_eos (user_id, eos_amount, gmt_create,
+        gmt_modified, is_deleted)
+        values (#{userId,jdbcType=BIGINT}, #{eosAmount,jdbcType=DECIMAL}, #{gmtCreate,jdbcType=TIMESTAMP},
+        #{gmtModified,jdbcType=TIMESTAMP}, #{isDeleted,jdbcType=BIT})
+    </insert>
+    <insert id="insertSelective" parameterType="com.xdaocloud.futurechain.model.UnlockEos">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into t_unlock_eos
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="eosAmount != null">
+                eos_amount,
+            </if>
+            <if test="gmtCreate != null">
+                gmt_create,
+            </if>
+            <if test="gmtModified != null">
+                gmt_modified,
+            </if>
+            <if test="isDeleted != null">
+                is_deleted,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="eosAmount != null">
+                #{eosAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="gmtCreate != null">
+                #{gmtCreate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="gmtModified != null">
+                #{gmtModified,jdbcType=TIMESTAMP},
+            </if>
+            <if test="isDeleted != null">
+                #{isDeleted,jdbcType=BIT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.xdaocloud.futurechain.model.UnlockEos">
+        update t_unlock_eos
+        <set>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="eosAmount != null">
+                eos_amount = #{eosAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="gmtCreate != null">
+                gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="gmtModified != null">
+                gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+            </if>
+            <if test="isDeleted != null">
+                is_deleted = #{isDeleted,jdbcType=BIT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.xdaocloud.futurechain.model.UnlockEos">
+    update t_unlock_eos
+    set user_id = #{userId,jdbcType=BIGINT},
+      eos_amount = #{eosAmount,jdbcType=DECIMAL},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      is_deleted = #{isDeleted,jdbcType=BIT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="findSumAmountByUserId" parameterType="java.lang.Long" resultType="java.math.BigDecimal">
+    SELECT SUM(eos_amount) FROM t_unlock_eos WHERE user_id = #{userId} AND  is_deleted = FALSE;
+  </select>
+
+    <select id="findList" resultType="com.xdaocloud.futurechain.dto.resp.eos.UnlockEosInfo">
+         SELECT
+            un.id,
+            un.eos_amount AS unlockAmount,
+            un.user_id AS userId,
+            un.gmt_create  AS  unlockTime,
+            u.name,
+            u.mobile_number AS mobileNumber,
+            u.nickname
+            FROM t_unlock_eos un INNER JOIN t_user u ON un.user_id = u.id  WHERE un.is_deleted = FALSE ;
+    </select>
+
+    <select id="findListByPhone" resultType="com.xdaocloud.futurechain.dto.resp.eos.UnlockEosInfo">
+        SELECT
+        un.id,
+        un.eos_amount AS unlockAmount,
+        un.user_id AS userId,
+        un.gmt_create  AS  unlockTime,
+        u.name,
+        u.mobile_number AS mobileNumber,
+        u.nickname
+        FROM t_unlock_eos un INNER JOIN t_user u ON un.user_id = u.id AND u.mobile_number = #{phone} WHERE un.is_deleted = FALSE ;
+    </select>
+</mapper>

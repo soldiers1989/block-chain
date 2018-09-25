@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xdaocloud.futurechain.mapper.AddressMapper">
+    <resultMap id="BaseResultMap" type="com.xdaocloud.futurechain.model.Address">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="app_id" jdbcType="VARCHAR" property="appId"/>
+        <result column="user_id" jdbcType="BIGINT" property="userId"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="province" jdbcType="VARCHAR" property="province"/>
+        <result column="city" jdbcType="VARCHAR" property="city"/>
+        <result column="county" jdbcType="VARCHAR" property="county"/>
+        <result column="detailed" jdbcType="VARCHAR" property="detailed"/>
+        <result column="postcode" jdbcType="VARCHAR" property="postcode"/>
+        <result column="phone" jdbcType="VARCHAR" property="phone"/>
+        <result column="choice" jdbcType="TINYINT" property="choice"/>
+        <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate"/>
+        <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified"/>
+        <result column="is_deleted" jdbcType="TINYINT" property="isDeleted"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, app_id, user_id, name, province, city, county, detailed, postcode, phone, choice,
+    gmt_create, gmt_modified, is_deleted
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_address
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_address
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+    <insert id="insert" parameterType="com.xdaocloud.futurechain.model.Address">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into t_address (app_id, user_id, name,
+        province, city, county,
+        detailed, postcode, phone,
+        choice, gmt_create, gmt_modified,
+        is_deleted)
+        values (#{appId,jdbcType=VARCHAR}, #{userId,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR},
+        #{province,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, #{county,jdbcType=VARCHAR},
+        #{detailed,jdbcType=VARCHAR}, #{postcode,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR},
+        #{choice,jdbcType=TINYINT}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP},
+        #{isDeleted,jdbcType=TINYINT})
+    </insert>
+    <insert id="insertSelective" parameterType="com.xdaocloud.futurechain.model.Address">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into t_address
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="appId != null">
+                app_id,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="province != null">
+                province,
+            </if>
+            <if test="city != null">
+                city,
+            </if>
+            <if test="county != null">
+                county,
+            </if>
+            <if test="detailed != null">
+                detailed,
+            </if>
+            <if test="postcode != null">
+                postcode,
+            </if>
+            <if test="phone != null">
+                phone,
+            </if>
+            <if test="choice != null">
+                choice,
+            </if>
+            <if test="gmtCreate != null">
+                gmt_create,
+            </if>
+            <if test="gmtModified != null">
+                gmt_modified,
+            </if>
+            <if test="isDeleted != null">
+                is_deleted,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="appId != null">
+                #{appId,jdbcType=VARCHAR},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="province != null">
+                #{province,jdbcType=VARCHAR},
+            </if>
+            <if test="city != null">
+                #{city,jdbcType=VARCHAR},
+            </if>
+            <if test="county != null">
+                #{county,jdbcType=VARCHAR},
+            </if>
+            <if test="detailed != null">
+                #{detailed,jdbcType=VARCHAR},
+            </if>
+            <if test="postcode != null">
+                #{postcode,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="choice != null">
+                #{choice,jdbcType=TINYINT},
+            </if>
+            <if test="gmtCreate != null">
+                #{gmtCreate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="gmtModified != null">
+                #{gmtModified,jdbcType=TIMESTAMP},
+            </if>
+            <if test="isDeleted != null">
+                #{isDeleted,jdbcType=TINYINT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.xdaocloud.futurechain.model.Address">
+        update t_address
+        <set>
+            <if test="appId != null">
+                app_id = #{appId,jdbcType=VARCHAR},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="province != null">
+                province = #{province,jdbcType=VARCHAR},
+            </if>
+            <if test="city != null">
+                city = #{city,jdbcType=VARCHAR},
+            </if>
+            <if test="county != null">
+                county = #{county,jdbcType=VARCHAR},
+            </if>
+            <if test="detailed != null">
+                detailed = #{detailed,jdbcType=VARCHAR},
+            </if>
+            <if test="postcode != null">
+                postcode = #{postcode,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                phone = #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="choice != null">
+                choice = #{choice,jdbcType=TINYINT},
+            </if>
+            <if test="gmtCreate != null">
+                gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="gmtModified != null">
+                gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+            </if>
+            <if test="isDeleted != null">
+                is_deleted = #{isDeleted,jdbcType=TINYINT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.xdaocloud.futurechain.model.Address">
+    update t_address
+    set app_id = #{appId,jdbcType=VARCHAR},
+    user_id = #{userId,jdbcType=BIGINT},
+    name = #{name,jdbcType=VARCHAR},
+    province = #{province,jdbcType=VARCHAR},
+    city = #{city,jdbcType=VARCHAR},
+    county = #{county,jdbcType=VARCHAR},
+    detailed = #{detailed,jdbcType=VARCHAR},
+    postcode = #{postcode,jdbcType=VARCHAR},
+    phone = #{phone,jdbcType=VARCHAR},
+    choice = #{choice,jdbcType=TINYINT},
+    gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+    gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+    is_deleted = #{isDeleted,jdbcType=TINYINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+    <update id="updateAllChoiceByUserIdAndAppId" parameterType="java.lang.Object">
+      update t_address set choice = 0 WHERE choice = 1 AND user_id = #{userId}
+  </update>
+
+    <select id="findListByUserIdAndAppId" parameterType="java.lang.Object" resultMap="BaseResultMap">
+       SELECT * FROM t_address WHERE  user_id = #{userId}
+  </select>
+
+    <select id="findDefault" parameterType="java.lang.Long" resultMap="BaseResultMap">
+           SELECT * FROM t_address WHERE  user_id = #{userId}
+    </select>
+</mapper>

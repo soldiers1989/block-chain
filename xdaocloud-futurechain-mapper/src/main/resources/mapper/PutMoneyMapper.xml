@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xdaocloud.futurechain.mapper.PutMoneyMapper">
+  <resultMap id="BaseResultMap" type="com.xdaocloud.futurechain.model.PutMoney">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="downline" jdbcType="INTEGER" property="downline" />
+    <result column="devote_rmb" jdbcType="DECIMAL" property="devoteRmb" />
+    <result column="rmb" jdbcType="DECIMAL" property="rmb" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+    <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
+    <result column="is_deleted" jdbcType="BIT" property="isDeleted" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, user_id, downline, devote_rmb, rmb, remark, gmt_create, gmt_modified, is_deleted
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_put_money
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_put_money
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.xdaocloud.futurechain.model.PutMoney">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_put_money (user_id, downline, devote_rmb,
+    rmb, remark, gmt_create,
+    gmt_modified, is_deleted)
+    values (#{userId,jdbcType=BIGINT}, #{downline,jdbcType=INTEGER}, #{devoteRmb,jdbcType=DECIMAL},
+    #{rmb,jdbcType=DECIMAL}, #{remark,jdbcType=VARCHAR}, #{gmtCreate,jdbcType=TIMESTAMP},
+    #{gmtModified,jdbcType=TIMESTAMP}, #{isDeleted,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xdaocloud.futurechain.model.PutMoney">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_put_money
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="downline != null">
+        downline,
+      </if>
+      <if test="devoteRmb != null">
+        devote_rmb,
+      </if>
+      <if test="rmb != null">
+        rmb,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create,
+      </if>
+      <if test="gmtModified != null">
+        gmt_modified,
+      </if>
+      <if test="isDeleted != null">
+        is_deleted,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="downline != null">
+        #{downline,jdbcType=INTEGER},
+      </if>
+      <if test="devoteRmb != null">
+        #{devoteRmb,jdbcType=DECIMAL},
+      </if>
+      <if test="rmb != null">
+        #{rmb,jdbcType=DECIMAL},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtCreate != null">
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null">
+        #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xdaocloud.futurechain.model.PutMoney">
+    update t_put_money
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="downline != null">
+        downline = #{downline,jdbcType=INTEGER},
+      </if>
+      <if test="devoteRmb != null">
+        devote_rmb = #{devoteRmb,jdbcType=DECIMAL},
+      </if>
+      <if test="rmb != null">
+        rmb = #{rmb,jdbcType=DECIMAL},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null">
+        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDeleted != null">
+        is_deleted = #{isDeleted,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xdaocloud.futurechain.model.PutMoney">
+    update t_put_money
+    set user_id = #{userId,jdbcType=BIGINT},
+      downline = #{downline,jdbcType=INTEGER},
+      devote_rmb = #{devoteRmb,jdbcType=DECIMAL},
+      rmb = #{rmb,jdbcType=DECIMAL},
+      remark = #{remark,jdbcType=VARCHAR},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      is_deleted = #{isDeleted,jdbcType=BIT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="findSumDevoteRmb" parameterType="java.lang.Long" resultType="java.math.BigDecimal">
+    SELECT SUM(devote_rmb) FROM t_put_money WHERE is_deleted = FALSE AND  user_id = #{userId};
+  </select>
+</mapper>

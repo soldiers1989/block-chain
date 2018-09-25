@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xdaocloud.futurechain.mapper.ContractTypeMapper">
+    <resultMap id="BaseResultMap" type="com.xdaocloud.futurechain.model.ContractType">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="parent_id" jdbcType="BIGINT" property="parentId"/>
+        <result column="is_hot" jdbcType="BIT" property="isHot"/>
+        <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate"/>
+        <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified"/>
+        <result column="is_deleted" jdbcType="BIT" property="isDeleted"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, name, parent_id, is_hot, gmt_create, gmt_modified, is_deleted
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_contract_type
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_contract_type
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+    <insert id="insert" parameterType="com.xdaocloud.futurechain.model.ContractType">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into t_contract_type (name, parent_id, is_hot,
+        gmt_create, gmt_modified, is_deleted
+        )
+        values (#{name,jdbcType=VARCHAR}, #{parentId,jdbcType=BIGINT}, #{isHot,jdbcType=BIT},
+        #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}, #{isDeleted,jdbcType=BIT}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="com.xdaocloud.futurechain.model.ContractType">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into t_contract_type
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">
+                name,
+            </if>
+            <if test="parentId != null">
+                parent_id,
+            </if>
+            <if test="isHot != null">
+                is_hot,
+            </if>
+            <if test="gmtCreate != null">
+                gmt_create,
+            </if>
+            <if test="gmtModified != null">
+                gmt_modified,
+            </if>
+            <if test="isDeleted != null">
+                is_deleted,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="parentId != null">
+                #{parentId,jdbcType=BIGINT},
+            </if>
+            <if test="isHot != null">
+                #{isHot,jdbcType=BIT},
+            </if>
+            <if test="gmtCreate != null">
+                #{gmtCreate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="gmtModified != null">
+                #{gmtModified,jdbcType=TIMESTAMP},
+            </if>
+            <if test="isDeleted != null">
+                #{isDeleted,jdbcType=BIT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.xdaocloud.futurechain.model.ContractType">
+        update t_contract_type
+        <set>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="parentId != null">
+                parent_id = #{parentId,jdbcType=BIGINT},
+            </if>
+            <if test="isHot != null">
+                is_hot = #{isHot,jdbcType=BIT},
+            </if>
+            <if test="gmtCreate != null">
+                gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="gmtModified != null">
+                gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+            </if>
+            <if test="isDeleted != null">
+                is_deleted = #{isDeleted,jdbcType=BIT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.xdaocloud.futurechain.model.ContractType">
+    update t_contract_type
+    set name = #{name,jdbcType=VARCHAR},
+      parent_id = #{parentId,jdbcType=BIGINT},
+      is_hot = #{isHot,jdbcType=BIT},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      is_deleted = #{isDeleted,jdbcType=BIT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+    <select id="getAll" resultMap="BaseResultMap">
+    SELECT * FROM t_contract_type WHERE is_deleted =FALSE ;
+  </select>
+
+    <select id="getHotTypeList" resultType="com.xdaocloud.futurechain.dto.resp.contract.HotTypeResponse">
+          SELECT id,name FROM t_contract_type WHERE is_hot = 1 AND is_deleted =FALSE ;
+    </select>
+
+    <select id="selectParentIdById" resultType="java.util.Map">
+        SELECT t1.name , t2.name parentName from t_contract_type t1 LEFT JOIN t_contract_type t2 on t1.parent_id = t2.id
+        WHERE t1.id = #{contractTypeId} and t1.is_deleted = FALSE and t2.is_deleted = FALSE
+    </select>
+
+
+</mapper>

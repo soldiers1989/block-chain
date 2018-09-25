@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xdaocloud.futurechain.mapper.IndustryMapper">
+  <resultMap id="BaseResultMap" type="com.xdaocloud.futurechain.model.Industry">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="industry_type" jdbcType="VARCHAR" property="industryType" />
+    <result column="industry_name" jdbcType="VARCHAR" property="industryName" />
+    <result column="industry_color" jdbcType="VARCHAR" property="industryColor" />
+    <result column="parent_id" jdbcType="BIGINT" property="parentId" />
+    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+    <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
+    <result column="is_deleted" jdbcType="BIT" property="isDeleted" />
+  </resultMap>
+  
+  <sql id="Base_Column_List">
+    id, industry_type, industry_name, industry_color, parent_id, gmt_create, gmt_modified, 
+    is_deleted
+  </sql>
+  
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_industry
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_industry
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  
+  <insert id="insert" parameterType="com.xdaocloud.futurechain.model.Industry">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_industry (industry_type, industry_name, industry_color, 
+      parent_id, gmt_create, gmt_modified, 
+      is_deleted)
+    values (#{industryType,jdbcType=VARCHAR}, #{industryName,jdbcType=VARCHAR}, #{industryColor,jdbcType=VARCHAR}, 
+      #{parentId,jdbcType=BIGINT}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}, 
+      #{isDeleted,jdbcType=BIT})
+  </insert>
+  
+  <insert id="insertSelective" parameterType="com.xdaocloud.futurechain.model.Industry">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_industry
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="industryType != null">
+        industry_type,
+      </if>
+      <if test="industryName != null">
+        industry_name,
+      </if>
+      <if test="industryColor != null">
+        industry_color,
+      </if>
+      <if test="parentId != null">
+        parent_id,
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create,
+      </if>
+      <if test="gmtModified != null">
+        gmt_modified,
+      </if>
+      <if test="isDeleted != null">
+        is_deleted,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="industryType != null">
+        #{industryType,jdbcType=VARCHAR},
+      </if>
+      <if test="industryName != null">
+        #{industryName,jdbcType=VARCHAR},
+      </if>
+      <if test="industryColor != null">
+        #{industryColor,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null">
+        #{parentId,jdbcType=BIGINT},
+      </if>
+      <if test="gmtCreate != null">
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null">
+        #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.xdaocloud.futurechain.model.Industry">
+    update t_industry
+    <set>
+      <if test="industryType != null">
+        industry_type = #{industryType,jdbcType=VARCHAR},
+      </if>
+      <if test="industryName != null">
+        industry_name = #{industryName,jdbcType=VARCHAR},
+      </if>
+      <if test="industryColor != null">
+        industry_color = #{industryColor,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null">
+        parent_id = #{parentId,jdbcType=BIGINT},
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null">
+        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDeleted != null">
+        is_deleted = #{isDeleted,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <update id="updateByPrimaryKey" parameterType="com.xdaocloud.futurechain.model.Industry">
+    update t_industry
+    set industry_type = #{industryType,jdbcType=VARCHAR},
+      industry_name = #{industryName,jdbcType=VARCHAR},
+      industry_color = #{industryColor,jdbcType=VARCHAR},
+      parent_id = #{parentId,jdbcType=BIGINT},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      is_deleted = #{isDeleted,jdbcType=BIT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="getIndustryList" resultMap="BaseResultMap">
+  	SELECT 
+  		<include refid="Base_Column_List" /> 
+	from t_industry
+  </select>
+  
+  <select id="getUserIndustryList" resultType="hashMap">
+  	select 
+    	id id,industry_type industryType,industry_name industryName,industry_color industryColor,parent_id parentId
+    from t_industry
+    where is_deleted = '0'
+    order by gmt_create asc
+  </select>
+</mapper>

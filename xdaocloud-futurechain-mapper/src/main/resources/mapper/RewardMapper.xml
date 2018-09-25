@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xdaocloud.futurechain.mapper.RewardMapper">
+    <resultMap id="BaseResultMap" type="com.xdaocloud.futurechain.model.Reward">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="type" jdbcType="SMALLINT" property="type"/>
+        <result column="ore_amount" jdbcType="BIGINT" property="oreAmount"/>
+        <result column="eos_amount" jdbcType="DECIMAL" property="eosAmount"/>
+        <result column="remarks" jdbcType="VARCHAR" property="remarks"/>
+        <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate"/>
+        <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified"/>
+        <result column="is_deleted" jdbcType="BIT" property="isDeleted"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, type, ore_amount, eos_amount, remarks, gmt_create, gmt_modified, is_deleted
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_reward
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_reward
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+    <insert id="insert" parameterType="com.xdaocloud.futurechain.model.Reward">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into t_reward (type, ore_amount, eos_amount,
+        remarks, gmt_create, gmt_modified,
+        is_deleted)
+        values (#{type,jdbcType=SMALLINT}, #{oreAmount,jdbcType=BIGINT}, #{eosAmount,jdbcType=DECIMAL},
+        #{remarks,jdbcType=VARCHAR}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP},
+        #{isDeleted,jdbcType=BIT})
+    </insert>
+    <insert id="insertSelective" parameterType="com.xdaocloud.futurechain.model.Reward">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into t_reward
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="type != null">
+                type,
+            </if>
+            <if test="oreAmount != null">
+                ore_amount,
+            </if>
+            <if test="eosAmount != null">
+                eos_amount,
+            </if>
+            <if test="remarks != null">
+                remarks,
+            </if>
+            <if test="gmtCreate != null">
+                gmt_create,
+            </if>
+            <if test="gmtModified != null">
+                gmt_modified,
+            </if>
+            <if test="isDeleted != null">
+                is_deleted,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="type != null">
+                #{type,jdbcType=SMALLINT},
+            </if>
+            <if test="oreAmount != null">
+                #{oreAmount,jdbcType=BIGINT},
+            </if>
+            <if test="eosAmount != null">
+                #{eosAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="remarks != null">
+                #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="gmtCreate != null">
+                #{gmtCreate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="gmtModified != null">
+                #{gmtModified,jdbcType=TIMESTAMP},
+            </if>
+            <if test="isDeleted != null">
+                #{isDeleted,jdbcType=BIT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.xdaocloud.futurechain.model.Reward">
+        update t_reward
+        <set>
+            <if test="type != null">
+                type = #{type,jdbcType=SMALLINT},
+            </if>
+            <if test="oreAmount != null">
+                ore_amount = #{oreAmount,jdbcType=BIGINT},
+            </if>
+            <if test="eosAmount != null">
+                eos_amount = #{eosAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="remarks != null">
+                remarks = #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="gmtCreate != null">
+                gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="gmtModified != null">
+                gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+            </if>
+            <if test="isDeleted != null">
+                is_deleted = #{isDeleted,jdbcType=BIT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.xdaocloud.futurechain.model.Reward">
+    update t_reward
+    set type = #{type,jdbcType=SMALLINT},
+      ore_amount = #{oreAmount,jdbcType=BIGINT},
+      eos_amount = #{eosAmount,jdbcType=DECIMAL},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      is_deleted = #{isDeleted,jdbcType=BIT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+    <select id="findOneByType" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+
+    SELECT * FROM t_reward WHERE type = #{type,jdbcType=SMALLINT}
+  </select>
+
+
+    <select id="findAllList" resultMap="BaseResultMap">
+          SELECT * FROM t_reward
+    </select>
+
+</mapper>

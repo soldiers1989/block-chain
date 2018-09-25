@@ -1,0 +1,5 @@
+#忽略全部内容，但是不忽略 .gitignore、pom.xml根目录下的 /src/目录
+/*
+!.gitignore
+!pom.xml
+!/src/

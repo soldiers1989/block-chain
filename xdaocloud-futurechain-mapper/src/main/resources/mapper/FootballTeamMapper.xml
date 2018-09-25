@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xdaocloud.futurechain.mapper.FootballTeamMapper">
+  <resultMap id="BaseResultMap" type="com.xdaocloud.futurechain.model.FootballTeam">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="team_name" jdbcType="CHAR" property="teamName" />
+    <result column="country" jdbcType="CHAR" property="country" />
+    <result column="coach" jdbcType="CHAR" property="coach" />
+    <result column="coach_avatar" jdbcType="VARCHAR" property="coachAvatar" />
+    <result column="captain" jdbcType="CHAR" property="captain" />
+    <result column="team_member" jdbcType="VARCHAR" property="teamMember" />
+    <result column="substitute" jdbcType="VARCHAR" property="substitute" />
+    <result column="goalkeeper" jdbcType="CHAR" property="goalkeeper" />
+    <result column="national_flag" jdbcType="VARCHAR" property="nationalFlag" />
+    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+    <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
+    <result column="is_deleted" jdbcType="BIT" property="isDeleted" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, team_name, country, coach, coach_avatar, captain, team_member, substitute, goalkeeper,
+    national_flag, gmt_create, gmt_modified, is_deleted
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_football_team
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_football_team
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.xdaocloud.futurechain.model.FootballTeam">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_football_team (team_name, country, coach,
+    coach_avatar, captain, team_member,
+    substitute, goalkeeper, national_flag,
+    gmt_create, gmt_modified, is_deleted
+    )
+    values (#{teamName,jdbcType=CHAR}, #{country,jdbcType=CHAR}, #{coach,jdbcType=CHAR},
+    #{coachAvatar,jdbcType=VARCHAR}, #{captain,jdbcType=CHAR}, #{teamMember,jdbcType=VARCHAR},
+    #{substitute,jdbcType=VARCHAR}, #{goalkeeper,jdbcType=CHAR}, #{nationalFlag,jdbcType=VARCHAR},
+    #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}, #{isDeleted,jdbcType=BIT}
+    )
+  </insert>
+  <insert id="insertSelective" parameterType="com.xdaocloud.futurechain.model.FootballTeam">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_football_team
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="teamName != null">
+        team_name,
+      </if>
+      <if test="country != null">
+        country,
+      </if>
+      <if test="coach != null">
+        coach,
+      </if>
+      <if test="coachAvatar != null">
+        coach_avatar,
+      </if>
+      <if test="captain != null">
+        captain,
+      </if>
+      <if test="teamMember != null">
+        team_member,
+      </if>
+      <if test="substitute != null">
+        substitute,
+      </if>
+      <if test="goalkeeper != null">
+        goalkeeper,
+      </if>
+      <if test="nationalFlag != null">
+        national_flag,
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create,
+      </if>
+      <if test="gmtModified != null">
+        gmt_modified,
+      </if>
+      <if test="isDeleted != null">
+        is_deleted,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="teamName != null">
+        #{teamName,jdbcType=CHAR},
+      </if>
+      <if test="country != null">
+        #{country,jdbcType=CHAR},
+      </if>
+      <if test="coach != null">
+        #{coach,jdbcType=CHAR},
+      </if>
+      <if test="coachAvatar != null">
+        #{coachAvatar,jdbcType=VARCHAR},
+      </if>
+      <if test="captain != null">
+        #{captain,jdbcType=CHAR},
+      </if>
+      <if test="teamMember != null">
+        #{teamMember,jdbcType=VARCHAR},
+      </if>
+      <if test="substitute != null">
+        #{substitute,jdbcType=VARCHAR},
+      </if>
+      <if test="goalkeeper != null">
+        #{goalkeeper,jdbcType=CHAR},
+      </if>
+      <if test="nationalFlag != null">
+        #{nationalFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtCreate != null">
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null">
+        #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xdaocloud.futurechain.model.FootballTeam">
+    update t_football_team
+    <set>
+      <if test="teamName != null">
+        team_name = #{teamName,jdbcType=CHAR},
+      </if>
+      <if test="country != null">
+        country = #{country,jdbcType=CHAR},
+      </if>
+      <if test="coach != null">
+        coach = #{coach,jdbcType=CHAR},
+      </if>
+      <if test="coachAvatar != null">
+        coach_avatar = #{coachAvatar,jdbcType=VARCHAR},
+      </if>
+      <if test="captain != null">
+        captain = #{captain,jdbcType=CHAR},
+      </if>
+      <if test="teamMember != null">
+        team_member = #{teamMember,jdbcType=VARCHAR},
+      </if>
+      <if test="substitute != null">
+        substitute = #{substitute,jdbcType=VARCHAR},
+      </if>
+      <if test="goalkeeper != null">
+        goalkeeper = #{goalkeeper,jdbcType=CHAR},
+      </if>
+      <if test="nationalFlag != null">
+        national_flag = #{nationalFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null">
+        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDeleted != null">
+        is_deleted = #{isDeleted,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xdaocloud.futurechain.model.FootballTeam">
+    update t_football_team
+    set team_name = #{teamName,jdbcType=CHAR},
+    country = #{country,jdbcType=CHAR},
+    coach = #{coach,jdbcType=CHAR},
+    coach_avatar = #{coachAvatar,jdbcType=VARCHAR},
+    captain = #{captain,jdbcType=CHAR},
+    team_member = #{teamMember,jdbcType=VARCHAR},
+    substitute = #{substitute,jdbcType=VARCHAR},
+    goalkeeper = #{goalkeeper,jdbcType=CHAR},
+    national_flag = #{nationalFlag,jdbcType=VARCHAR},
+    gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+    gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+    is_deleted = #{isDeleted,jdbcType=BIT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+
+  <select id="footballTeamList" resultType="java.util.Map">
+      select id,country from t_football_team
+  </select>
+</mapper>

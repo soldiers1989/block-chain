@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xdaocloud.futurechain.mapper.OreEnvelopeMapper">
+    <resultMap id="BaseResultMap" type="com.xdaocloud.futurechain.model.OreEnvelope">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="user_id" jdbcType="BIGINT" property="userId"/>
+        <result column="count" jdbcType="INTEGER" property="count"/>
+        <result column="amount" jdbcType="DECIMAL" property="amount"/>
+        <result column="residue" jdbcType="INTEGER" property="residue"/>
+        <result column="valid_time" jdbcType="INTEGER" property="validTime"/>
+        <result column="end_time" jdbcType="TIMESTAMP" property="endTime"/>
+        <result column="ore_state" jdbcType="BIT" property="oreState"/>
+        <result column="award_ftc" jdbcType="VARCHAR" property="awardFtc"/>
+        <result column="reward" jdbcType="BIT" property="reward"/>
+        <result column="ore_title" jdbcType="CHAR" property="oreTitle"/>
+        <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate"/>
+        <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified"/>
+        <result column="is_deleted" jdbcType="BIT" property="isDeleted"/>
+    </resultMap>
+    <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.xdaocloud.futurechain.model.OreEnvelope">
+        <result column="random" jdbcType="LONGVARCHAR" property="random"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, user_id, count, amount, residue, valid_time, end_time, ore_state, award_ftc,
+        reward, ore_title, gmt_create, gmt_modified, is_deleted
+    </sql>
+    <sql id="Blob_Column_List">
+        random
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from t_ore_envelope
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from t_ore_envelope
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.xdaocloud.futurechain.model.OreEnvelope">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into t_ore_envelope (user_id, count, amount,
+        residue, valid_time, end_time,
+        ore_state, award_ftc, reward,
+        ore_title, gmt_create, gmt_modified,
+        is_deleted, random)
+        values (#{userId,jdbcType=BIGINT}, #{count,jdbcType=INTEGER}, #{amount,jdbcType=DECIMAL},
+        #{residue,jdbcType=INTEGER}, #{validTime,jdbcType=INTEGER}, #{endTime,jdbcType=TIMESTAMP},
+        #{oreState,jdbcType=BIT}, #{awardFtc,jdbcType=VARCHAR}, #{reward,jdbcType=BIT},
+        #{oreTitle,jdbcType=CHAR}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP},
+        #{isDeleted,jdbcType=BIT}, #{random,jdbcType=LONGVARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.xdaocloud.futurechain.model.OreEnvelope">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into t_ore_envelope
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="count != null">
+                count,
+            </if>
+            <if test="amount != null">
+                amount,
+            </if>
+            <if test="residue != null">
+                residue,
+            </if>
+            <if test="validTime != null">
+                valid_time,
+            </if>
+            <if test="endTime != null">
+                end_time,
+            </if>
+            <if test="oreState != null">
+                ore_state,
+            </if>
+            <if test="awardFtc != null">
+                award_ftc,
+            </if>
+            <if test="reward != null">
+                reward,
+            </if>
+            <if test="oreTitle != null">
+                ore_title,
+            </if>
+            <if test="gmtCreate != null">
+                gmt_create,
+            </if>
+            <if test="gmtModified != null">
+                gmt_modified,
+            </if>
+            <if test="isDeleted != null">
+                is_deleted,
+            </if>
+            <if test="random != null">
+                random,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="count != null">
+                #{count,jdbcType=INTEGER},
+            </if>
+            <if test="amount != null">
+                #{amount,jdbcType=DECIMAL},
+            </if>
+            <if test="residue != null">
+                #{residue,jdbcType=INTEGER},
+            </if>
+            <if test="validTime != null">
+                #{validTime,jdbcType=INTEGER},
+            </if>
+            <if test="endTime != null">
+                #{endTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="oreState != null">
+                #{oreState,jdbcType=BIT},
+            </if>
+            <if test="awardFtc != null">
+                #{awardFtc,jdbcType=VARCHAR},
+            </if>
+            <if test="reward != null">
+                #{reward,jdbcType=BIT},
+            </if>
+            <if test="oreTitle != null">
+                #{oreTitle,jdbcType=CHAR},
+            </if>
+            <if test="gmtCreate != null">
+                #{gmtCreate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="gmtModified != null">
+                #{gmtModified,jdbcType=TIMESTAMP},
+            </if>
+            <if test="isDeleted != null">
+                #{isDeleted,jdbcType=BIT},
+            </if>
+            <if test="random != null">
+                #{random,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.xdaocloud.futurechain.model.OreEnvelope">
+        update t_ore_envelope
+        <set>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="count != null">
+                count = #{count,jdbcType=INTEGER},
+            </if>
+            <if test="amount != null">
+                amount = #{amount,jdbcType=DECIMAL},
+            </if>
+            <if test="residue != null">
+                residue = #{residue,jdbcType=INTEGER},
+            </if>
+            <if test="validTime != null">
+                valid_time = #{validTime,jdbcType=INTEGER},
+            </if>
+            <if test="endTime != null">
+                end_time = #{endTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="oreState != null">
+                ore_state = #{oreState,jdbcType=BIT},
+            </if>
+            <if test="awardFtc != null">
+                award_ftc = #{awardFtc,jdbcType=VARCHAR},
+            </if>
+            <if test="reward != null">
+                reward = #{reward,jdbcType=BIT},
+            </if>
+            <if test="oreTitle != null">
+                ore_title = #{oreTitle,jdbcType=CHAR},
+            </if>
+            <if test="gmtCreate != null">
+                gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="gmtModified != null">
+                gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+            </if>
+            <if test="isDeleted != null">
+                is_deleted = #{isDeleted,jdbcType=BIT},
+            </if>
+            <if test="random != null">
+                random = #{random,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.xdaocloud.futurechain.model.OreEnvelope">
+        update t_ore_envelope
+        set user_id = #{userId,jdbcType=BIGINT},
+        count = #{count,jdbcType=INTEGER},
+        amount = #{amount,jdbcType=DECIMAL},
+        residue = #{residue,jdbcType=INTEGER},
+        valid_time = #{validTime,jdbcType=INTEGER},
+        end_time = #{endTime,jdbcType=TIMESTAMP},
+        ore_state = #{oreState,jdbcType=BIT},
+        award_ftc = #{awardFtc,jdbcType=VARCHAR},
+        reward = #{reward,jdbcType=BIT},
+        ore_title = #{oreTitle,jdbcType=CHAR},
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+        is_deleted = #{isDeleted,jdbcType=BIT},
+        random = #{random,jdbcType=LONGVARCHAR}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.xdaocloud.futurechain.model.OreEnvelope">
+    update t_ore_envelope
+    set user_id = #{userId,jdbcType=BIGINT},
+      count = #{count,jdbcType=INTEGER},
+      amount = #{amount,jdbcType=DECIMAL},
+      residue = #{residue,jdbcType=INTEGER},
+      valid_time = #{validTime,jdbcType=INTEGER},
+      end_time = #{endTime,jdbcType=TIMESTAMP},
+      ore_state = #{oreState,jdbcType=BIT},
+      award_ftc = #{awardFtc,jdbcType=VARCHAR},
+      reward = #{reward,jdbcType=BIT},
+      ore_title = #{oreTitle,jdbcType=CHAR},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      is_deleted = #{isDeleted,jdbcType=BIT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+    <update id="updateOreStateFalseByPrimaryKey" parameterType="java.lang.Long">
+        update t_ore_envelope
+        set
+        ore_state = FALSE
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <select id="findCountById" parameterType="java.lang.Long" resultType="java.lang.Integer">
+       SELECT count FROM t_ore_envelope WHERE id = #{id} AND is_deleted = FALSE ;
+  </select>
+
+    <parameterMap id="Page_Request" type="com.xdaocloud.futurechain.dto.req.demo.Page_Request">
+    </parameterMap>
+
+    <!--根据用户id查询矿包列表状态，用户已经抢过的矿包 oreState 状态为false-->
+    <select id="findByUserId" parameterType="java.lang.Long"
+            resultType="com.xdaocloud.futurechain.dto.resp.ore.OreEnvelopeListDTO">
+    SELECT
+	ore.id,
+	ore.user_id AS userId,
+	ore.count,
+	ore.ore_title AS oreTitle,
+    IF((SELECT count(1) FROM t_grab_ore_envelope grad WHERE grad.is_deleted = FALSE AND grad.user_id = #{userid} AND grad.ore_envelope_id = ore.id)>0,FALSE,TRUE) AS userIsOpen,
+    ore.gmt_create AS gmtCreate,
+    ore.ore_state AS oreState,
+   (SELECT t_u1.avatar FROM t_user AS t_u1 WHERE id = ore.user_id ) AS avatar,
+   (SELECT t_u2.nickname FROM t_user AS t_u2 WHERE id = ore.user_id ) AS nickname
+    FROM
+	  t_ore_envelope ore
+    WHERE
+	  ore.is_deleted = FALSE
+	  AND ore.user_id IN
+      (SELECT u1.id FROM t_user u1 WHERE u1.friend_chain_root_user_id = (SELECT u.friend_chain_root_user_id AS rootUserId FROM t_user u WHERE u.id=#{userid} AND u.is_deleted = FALSE) AND u1.is_deleted = FALSE)
+	   ORDER BY id DESC limit 20;
+  </select>
+
+
+</mapper>

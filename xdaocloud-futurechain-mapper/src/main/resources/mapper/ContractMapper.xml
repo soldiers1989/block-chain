@@ -1,0 +1,493 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xdaocloud.futurechain.mapper.ContractMapper">
+    <resultMap id="BaseResultMap" type="com.xdaocloud.futurechain.model.Contract">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="contract_hash_id" jdbcType="VARCHAR" property="contractHashId"/>
+        <result column="user_id" jdbcType="BIGINT" property="userId"/>
+        <result column="sign_id" jdbcType="BIGINT" property="signId"/>
+        <result column="role" jdbcType="INTEGER" property="role"/>
+        <result column="con_name" jdbcType="CHAR" property="conName"/>
+        <result column="contract_type_id" jdbcType="BIGINT" property="contractTypeId"/>
+        <result column="con_address" jdbcType="CHAR" property="conAddress"/>
+        <result column="portrait" jdbcType="VARCHAR" property="portrait"/>
+        <result column="longitude" jdbcType="CHAR" property="longitude"/>
+        <result column="latitude" jdbcType="CHAR" property="latitude"/>
+        <result column="money" jdbcType="DECIMAL" property="money"/>
+        <result column="borrow_way" jdbcType="INTEGER" property="borrowWay"/>
+        <result column="accrual" jdbcType="CHAR" property="accrual"/>
+        <result column="back_time" jdbcType="TIMESTAMP" property="backTime"/>
+        <result column="sign_time" jdbcType="TIMESTAMP" property="signTime"/>
+        <result column="penalty" jdbcType="DECIMAL" property="penalty"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
+        <result column="sign_state" jdbcType="BIT" property="signState"/>
+        <result column="collect_state" jdbcType="BIT" property="collectState"/>
+        <result column="still_state" jdbcType="BIT" property="stillState"/>
+        <result column="state" jdbcType="INTEGER" property="state"/>
+        <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate"/>
+        <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified"/>
+        <result column="is_deleted" jdbcType="BIT" property="isDeleted"/>
+    </resultMap>
+    <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.xdaocloud.futurechain.model.Contract">
+        <result column="rich_text" jdbcType="LONGVARCHAR" property="richText"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, contract_hash_id, user_id, sign_id, role, con_name, contract_type_id, con_address,
+    portrait, longitude, latitude, money, borrow_way, accrual, back_time, sign_time,
+    penalty, remark, sign_state, collect_state, still_state, state, gmt_create, gmt_modified,
+    is_deleted
+  </sql>
+    <sql id="Blob_Column_List">
+    rich_text
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from t_contract
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_contract
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+    <insert id="insert" parameterType="com.xdaocloud.futurechain.model.Contract">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into t_contract (contract_hash_id, user_id, sign_id,
+        role, con_name, contract_type_id,
+        con_address, portrait, longitude,
+        latitude, money, borrow_way,
+        accrual, back_time, sign_time,
+        penalty, remark, sign_state,
+        collect_state, still_state, state,
+        gmt_create, gmt_modified, is_deleted,
+        rich_text)
+        values (#{contractHashId,jdbcType=VARCHAR}, #{userId,jdbcType=BIGINT}, #{signId,jdbcType=BIGINT},
+        #{role,jdbcType=INTEGER}, #{conName,jdbcType=CHAR}, #{contractTypeId,jdbcType=BIGINT},
+        #{conAddress,jdbcType=CHAR}, #{portrait,jdbcType=VARCHAR}, #{longitude,jdbcType=CHAR},
+        #{latitude,jdbcType=CHAR}, #{money,jdbcType=DECIMAL}, #{borrowWay,jdbcType=INTEGER},
+        #{accrual,jdbcType=CHAR}, #{backTime,jdbcType=TIMESTAMP}, #{signTime,jdbcType=TIMESTAMP},
+        #{penalty,jdbcType=DECIMAL}, #{remark,jdbcType=VARCHAR}, #{signState,jdbcType=BIT},
+        #{collectState,jdbcType=BIT}, #{stillState,jdbcType=BIT}, #{state,jdbcType=INTEGER},
+        #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}, #{isDeleted,jdbcType=BIT},
+        #{richText,jdbcType=LONGVARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.xdaocloud.futurechain.model.Contract">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into t_contract
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="contractHashId != null">
+                contract_hash_id,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="signId != null">
+                sign_id,
+            </if>
+            <if test="role != null">
+                role,
+            </if>
+            <if test="conName != null">
+                con_name,
+            </if>
+            <if test="contractTypeId != null">
+                contract_type_id,
+            </if>
+            <if test="conAddress != null">
+                con_address,
+            </if>
+            <if test="portrait != null">
+                portrait,
+            </if>
+            <if test="longitude != null">
+                longitude,
+            </if>
+            <if test="latitude != null">
+                latitude,
+            </if>
+            <if test="money != null">
+                money,
+            </if>
+            <if test="borrowWay != null">
+                borrow_way,
+            </if>
+            <if test="accrual != null">
+                accrual,
+            </if>
+            <if test="backTime != null">
+                back_time,
+            </if>
+            <if test="signTime != null">
+                sign_time,
+            </if>
+            <if test="penalty != null">
+                penalty,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+            <if test="signState != null">
+                sign_state,
+            </if>
+            <if test="collectState != null">
+                collect_state,
+            </if>
+            <if test="stillState != null">
+                still_state,
+            </if>
+            <if test="state != null">
+                state,
+            </if>
+            <if test="gmtCreate != null">
+                gmt_create,
+            </if>
+            <if test="gmtModified != null">
+                gmt_modified,
+            </if>
+            <if test="isDeleted != null">
+                is_deleted,
+            </if>
+            <if test="richText != null">
+                rich_text,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="contractHashId != null">
+                #{contractHashId,jdbcType=VARCHAR},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="signId != null">
+                #{signId,jdbcType=BIGINT},
+            </if>
+            <if test="role != null">
+                #{role,jdbcType=INTEGER},
+            </if>
+            <if test="conName != null">
+                #{conName,jdbcType=CHAR},
+            </if>
+            <if test="contractTypeId != null">
+                #{contractTypeId,jdbcType=BIGINT},
+            </if>
+            <if test="conAddress != null">
+                #{conAddress,jdbcType=CHAR},
+            </if>
+            <if test="portrait != null">
+                #{portrait,jdbcType=VARCHAR},
+            </if>
+            <if test="longitude != null">
+                #{longitude,jdbcType=CHAR},
+            </if>
+            <if test="latitude != null">
+                #{latitude,jdbcType=CHAR},
+            </if>
+            <if test="money != null">
+                #{money,jdbcType=DECIMAL},
+            </if>
+            <if test="borrowWay != null">
+                #{borrowWay,jdbcType=INTEGER},
+            </if>
+            <if test="accrual != null">
+                #{accrual,jdbcType=CHAR},
+            </if>
+            <if test="backTime != null">
+                #{backTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="signTime != null">
+                #{signTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="penalty != null">
+                #{penalty,jdbcType=DECIMAL},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="signState != null">
+                #{signState,jdbcType=BIT},
+            </if>
+            <if test="collectState != null">
+                #{collectState,jdbcType=BIT},
+            </if>
+            <if test="stillState != null">
+                #{stillState,jdbcType=BIT},
+            </if>
+            <if test="state != null">
+                #{state,jdbcType=INTEGER},
+            </if>
+            <if test="gmtCreate != null">
+                #{gmtCreate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="gmtModified != null">
+                #{gmtModified,jdbcType=TIMESTAMP},
+            </if>
+            <if test="isDeleted != null">
+                #{isDeleted,jdbcType=BIT},
+            </if>
+            <if test="richText != null">
+                #{richText,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.xdaocloud.futurechain.model.Contract">
+        update t_contract
+        <set>
+            <if test="contractHashId != null">
+                contract_hash_id = #{contractHashId,jdbcType=VARCHAR},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="signId != null">
+                sign_id = #{signId,jdbcType=BIGINT},
+            </if>
+            <if test="role != null">
+                role = #{role,jdbcType=INTEGER},
+            </if>
+            <if test="conName != null">
+                con_name = #{conName,jdbcType=CHAR},
+            </if>
+            <if test="contractTypeId != null">
+                contract_type_id = #{contractTypeId,jdbcType=BIGINT},
+            </if>
+            <if test="conAddress != null">
+                con_address = #{conAddress,jdbcType=CHAR},
+            </if>
+            <if test="portrait != null">
+                portrait = #{portrait,jdbcType=VARCHAR},
+            </if>
+            <if test="longitude != null">
+                longitude = #{longitude,jdbcType=CHAR},
+            </if>
+            <if test="latitude != null">
+                latitude = #{latitude,jdbcType=CHAR},
+            </if>
+            <if test="money != null">
+                money = #{money,jdbcType=DECIMAL},
+            </if>
+            <if test="borrowWay != null">
+                borrow_way = #{borrowWay,jdbcType=INTEGER},
+            </if>
+            <if test="accrual != null">
+                accrual = #{accrual,jdbcType=CHAR},
+            </if>
+            <if test="backTime != null">
+                back_time = #{backTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="signTime != null">
+                sign_time = #{signTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="penalty != null">
+                penalty = #{penalty,jdbcType=DECIMAL},
+            </if>
+            <if test="remark != null">
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="signState != null">
+                sign_state = #{signState,jdbcType=BIT},
+            </if>
+            <if test="collectState != null">
+                collect_state = #{collectState,jdbcType=BIT},
+            </if>
+            <if test="stillState != null">
+                still_state = #{stillState,jdbcType=BIT},
+            </if>
+            <if test="state != null">
+                state = #{state,jdbcType=INTEGER},
+            </if>
+            <if test="gmtCreate != null">
+                gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="gmtModified != null">
+                gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+            </if>
+            <if test="isDeleted != null">
+                is_deleted = #{isDeleted,jdbcType=BIT},
+            </if>
+            <if test="richText != null">
+                rich_text = #{richText,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.xdaocloud.futurechain.model.Contract">
+    update t_contract
+    set contract_hash_id = #{contractHashId,jdbcType=VARCHAR},
+    user_id = #{userId,jdbcType=BIGINT},
+    sign_id = #{signId,jdbcType=BIGINT},
+    role = #{role,jdbcType=INTEGER},
+    con_name = #{conName,jdbcType=CHAR},
+    contract_type_id = #{contractTypeId,jdbcType=BIGINT},
+    con_address = #{conAddress,jdbcType=CHAR},
+    portrait = #{portrait,jdbcType=VARCHAR},
+    longitude = #{longitude,jdbcType=CHAR},
+    latitude = #{latitude,jdbcType=CHAR},
+    money = #{money,jdbcType=DECIMAL},
+    borrow_way = #{borrowWay,jdbcType=INTEGER},
+    accrual = #{accrual,jdbcType=CHAR},
+    back_time = #{backTime,jdbcType=TIMESTAMP},
+    sign_time = #{signTime,jdbcType=TIMESTAMP},
+    penalty = #{penalty,jdbcType=DECIMAL},
+    remark = #{remark,jdbcType=VARCHAR},
+    sign_state = #{signState,jdbcType=BIT},
+    collect_state = #{collectState,jdbcType=BIT},
+    still_state = #{stillState,jdbcType=BIT},
+    state = #{state,jdbcType=INTEGER},
+    gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+    gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+    is_deleted = #{isDeleted,jdbcType=BIT},
+    rich_text = #{richText,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+    <update id="updateByPrimaryKey" parameterType="com.xdaocloud.futurechain.model.Contract">
+    update t_contract
+    set contract_hash_id = #{contractHashId,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=BIGINT},
+      sign_id = #{signId,jdbcType=BIGINT},
+      role = #{role,jdbcType=INTEGER},
+      con_name = #{conName,jdbcType=CHAR},
+      contract_type_id = #{contractTypeId,jdbcType=BIGINT},
+      con_address = #{conAddress,jdbcType=CHAR},
+      portrait = #{portrait,jdbcType=VARCHAR},
+      longitude = #{longitude,jdbcType=CHAR},
+      latitude = #{latitude,jdbcType=CHAR},
+      money = #{money,jdbcType=DECIMAL},
+      borrow_way = #{borrowWay,jdbcType=INTEGER},
+      accrual = #{accrual,jdbcType=CHAR},
+      back_time = #{backTime,jdbcType=TIMESTAMP},
+      sign_time = #{signTime,jdbcType=TIMESTAMP},
+      penalty = #{penalty,jdbcType=DECIMAL},
+      remark = #{remark,jdbcType=VARCHAR},
+      sign_state = #{signState,jdbcType=BIT},
+      collect_state = #{collectState,jdbcType=BIT},
+      still_state = #{stillState,jdbcType=BIT},
+      state = #{state,jdbcType=INTEGER},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      is_deleted = #{isDeleted,jdbcType=BIT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+
+    <select id="findMyReleaseListByUserIdOrContractNameCount"
+            parameterType="com.xdaocloud.futurechain.dto.req.contract.DappContractRequest"
+            resultType="java.lang.Integer">
+    select count(con_name)
+    FROM
+    t_contract
+    WHERE
+    user_id = #{userId}
+    AND is_deleted = FALSE
+  </select>
+
+    <select id="findMyReleaseListByUserIdOrContractName"
+            parameterType="com.xdaocloud.futurechain.dto.req.contract.DappContractRequest" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        t_contract
+        WHERE
+        user_id = #{userId}
+        AND is_deleted = FALSE
+        ORDER BY
+        gmt_create DESC
+        LIMIT #{page} , #{size}
+    </select>
+
+
+    <select id="findMyContractListListByUserIdOrContractNameCount"
+            parameterType="com.xdaocloud.futurechain.dto.req.contract.DappContractRequest"
+            resultType="java.lang.Integer">
+    select count(id)
+    FROM
+    t_contract
+    WHERE
+    sign_id = #{userId}
+    AND is_deleted = FALSE
+    AND sign_state = TRUE
+  </select>
+
+    <select id="findMyContractListListByUserIdOrContractName"
+            parameterType="com.xdaocloud.futurechain.dto.req.contract.DappContractRequest" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        t_contract
+        WHERE
+        sign_id = #{userId}
+        AND is_deleted = FALSE
+        AND sign_state = TRUE
+        ORDER BY
+        gmt_create DESC
+        LIMIT #{page} , #{size}
+    </select>
+
+
+    <select id="findMyReleaseByUserIdOrContractId" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        t_contract
+        WHERE
+        <if test="type == 1">
+            user_id = #{userId}
+        </if>
+        <if test="type == 0">
+            sign_id = #{userId}
+        </if>
+        AND id = #{contractId}
+        AND is_deleted = FALSE
+    </select>
+
+    <select id="findContractDetails" parameterType="java.lang.Object"
+            resultType="com.xdaocloud.futurechain.dto.resp.contract.ContractDetailsResponse">
+        SELECT
+            c.id,
+            c.contract_hash_id AS contractHashId,
+            c.user_id AS userId,
+            (SELECT nickname FROM t_user WHERE id = c.user_id) AS userNickName,
+            (SELECT avatar FROM t_user WHERE id = c.user_id) AS userAvatar,
+            c.sign_id AS signId,
+            (SELECT nickname FROM t_user WHERE id = c.sign_id) AS signNickName,
+            (SELECT avatar FROM t_user WHERE id = c.sign_id) AS signAvatar,
+            c.role,
+            c.con_name AS conName,
+            (SELECT name FROM t_contract_type WHERE id = c.contract_type_id) AS contractTypeId,
+            c.con_address AS conAddress,
+            c.portrait,
+            c.latitude,
+            c.longitude,
+            c.money,
+            c.borrow_way AS borrowWay,
+            c.accrual,
+            c.back_time AS backTime,
+            c.sign_time AS signTime,
+            c.penalty,
+            c.remark,
+            c.rich_text AS richText,
+            c.sign_state AS signState,
+            c.collect_state AS collectState,
+            c.still_state AS stillState,
+            c.state,
+            c.gmt_create AS gmtCreate
+        FROM
+            t_contract c
+        WHERE
+            c.id = #{contractId}
+        AND c.is_deleted = #{isDeleted};
+
+  </select>
+
+    <update id="delRichText" parameterType="java.lang.Long">
+    update t_contract
+    set rich_text = null
+    where id = #{contractId,jdbcType=BIGINT}
+
+    </update>
+</mapper>

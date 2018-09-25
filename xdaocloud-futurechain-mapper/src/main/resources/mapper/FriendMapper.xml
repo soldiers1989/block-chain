@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xdaocloud.futurechain.mapper.FriendMapper">
+    <resultMap id="BaseResultMap" type="com.xdaocloud.futurechain.model.Friend">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="user_id" jdbcType="BIGINT" property="userId"/>
+        <result column="friend_id" jdbcType="BIGINT" property="friendId"/>
+        <result column="user_reject" jdbcType="BIT" property="userReject"/>
+        <result column="friend_reject" jdbcType="BIT" property="friendReject"/>
+        <result column="user_remark" jdbcType="CHAR" property="userRemark"/>
+        <result column="friend_remark" jdbcType="CHAR" property="friendRemark"/>
+        <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate"/>
+        <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified"/>
+        <result column="is_deleted" jdbcType="BIT" property="isDeleted"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, user_id, friend_id, user_reject, friend_reject, user_remark, friend_remark, gmt_create,
+        gmt_modified, is_deleted
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_friend
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from t_friend
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.xdaocloud.futurechain.model.Friend">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into t_friend (user_id, friend_id, user_reject,
+        friend_reject, user_remark, friend_remark,
+        gmt_create, gmt_modified, is_deleted
+        )
+        values (#{userId,jdbcType=BIGINT}, #{friendId,jdbcType=BIGINT}, #{userReject,jdbcType=BIT},
+        #{friendReject,jdbcType=BIT}, #{userRemark,jdbcType=CHAR}, #{friendRemark,jdbcType=CHAR},
+        #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}, #{isDeleted,jdbcType=BIT}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="com.xdaocloud.futurechain.model.Friend">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into t_friend
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="friendId != null">
+                friend_id,
+            </if>
+            <if test="userReject != null">
+                user_reject,
+            </if>
+            <if test="friendReject != null">
+                friend_reject,
+            </if>
+            <if test="userRemark != null">
+                user_remark,
+            </if>
+            <if test="friendRemark != null">
+                friend_remark,
+            </if>
+            <if test="gmtCreate != null">
+                gmt_create,
+            </if>
+            <if test="gmtModified != null">
+                gmt_modified,
+            </if>
+            <if test="isDeleted != null">
+                is_deleted,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="friendId != null">
+                #{friendId,jdbcType=BIGINT},
+            </if>
+            <if test="userReject != null">
+                #{userReject,jdbcType=BIT},
+            </if>
+            <if test="friendReject != null">
+                #{friendReject,jdbcType=BIT},
+            </if>
+            <if test="userRemark != null">
+                #{userRemark,jdbcType=CHAR},
+            </if>
+            <if test="friendRemark != null">
+                #{friendRemark,jdbcType=CHAR},
+            </if>
+            <if test="gmtCreate != null">
+                #{gmtCreate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="gmtModified != null">
+                #{gmtModified,jdbcType=TIMESTAMP},
+            </if>
+            <if test="isDeleted != null">
+                #{isDeleted,jdbcType=BIT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.xdaocloud.futurechain.model.Friend">
+        update t_friend
+        <set>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="friendId != null">
+                friend_id = #{friendId,jdbcType=BIGINT},
+            </if>
+            <if test="userReject != null">
+                user_reject = #{userReject,jdbcType=BIT},
+            </if>
+            <if test="friendReject != null">
+                friend_reject = #{friendReject,jdbcType=BIT},
+            </if>
+            <if test="userRemark != null">
+                user_remark = #{userRemark,jdbcType=CHAR},
+            </if>
+            <if test="friendRemark != null">
+                friend_remark = #{friendRemark,jdbcType=CHAR},
+            </if>
+            <if test="gmtCreate != null">
+                gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="gmtModified != null">
+                gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+            </if>
+            <if test="isDeleted != null">
+                is_deleted = #{isDeleted,jdbcType=BIT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.xdaocloud.futurechain.model.Friend">
+        update t_friend
+        set user_id = #{userId,jdbcType=BIGINT},
+        friend_id = #{friendId,jdbcType=BIGINT},
+        user_reject = #{userReject,jdbcType=BIT},
+        friend_reject = #{friendReject,jdbcType=BIT},
+        user_remark = #{userRemark,jdbcType=CHAR},
+        friend_remark = #{friendRemark,jdbcType=CHAR},
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+        is_deleted = #{isDeleted,jdbcType=BIT}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+
+    <select id="findOneByParam" parameterType="com.xdaocloud.futurechain.model.Friend" resultMap="BaseResultMap">
+        SELECT * FROM t_friend
+        <where>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=BIGINT}
+            </if>
+            <if test="friendId != null">
+                AND friend_id = #{friendId,jdbcType=BIGINT}
+            </if>
+            <if test="userReject != null">
+                AND user_reject = #{userReject,jdbcType=BIT},
+            </if>
+            <if test="friendReject != null">
+                AND friend_reject = #{friendReject,jdbcType=BIT},
+            </if>
+            <if test="userRemark != null">
+                AND user_remark = #{userRemark,jdbcType=CHAR},
+            </if>
+            <if test="friendRemark != null">
+                AND friend_remark = #{friendRemark,jdbcType=CHAR},
+            </if>
+            <if test="gmtCreate != null">
+                AND gmt_create = #{gmtCreate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="gmtModified != null">
+                AND gmt_modified = #{gmtModified,jdbcType=TIMESTAMP}
+            </if>
+            <if test="isDeleted != null">
+                AND is_deleted = #{isDeleted,jdbcType=BIT}
+            </if>
+        </where>
+    </select>
+
+
+    <select id="findListByParam" parameterType="com.xdaocloud.futurechain.model.Friend" resultMap="BaseResultMap">
+        SELECT * FROM t_friend
+        <where>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=BIGINT}
+            </if>
+            <if test="friendId != null">
+                AND friend_id = #{friendId,jdbcType=BIGINT}
+            </if>
+            <if test="userReject != null">
+                AND user_reject = #{userReject,jdbcType=BIT},
+            </if>
+            <if test="friendReject != null">
+                AND friend_reject = #{friendReject,jdbcType=BIT},
+            </if>
+            <if test="userRemark != null">
+                AND user_remark = #{userRemark,jdbcType=CHAR},
+            </if>
+            <if test="friendRemark != null">
+                AND friend_remark = #{friendRemark,jdbcType=CHAR},
+            </if>
+            <if test="gmtCreate != null">
+                AND gmt_create = #{gmtCreate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="gmtModified != null">
+                AND gmt_modified = #{gmtModified,jdbcType=TIMESTAMP}
+            </if>
+            <if test="isDeleted != null">
+                AND is_deleted = #{isDeleted,jdbcType=BIT}
+            </if>
+        </where>
+    </select>
+
+    <select id="findListByUserId" parameterType="java.lang.Long"
+            resultType="com.xdaocloud.futurechain.dto.resp.friend.FriendResponse">
+        SELECT
+            u.id AS userid,
+            u.avatar AS avatar,
+            u.nickname AS nickname,
+            f.friend_remark AS remark
+        FROM
+          t_friend f
+        INNER JOIN t_user u ON f.friend_id = u.id
+        WHERE
+          f.user_id =  #{userId}
+        AND f.is_deleted = FALSE
+    </select>
+
+    <select id="findListByFriendId" parameterType="java.lang.Long"
+            resultType="com.xdaocloud.futurechain.dto.resp.friend.FriendResponse">
+        SELECT
+        u.id AS userid,
+        u.user_no AS userNO,
+        u.avatar AS avatar,
+        u.nickname AS nickname,
+        f.user_remark AS remark
+        FROM
+        t_friend f
+        INNER JOIN t_user u ON f.user_id = u.id
+        WHERE
+        f.friend_id =  #{userId}
+        AND f.is_deleted = FALSE;
+    </select>
+
+    <select id="findCountByUserIdAndFriendId" parameterType="java.lang.Long" resultType="java.lang.Integer">
+        SELECT COUNT(0) FROM t_friend WHERE user_id = #{userId} AND friend_id = #{friendId} AND is_deleted = FALSE;
+    </select>
+
+
+    <select id="findOneByUserIdAndFriendId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        SELECT * FROM t_friend WHERE user_id = #{userId} AND friend_id = #{friendId} AND is_deleted = FALSE
+        union
+        SELECT * FROM t_friend WHERE user_id = #{friendId} AND friend_id = #{userId} AND is_deleted = FALSE;
+    </select>
+
+    <select id="countByUserIdOfMyFriend" parameterType="java.lang.Long" resultType="java.lang.Integer">
+        SELECT COUNT(0) FROM t_friend WHERE user_id = #{userId} OR friend_id = #{friendId} AND is_deleted = FALSE;
+    </select>
+
+    <select id="findFriendsByUserId" parameterType="java.lang.Long"
+            resultType="java.lang.Long">
+        SELECT
+         friend_id
+        FROM
+        t_friend f
+        WHERE
+        f.user_id = #{userId}
+        AND f.is_deleted = FALSE;
+    </select>
+
+    <select id="findFriendsByFriendId" parameterType="java.lang.Long"
+            resultType="java.lang.Long">
+        SELECT
+        user_id
+        FROM
+        t_friend f
+        WHERE
+        f.friend_id = #{userId}
+        AND f.is_deleted = FALSE;
+    </select>
+
+    <select id="selectFriendIdListBuUserId" resultType="java.lang.Long">
+        SELECT
+          u.id
+	    FROM
+	    t_friend f ,
+          t_user u
+        where (f.friend_id = #{userId} and u.id = f.user_id) Or (f.user_id = #{userId}  and u.id = f.friend_id )  AND      f.is_deleted = FALSE AND u.is_deleted = FALSE
+    </select>
+
+</mapper>

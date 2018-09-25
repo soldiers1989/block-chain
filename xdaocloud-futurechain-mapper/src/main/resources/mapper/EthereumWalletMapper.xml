@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xdaocloud.futurechain.mapper.EthereumWalletMapper">
+  <resultMap id="BaseResultMap" type="com.xdaocloud.futurechain.model.EthereumWallet">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="wallet_address" jdbcType="CHAR" property="walletAddress" />
+    <result column="wallet_private_key" jdbcType="VARCHAR" property="walletPrivateKey" />
+    <result column="wallet_public_key" jdbcType="VARCHAR" property="walletPublicKey" />
+    <result column="wallet_file_path" jdbcType="VARCHAR" property="walletFilePath" />
+    <result column="pass_phrase" jdbcType="VARCHAR" property="passPhrase" />
+    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+    <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
+    <result column="is_deleted" jdbcType="BIT" property="isDeleted" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.xdaocloud.futurechain.model.EthereumWallet">
+    <result column="remark" jdbcType="LONGVARCHAR" property="remark" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, user_id, wallet_address, wallet_private_key, wallet_public_key, wallet_file_path,
+    pass_phrase, gmt_create, gmt_modified, is_deleted
+  </sql>
+  <sql id="Blob_Column_List">
+    remark
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_ethereum_wallet
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_ethereum_wallet
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.xdaocloud.futurechain.model.EthereumWallet">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_ethereum_wallet (user_id, wallet_address, wallet_private_key,
+    wallet_public_key, wallet_file_path, pass_phrase,
+    gmt_create, gmt_modified, is_deleted,
+    remark)
+    values (#{userId,jdbcType=BIGINT}, #{walletAddress,jdbcType=CHAR}, #{walletPrivateKey,jdbcType=VARCHAR},
+    #{walletPublicKey,jdbcType=VARCHAR}, #{walletFilePath,jdbcType=VARCHAR}, #{passPhrase,jdbcType=VARCHAR},
+    #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}, #{isDeleted,jdbcType=BIT},
+    #{remark,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xdaocloud.futurechain.model.EthereumWallet">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_ethereum_wallet
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="walletAddress != null">
+        wallet_address,
+      </if>
+      <if test="walletPrivateKey != null">
+        wallet_private_key,
+      </if>
+      <if test="walletPublicKey != null">
+        wallet_public_key,
+      </if>
+      <if test="walletFilePath != null">
+        wallet_file_path,
+      </if>
+      <if test="passPhrase != null">
+        pass_phrase,
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create,
+      </if>
+      <if test="gmtModified != null">
+        gmt_modified,
+      </if>
+      <if test="isDeleted != null">
+        is_deleted,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="walletAddress != null">
+        #{walletAddress,jdbcType=CHAR},
+      </if>
+      <if test="walletPrivateKey != null">
+        #{walletPrivateKey,jdbcType=VARCHAR},
+      </if>
+      <if test="walletPublicKey != null">
+        #{walletPublicKey,jdbcType=VARCHAR},
+      </if>
+      <if test="walletFilePath != null">
+        #{walletFilePath,jdbcType=VARCHAR},
+      </if>
+      <if test="passPhrase != null">
+        #{passPhrase,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtCreate != null">
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null">
+        #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=BIT},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xdaocloud.futurechain.model.EthereumWallet">
+    update t_ethereum_wallet
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="walletAddress != null">
+        wallet_address = #{walletAddress,jdbcType=CHAR},
+      </if>
+      <if test="walletPrivateKey != null">
+        wallet_private_key = #{walletPrivateKey,jdbcType=VARCHAR},
+      </if>
+      <if test="walletPublicKey != null">
+        wallet_public_key = #{walletPublicKey,jdbcType=VARCHAR},
+      </if>
+      <if test="walletFilePath != null">
+        wallet_file_path = #{walletFilePath,jdbcType=VARCHAR},
+      </if>
+      <if test="passPhrase != null">
+        pass_phrase = #{passPhrase,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null">
+        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDeleted != null">
+        is_deleted = #{isDeleted,jdbcType=BIT},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.xdaocloud.futurechain.model.EthereumWallet">
+    update t_ethereum_wallet
+    set user_id = #{userId,jdbcType=BIGINT},
+    wallet_address = #{walletAddress,jdbcType=CHAR},
+    wallet_private_key = #{walletPrivateKey,jdbcType=VARCHAR},
+    wallet_public_key = #{walletPublicKey,jdbcType=VARCHAR},
+    wallet_file_path = #{walletFilePath,jdbcType=VARCHAR},
+    pass_phrase = #{passPhrase,jdbcType=VARCHAR},
+    gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+    gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+    is_deleted = #{isDeleted,jdbcType=BIT},
+    remark = #{remark,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xdaocloud.futurechain.model.EthereumWallet">
+    update t_ethereum_wallet
+    set user_id = #{userId,jdbcType=BIGINT},
+      wallet_address = #{walletAddress,jdbcType=CHAR},
+      wallet_private_key = #{walletPrivateKey,jdbcType=VARCHAR},
+      wallet_public_key = #{walletPublicKey,jdbcType=VARCHAR},
+      wallet_file_path = #{walletFilePath,jdbcType=VARCHAR},
+      pass_phrase = #{passPhrase,jdbcType=VARCHAR},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      is_deleted = #{isDeleted,jdbcType=BIT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+<select id="findWalletFilePathByUserId" parameterType="java.lang.Long"  resultType="java.lang.String">
+  SELECT wallet_file_path FROM t_ethereum_wallet  WHERE user_id = #{userid} AND is_deleted =FALSE ;
+</select>
+
+  <select id="findWalletFilePathByWalletAddress" parameterType="java.lang.String" resultType="java.lang.String">
+    SELECT wallet_file_path FROM t_ethereum_wallet  WHERE wallet_address = #{walletAddress} AND is_deleted =FALSE ;
+  </select>
+
+  <select id="findWalletAddressByUserid" parameterType="java.lang.Long" resultType="java.lang.String">
+      SELECT wallet_address FROM t_ethereum_wallet  WHERE user_id = #{userid} AND is_deleted =FALSE ORDER BY id DESC limit 1;
+  </select>
+
+  <select id="findCountByUserid" parameterType="java.lang.Long" resultType="java.lang.Integer">
+    SELECT count(1) FROM t_ethereum_wallet  WHERE user_id = #{userid} AND is_deleted =FALSE;
+  </select>
+
+</mapper>

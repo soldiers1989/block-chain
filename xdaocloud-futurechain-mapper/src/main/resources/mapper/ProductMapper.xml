@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xdaocloud.futurechain.mapper.ProductMapper">
+  <resultMap id="BaseResultMap" type="com.xdaocloud.futurechain.model.Product">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="type" jdbcType="TINYINT" property="type" />
+    <result column="code" jdbcType="CHAR" property="code" />
+    <result column="price" jdbcType="DECIMAL" property="price" />
+    <result column="amount" jdbcType="BIGINT" property="amount" />
+    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+    <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
+    <result column="is_deleted" jdbcType="BIT" property="isDeleted" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.xdaocloud.futurechain.model.Product">
+    <result column="depict" jdbcType="LONGVARCHAR" property="depict" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, name, type, code, price, amount, gmt_create, gmt_modified, is_deleted
+  </sql>
+  <sql id="Blob_Column_List">
+    depict
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_product
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_product
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.xdaocloud.futurechain.model.Product">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_product (name, type, code, 
+      price, amount, gmt_create, 
+      gmt_modified, is_deleted, depict
+      )
+    values (#{name,jdbcType=VARCHAR}, #{type,jdbcType=TINYINT}, #{code,jdbcType=CHAR}, 
+      #{price,jdbcType=DECIMAL}, #{amount,jdbcType=BIGINT}, #{gmtCreate,jdbcType=TIMESTAMP}, 
+      #{gmtModified,jdbcType=TIMESTAMP}, #{isDeleted,jdbcType=BIT}, #{depict,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.xdaocloud.futurechain.model.Product">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_product
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="name != null">
+        name,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="code != null">
+        code,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="amount != null">
+        amount,
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create,
+      </if>
+      <if test="gmtModified != null">
+        gmt_modified,
+      </if>
+      <if test="isDeleted != null">
+        is_deleted,
+      </if>
+      <if test="depict != null">
+        depict,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=TINYINT},
+      </if>
+      <if test="code != null">
+        #{code,jdbcType=CHAR},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="amount != null">
+        #{amount,jdbcType=BIGINT},
+      </if>
+      <if test="gmtCreate != null">
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null">
+        #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=BIT},
+      </if>
+      <if test="depict != null">
+        #{depict,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xdaocloud.futurechain.model.Product">
+    update t_product
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=TINYINT},
+      </if>
+      <if test="code != null">
+        code = #{code,jdbcType=CHAR},
+      </if>
+      <if test="price != null">
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="amount != null">
+        amount = #{amount,jdbcType=BIGINT},
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null">
+        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDeleted != null">
+        is_deleted = #{isDeleted,jdbcType=BIT},
+      </if>
+      <if test="depict != null">
+        depict = #{depict,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.xdaocloud.futurechain.model.Product">
+    update t_product
+    set name = #{name,jdbcType=VARCHAR},
+      type = #{type,jdbcType=TINYINT},
+      code = #{code,jdbcType=CHAR},
+      price = #{price,jdbcType=DECIMAL},
+      amount = #{amount,jdbcType=BIGINT},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      is_deleted = #{isDeleted,jdbcType=BIT},
+      depict = #{depict,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xdaocloud.futurechain.model.Product">
+    update t_product
+    set name = #{name,jdbcType=VARCHAR},
+      type = #{type,jdbcType=TINYINT},
+      code = #{code,jdbcType=CHAR},
+      price = #{price,jdbcType=DECIMAL},
+      amount = #{amount,jdbcType=BIGINT},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      is_deleted = #{isDeleted,jdbcType=BIT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="findProducts" resultMap="BaseResultMap">
+    SELECT * FROM t_product WHERE is_deleted = FALSE ;
+  </select>
+
+  <select id="findByProductCode" parameterType="java.lang.String" resultMap="BaseResultMap">
+    SELECT * FROM t_product WHERE is_deleted = FALSE AND code = #{code};
+  </select>
+</mapper>

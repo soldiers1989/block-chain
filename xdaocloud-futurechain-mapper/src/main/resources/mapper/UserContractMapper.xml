@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xdaocloud.futurechain.mapper.UserContractMapper">
+  <resultMap id="BaseResultMap" type="com.xdaocloud.futurechain.model.UserContract">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="contract_id" jdbcType="BIGINT" property="contractId" />
+    <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
+    <result column="type" jdbcType="BIT" property="type" />
+    <result column="is_hot" jdbcType="BIT" property="isHot" />
+    <result column="is_deleted" jdbcType="BIT" property="isDeleted" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, user_id, contract_id, gmt_modified, type, is_hot, is_deleted
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_user_contract
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_user_contract
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.xdaocloud.futurechain.model.UserContract">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_user_contract (user_id, contract_id, gmt_modified, 
+      type, is_hot, is_deleted)
+    values (#{userId,jdbcType=BIGINT}, #{contractId,jdbcType=BIGINT}, #{gmtModified,jdbcType=TIMESTAMP}, 
+      #{type,jdbcType=BIT}, #{isHot,jdbcType=BIT}, #{isDeleted,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xdaocloud.futurechain.model.UserContract">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_user_contract
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="contractId != null">
+        contract_id,
+      </if>
+      <if test="gmtModified != null">
+        gmt_modified,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="isHot != null">
+        is_hot,
+      </if>
+      <if test="isDeleted != null">
+        is_deleted,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="contractId != null">
+        #{contractId,jdbcType=BIGINT},
+      </if>
+      <if test="gmtModified != null">
+        #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=BIT},
+      </if>
+      <if test="isHot != null">
+        #{isHot,jdbcType=BIT},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xdaocloud.futurechain.model.UserContract">
+    update t_user_contract
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="contractId != null">
+        contract_id = #{contractId,jdbcType=BIGINT},
+      </if>
+      <if test="gmtModified != null">
+        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=BIT},
+      </if>
+      <if test="isHot != null">
+        is_hot = #{isHot,jdbcType=BIT},
+      </if>
+      <if test="isDeleted != null">
+        is_deleted = #{isDeleted,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xdaocloud.futurechain.model.UserContract">
+    update t_user_contract
+    set user_id = #{userId,jdbcType=BIGINT},
+      contract_id = #{contractId,jdbcType=BIGINT},
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      type = #{type,jdbcType=BIT},
+      is_hot = #{isHot,jdbcType=BIT},
+      is_deleted = #{isDeleted,jdbcType=BIT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+
+  <select id="findContractByUserIdOrContractNameCount" parameterType="com.xdaocloud.futurechain.dto.req.contract.DappContractRequest"  resultType="java.lang.Integer">
+    select count(c.con_name)
+    from t_user_contract uc
+    LEFT JOIN t_contract c on uc.contract_id = c.id
+    where uc.is_deleted = FALSE and c.is_deleted =  FALSE
+    and uc.user_id = #{userId}
+
+  </select>
+
+  <select id="findContractByUserIdOrContractName" parameterType="com.xdaocloud.futurechain.dto.req.contract.DappContractRequest"  resultType="java.util.Map">
+    select c.con_name contractName,c.portrait portrait,c.id contractId , uc.type isOwn
+    from t_user_contract uc
+    LEFT JOIN t_contract c on uc.contract_id = c.id
+    where uc.is_deleted = FALSE and c.is_deleted =  FALSE
+    and uc.user_id = #{userId}
+    ORDER BY uc.gmt_modified desc
+    LIMIT #{page} , #{size}
+  </select>
+
+  <select id="selectByUserIdAndContractId" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+     from t_user_contract where is_deleted = false and user_id = #{userId} and contract_id = #{contractId}
+  </select>
+
+</mapper>

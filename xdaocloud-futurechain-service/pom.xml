@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>com.xdaocloud.futurechain</groupId>
+        <artifactId>xdaocloud-futurechain</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.xdaocloud.futurechain</groupId>
+    <artifactId>xdaocloud-futurechain-service</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+
+    <dependencies>
+        <dependency>
+            <groupId>com.xdaocloud.futurechain</groupId>
+            <artifactId>xdaocloud-futurechain-model</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.xdaocloud.futurechain</groupId>
+            <artifactId>xdaocloud-futurechain-common</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+      <!--  <dependency>
+            <groupId>com.xdaocloud.base</groupId>
+            <artifactId>xdaocloud-base-common</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>-->
+
+       <!-- <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-eureka</artifactId>
+        </dependency>-->
+        <!-- https://mvnrepository.com/artifact/com.baidu.aip/java-sdk -->
+        <dependency>
+            <groupId>com.baidu.aip</groupId>
+            <artifactId>java-sdk</artifactId>
+            <version>4.4.1</version>
+        </dependency>
+<!--
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>-->
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-redis</artifactId>
+            <version>1.4.7.RELEASE</version>
+        </dependency>
+
+      <!--  <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-redis</artifactId>
+        </dependency>
+-->
+       <!-- <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-mongodb</artifactId>
+        </dependency>-->
+
+       <!-- <dependency>
+            <groupId>org.springframework.kafka</groupId>
+            <artifactId>spring-kafka</artifactId>
+        </dependency>-->
+
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.11</version>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.persistence</groupId>
+            <artifactId>persistence-api</artifactId>
+            <version>1.0.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>jstl</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.xdaocloud.futurechain</groupId>
+            <artifactId>xdaocloud-futurechain-common</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+       <!-- <dependency>
+            <groupId>com.xdaocloud.base</groupId>
+            <artifactId>xdaocloud-base-common</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>-->
+        <!--pagehelper -->
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper-spring-boot-starter</artifactId>
+            <version>1.2.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.xdaocloud.futurechain</groupId>
+            <artifactId>xdaocloud-futurechain-utils</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+
+
+     <!--   <dependency>
+            <groupId>org.web3j</groupId>
+            <artifactId>core</artifactId>
+            <version>3.3.1</version>
+        </dependency>-->
+
+        <dependency>
+            <groupId>com.aes</groupId>
+            <artifactId>AesTool</artifactId>
+            <version>1.0</version>
+        </dependency>
+
+        <!--<dependency>
+            <groupId>com.alipay.sdk</groupId>
+            <artifactId>alipay-sdk-java</artifactId>
+            <version>3.0.0</version>
+        </dependency>-->
+        <dependency>
+            <groupId>com.xdaocloud.futurechain</groupId>
+            <artifactId>xdaocloud-futurechain-mapper</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.xdaocloud.futurechain</groupId>
+            <artifactId>xdaocloud-futurechain-huanxin</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.xdaocloud.futurechain</groupId>
+            <artifactId>xdaocloud-futurechain-eos</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.netflix.feign</groupId>
+            <artifactId>feign-core</artifactId>
+            <version>8.17.0</version>
+        </dependency>
+
+    </dependencies>
+
+</project>

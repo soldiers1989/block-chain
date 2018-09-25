@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xdaocloud.futurechain.mapper.ReadingRecordMapper">
+  <resultMap id="BaseResultMap" type="com.xdaocloud.futurechain.model.ReadingRecord">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="circle_id" jdbcType="BIGINT" property="circleId" />
+    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+    <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
+    <result column="is_delete" jdbcType="BIT" property="isDelete" />
+  </resultMap>
+  
+  <sql id="Base_Column_List">
+    id, user_id, circle_id, gmt_create, gmt_modified, is_delete
+  </sql>
+  
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_reading_record
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_reading_record
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  
+  <insert id="insert" parameterType="com.xdaocloud.futurechain.model.ReadingRecord">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_reading_record (user_id, circle_id, gmt_create, 
+      gmt_modified, is_delete)
+    values (#{userId,jdbcType=BIGINT}, #{circleId,jdbcType=BIGINT}, #{gmtCreate,jdbcType=TIMESTAMP}, 
+      #{gmtModified,jdbcType=TIMESTAMP}, #{isDelete,jdbcType=BIT})
+  </insert>
+  
+  <insert id="insertSelective" parameterType="com.xdaocloud.futurechain.model.ReadingRecord">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_reading_record
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="circleId != null">
+        circle_id,
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create,
+      </if>
+      <if test="gmtModified != null">
+        gmt_modified,
+      </if>
+      <if test="isDelete != null">
+        is_delete,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="circleId != null">
+        #{circleId,jdbcType=BIGINT},
+      </if>
+      <if test="gmtCreate != null">
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null">
+        #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDelete != null">
+        #{isDelete,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.xdaocloud.futurechain.model.ReadingRecord">
+    update t_reading_record
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="circleId != null">
+        circle_id = #{circleId,jdbcType=BIGINT},
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null">
+        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDelete != null">
+        is_delete = #{isDelete,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <update id="updateByPrimaryKey" parameterType="com.xdaocloud.futurechain.model.ReadingRecord">
+    update t_reading_record
+    set user_id = #{userId,jdbcType=BIGINT},
+      circle_id = #{circleId,jdbcType=BIGINT},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      is_delete = #{isDelete,jdbcType=BIT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <select id="selectIsRead" parameterType="java.lang.Long" resultType="java.lang.Long">
+    SELECT 
+    	COUNT(id) 
+    FROM t_reading_record 
+    WHERE 
+    	user_id = #{userId} 
+    AND 
+    	circle_id = #{circleId}
+  </select> 
+  
+  <select id="selectReadCountByMonth" parameterType="java.lang.Long" resultType="java.lang.Long">
+    SELECT 
+    	COUNT(id) 
+    FROM t_reading_record 
+    WHERE 
+    	circle_id = #{circleId}
+
+    AND (
+    gmt_create<![CDATA[ >= ]]>  (str_to_date ( concat((SELECT DATE_ADD( curdate(), INTERVAL - DAY (curdate()) + 1 DAY )),' 00:00:00'), '%Y-%m-%d %H:%i:%s' ))
+    AND gmt_create <![CDATA[ <= ]]> str_to_date ( concat((SELECT last_day(curdate())),' 23:59:59'), '%Y-%m-%d %H:%i:%s' )
+    )
+  </select> 
+  
+  <select id="selectReadFriendNum" parameterType="java.lang.Long" resultType="java.lang.Long">
+	select count(1) from (
+	SELECT DISTINCT r.user_id FROM t_reading_record r WHERE r.circle_id =
+	#{circleId} AND r.is_delete = 0
+	) s , t_friend f where (f.user_id = s.user_id AND f.friend_id =
+	#{userid} ) or (f.friend_id = s.user_id AND f.user_id = #{userid} )
+  </select>
+  
+  <select id="selectReadCountAll" parameterType="java.lang.Long" resultType="java.lang.Long">
+    SELECT
+		COUNT(r.id)
+	FROM
+		t_reading_record r
+	LEFT JOIN t_circle c ON c.id = r.circle_id
+	WHERE
+		c.user_id = #{userId}
+	AND
+        r.is_delete = FALSE
+    AND
+        c.is_deleted = FALSE
+  </select>
+
+</mapper>

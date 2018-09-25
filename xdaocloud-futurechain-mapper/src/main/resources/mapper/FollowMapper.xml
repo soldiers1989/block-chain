@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xdaocloud.futurechain.mapper.FollowMapper">
+  <resultMap id="BaseResultMap" type="com.xdaocloud.futurechain.model.Follow">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="passive_user_id" jdbcType="BIGINT" property="passiveUserId" />
+    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+    <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
+    <result column="is_delete" jdbcType="BIT" property="isDelete" />
+  </resultMap>
+  
+  <sql id="Base_Column_List">
+    id, user_id, passive_user_id, gmt_create, gmt_modified, is_delete
+  </sql>
+  
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_follow
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_follow
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  
+  <insert id="insert" parameterType="com.xdaocloud.futurechain.model.Follow">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_follow (user_id, passive_user_id, gmt_create, 
+      gmt_modified, is_delete)
+    values (#{userId,jdbcType=BIGINT}, #{passiveUserId,jdbcType=BIGINT}, #{gmtCreate,jdbcType=TIMESTAMP}, 
+      #{gmtModified,jdbcType=TIMESTAMP}, #{isDelete,jdbcType=BIT})
+  </insert>
+  
+  <insert id="insertSelective" parameterType="com.xdaocloud.futurechain.model.Follow">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_follow
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="passiveUserId != null">
+        passive_user_id,
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create,
+      </if>
+      <if test="gmtModified != null">
+        gmt_modified,
+      </if>
+      <if test="isDelete != null">
+        is_delete,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="passiveUserId != null">
+        #{passiveUserId,jdbcType=BIGINT},
+      </if>
+      <if test="gmtCreate != null">
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null">
+        #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDelete != null">
+        #{isDelete,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.xdaocloud.futurechain.model.Follow">
+    update t_follow
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="passiveUserId != null">
+        passive_user_id = #{passiveUserId,jdbcType=BIGINT},
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null">
+        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDelete != null">
+        is_delete = #{isDelete,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <update id="updateByPrimaryKey" parameterType="com.xdaocloud.futurechain.model.Follow">
+    update t_follow
+    set user_id = #{userId,jdbcType=BIGINT},
+      passive_user_id = #{passiveUserId,jdbcType=BIGINT},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      is_delete = #{isDelete,jdbcType=BIT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <select id="findCountByParam" parameterType="com.xdaocloud.futurechain.model.Follow" resultType="java.lang.Integer">
+        SELECT COUNT(1) FROM t_follow
+        <where>
+            <if test="userId != null">
+                user_id
+            </if>
+            <if test="passiveUserId != null">
+                AND passive_user_id
+            </if>
+        </where>
+   </select>
+
+   <select id="findListByParam" parameterType="com.xdaocloud.futurechain.model.Follow" resultType="java.lang.Integer">
+        SELECT * FROM t_follow
+        <where>
+            <if test="userId != null">
+                user_id
+            </if>
+            <if test="passiveUserId != null">
+                AND passive_user_id
+            </if>
+        </where>
+   </select>
+
+
+  <select id="selectByUserIdAndPassiveUserId" resultType="java.lang.Integer">
+    SELECT COUNT(1) FROM t_follow WHERE 1 = 1
+    <if test="userId != 0 ">
+      AND user_id =  #{userId}
+    </if>
+    <if test="passiveUserId != 0 ">
+      AND passive_user_id = #{passiveUserId}
+    </if>
+     AND is_delete = FALSE
+  </select>
+
+  <update id="updateByUserIdAndFollowUserId">
+    UPDATE t_follow set is_delete = 1 ,gmt_modified = SYSDATE() where user_id = #{userId} and passive_user_id = #{followUserId} and is_delete =  0
+  </update>
+  
+  <select id="selectIsFollow" parameterType="java.lang.Long" resultType="java.lang.Long">
+  	SELECT
+		COUNT(id)
+	FROM
+		t_follow
+	WHERE
+		user_id = #{userId} AND passive_user_id = #{passiveUserId}
+	AND is_delete = '0'
+  </select>
+  
+  <select id="selectFollowCountAll" parameterType="java.lang.Long" resultType="java.lang.Long">
+  	SELECT
+		COUNT(id)
+	FROM
+		t_follow
+	WHERE
+		passive_user_id = #{userId}
+	AND is_delete = '0'
+  </select>
+  
+  <select id="selectFriendFollowNum" parameterType="java.lang.Long" resultType="java.lang.Long">
+  	SELECT
+		COUNT(f.id)
+	FROM
+		t_follow f
+	LEFT JOIN t_friend fr ON fr.friend_id = f.user_id
+	WHERE
+		fr.user_id = #{userId}
+	AND 
+		f.passive_user_id =#{passiveUserId}
+	AND 
+		f.is_delete = FALSE
+	AND 
+		fr.is_deleted = FALSE
+  </select>
+</mapper>

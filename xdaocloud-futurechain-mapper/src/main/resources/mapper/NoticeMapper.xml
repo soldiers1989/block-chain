@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xdaocloud.futurechain.mapper.NoticeMapper">
+  <resultMap id="BaseResultMap" type="com.xdaocloud.futurechain.model.Notice">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="type" jdbcType="TINYINT" property="type" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="priority" jdbcType="TINYINT" property="priority" />
+    <result column="enable_time" jdbcType="TIMESTAMP" property="enableTime" />
+    <result column="unable_time" jdbcType="TIMESTAMP" property="unableTime" />
+    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+    <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
+    <result column="is_deleted" jdbcType="BIT" property="isDeleted" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, type, content, url, param_json, priority, enable_time, unable_time, gmt_create, 
+    gmt_modified, is_deleted
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_notice
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_notice
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.xdaocloud.futurechain.model.Notice">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_notice (type, content, url, 
+     priority, enable_time,
+      unable_time, gmt_create, gmt_modified, 
+      is_deleted)
+    values (#{type,jdbcType=TINYINT}, #{content,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, 
+      #{priority,jdbcType=TINYINT}, #{enableTime,jdbcType=TIMESTAMP},
+      #{unableTime,jdbcType=TIMESTAMP}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}, 
+      #{isDeleted,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xdaocloud.futurechain.model.Notice">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_notice
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="type != null">
+        type,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+      <if test="url != null">
+        url,
+      </if>
+
+      <if test="priority != null">
+        priority,
+      </if>
+      <if test="enableTime != null">
+        enable_time,
+      </if>
+      <if test="unableTime != null">
+        unable_time,
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create,
+      </if>
+      <if test="gmtModified != null">
+        gmt_modified,
+      </if>
+      <if test="isDeleted != null">
+        is_deleted,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="type != null">
+        #{type,jdbcType=TINYINT},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        #{url,jdbcType=VARCHAR},
+      </if>
+
+      <if test="priority != null">
+        #{priority,jdbcType=TINYINT},
+      </if>
+      <if test="enableTime != null">
+        #{enableTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="unableTime != null">
+        #{unableTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtCreate != null">
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null">
+        #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xdaocloud.futurechain.model.Notice">
+    update t_notice
+    <set>
+      <if test="type != null">
+        type = #{type,jdbcType=TINYINT},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="priority != null">
+        priority = #{priority,jdbcType=TINYINT},
+      </if>
+      <if test="enableTime != null">
+        enable_time = #{enableTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="unableTime != null">
+        unable_time = #{unableTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null">
+        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDeleted != null">
+        is_deleted = #{isDeleted,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xdaocloud.futurechain.model.Notice">
+    update t_notice
+    set type = #{type,jdbcType=TINYINT},
+      content = #{content,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
+      priority = #{priority,jdbcType=TINYINT},
+      enable_time = #{enableTime,jdbcType=TIMESTAMP},
+      unable_time = #{unableTime,jdbcType=TIMESTAMP},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      is_deleted = #{isDeleted,jdbcType=BIT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="selectNoticeList" resultType="com.xdaocloud.futurechain.dto.resp.notice.NoticeDTO">
+    SELECT
+      id,
+      `type`,
+      content,
+      url
+    FROM `t_notice`
+    WHERE
+      is_deleted = FALSE
+      AND enable_time <![CDATA[<=]]> NOW()
+      AND unable_time >= NOW()
+    ORDER BY priority ASC
+  </select>
+</mapper>

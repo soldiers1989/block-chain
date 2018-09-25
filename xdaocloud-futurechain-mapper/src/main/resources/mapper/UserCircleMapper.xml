@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xdaocloud.futurechain.mapper.UserCircleMapper">
+  <resultMap id="BaseResultMap" type="com.xdaocloud.futurechain.model.UserCircle">
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="circle_id" jdbcType="BIGINT" property="circleId" />
+  </resultMap>
+  <insert id="insert" parameterType="com.xdaocloud.futurechain.model.UserCircle">
+    insert into t_user_circle (user_id, circle_id)
+    values (#{userId,jdbcType=BIGINT}, #{circleId,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xdaocloud.futurechain.model.UserCircle">
+    insert into t_user_circle
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="circleId != null">
+        circle_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="circleId != null">
+        #{circleId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+
+  <select id="findByUserIdAndCircleId" parameterType="java.lang.Long" resultType="java.lang.Integer">
+     SELECT COUNT(1) FROM t_user_circle WHERE user_id = #{userId} AND circle_id = #{circleId}
+  </select>
+
+  <delete id="deleteByUserIdAndCircleId" parameterType="java.lang.Long" >
+
+    DELETE FROM t_user_circle WHERE user_id = #{userId} AND circle_id = #{circleId}
+
+  </delete>
+
+</mapper>

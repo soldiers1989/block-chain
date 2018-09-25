@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xdaocloud.futurechain.mapper.VersionMapper">
+    <resultMap id="BaseResultMap" type="com.xdaocloud.futurechain.model.Version">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="version_code" jdbcType="VARCHAR" property="versionCode"/>
+        <result column="version_name" jdbcType="VARCHAR" property="versionName"/>
+        <result column="upgrade_msg" jdbcType="VARCHAR" property="upgradeMsg"/>
+        <result column="download_url" jdbcType="VARCHAR" property="downloadUrl"/>
+        <result column="client_type" jdbcType="VARCHAR" property="clientType"/>
+        <result column="is_force" jdbcType="BIT" property="isForce"/>
+        <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate"/>
+        <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified"/>
+        <result column="is_deleted" jdbcType="BIT" property="isDeleted"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, version_code, version_name, upgrade_msg, download_url, client_type, is_force, 
+    gmt_create, gmt_modified, is_deleted
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_version
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_version
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+    <insert id="insert" parameterType="com.xdaocloud.futurechain.model.Version">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into t_version (version_code, version_name, upgrade_msg,
+        download_url, client_type, is_force,
+        gmt_create, gmt_modified, is_deleted
+        )
+        values (#{versionCode,jdbcType=VARCHAR}, #{versionName,jdbcType=VARCHAR}, #{upgradeMsg,jdbcType=VARCHAR},
+        #{downloadUrl,jdbcType=VARCHAR}, #{clientType,jdbcType=VARCHAR}, #{isForce,jdbcType=BIT},
+        #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}, #{isDeleted,jdbcType=BIT}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="com.xdaocloud.futurechain.model.Version">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into t_version
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="versionCode != null">
+                version_code,
+            </if>
+            <if test="versionName != null">
+                version_name,
+            </if>
+            <if test="upgradeMsg != null">
+                upgrade_msg,
+            </if>
+            <if test="downloadUrl != null">
+                download_url,
+            </if>
+            <if test="clientType != null">
+                client_type,
+            </if>
+            <if test="isForce != null">
+                is_force,
+            </if>
+            <if test="gmtCreate != null">
+                gmt_create,
+            </if>
+            <if test="gmtModified != null">
+                gmt_modified,
+            </if>
+            <if test="isDeleted != null">
+                is_deleted,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="versionCode != null">
+                #{versionCode,jdbcType=VARCHAR},
+            </if>
+            <if test="versionName != null">
+                #{versionName,jdbcType=VARCHAR},
+            </if>
+            <if test="upgradeMsg != null">
+                #{upgradeMsg,jdbcType=VARCHAR},
+            </if>
+            <if test="downloadUrl != null">
+                #{downloadUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="clientType != null">
+                #{clientType,jdbcType=VARCHAR},
+            </if>
+            <if test="isForce != null">
+                #{isForce,jdbcType=BIT},
+            </if>
+            <if test="gmtCreate != null">
+                #{gmtCreate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="gmtModified != null">
+                #{gmtModified,jdbcType=TIMESTAMP},
+            </if>
+            <if test="isDeleted != null">
+                #{isDeleted,jdbcType=BIT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.xdaocloud.futurechain.model.Version">
+        update t_version
+        <set>
+            <if test="versionCode != null">
+                version_code = #{versionCode,jdbcType=VARCHAR},
+            </if>
+            <if test="versionName != null">
+                version_name = #{versionName,jdbcType=VARCHAR},
+            </if>
+            <if test="upgradeMsg != null">
+                upgrade_msg = #{upgradeMsg,jdbcType=VARCHAR},
+            </if>
+            <if test="downloadUrl != null">
+                download_url = #{downloadUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="clientType != null">
+                client_type = #{clientType,jdbcType=VARCHAR},
+            </if>
+            <if test="isForce != null">
+                is_force = #{isForce,jdbcType=BIT},
+            </if>
+            <if test="gmtCreate != null">
+                gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="gmtModified != null">
+                gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+            </if>
+            <if test="isDeleted != null">
+                is_deleted = #{isDeleted,jdbcType=BIT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.xdaocloud.futurechain.model.Version">
+    update t_version
+    set version_code = #{versionCode,jdbcType=VARCHAR},
+      version_name = #{versionName,jdbcType=VARCHAR},
+      upgrade_msg = #{upgradeMsg,jdbcType=VARCHAR},
+      download_url = #{downloadUrl,jdbcType=VARCHAR},
+      client_type = #{clientType,jdbcType=VARCHAR},
+      is_force = #{isForce,jdbcType=BIT},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      is_deleted = #{isDeleted,jdbcType=BIT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+    <select id="findByClientType" parameterType="java.lang.String" resultMap="BaseResultMap">
+     SELECT * FROM t_version WHERE client_type = #{clientType} ORDER BY id DESC limit 1;
+  </select>
+</mapper>

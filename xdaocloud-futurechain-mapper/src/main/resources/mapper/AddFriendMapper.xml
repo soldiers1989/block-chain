@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xdaocloud.futurechain.mapper.AddFriendMapper">
+    <resultMap id="BaseResultMap" type="com.xdaocloud.futurechain.model.AddFriend">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="user_id" jdbcType="BIGINT" property="userId"/>
+        <result column="friend_id" jdbcType="BIGINT" property="friendId"/>
+        <result column="add_type" jdbcType="CHAR" property="addType"/>
+        <result column="is_agree" jdbcType="TINYINT" property="isAgree"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
+        <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate"/>
+        <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified"/>
+        <result column="is_deleted" jdbcType="BIT" property="isDeleted"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, user_id, friend_id, add_type, is_agree, remark, gmt_create, gmt_modified, is_deleted
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_add_friend
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from t_add_friend
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.xdaocloud.futurechain.model.AddFriend">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into t_add_friend (user_id, friend_id, add_type,
+        is_agree, remark, gmt_create,
+        gmt_modified, is_deleted)
+        values (#{userId,jdbcType=BIGINT}, #{friendId,jdbcType=BIGINT}, #{addType,jdbcType=CHAR},
+        #{isAgree,jdbcType=TINYINT}, #{remark,jdbcType=VARCHAR}, #{gmtCreate,jdbcType=TIMESTAMP},
+        #{gmtModified,jdbcType=TIMESTAMP}, #{isDeleted,jdbcType=BIT})
+    </insert>
+    <insert id="insertSelective" parameterType="com.xdaocloud.futurechain.model.AddFriend">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into t_add_friend
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="friendId != null">
+                friend_id,
+            </if>
+            <if test="addType != null">
+                add_type,
+            </if>
+            <if test="isAgree != null">
+                is_agree,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+            <if test="gmtCreate != null">
+                gmt_create,
+            </if>
+            <if test="gmtModified != null">
+                gmt_modified,
+            </if>
+            <if test="isDeleted != null">
+                is_deleted,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="friendId != null">
+                #{friendId,jdbcType=BIGINT},
+            </if>
+            <if test="addType != null">
+                #{addType,jdbcType=CHAR},
+            </if>
+            <if test="isAgree != null">
+                #{isAgree,jdbcType=TINYINT},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="gmtCreate != null">
+                #{gmtCreate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="gmtModified != null">
+                #{gmtModified,jdbcType=TIMESTAMP},
+            </if>
+            <if test="isDeleted != null">
+                #{isDeleted,jdbcType=BIT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.xdaocloud.futurechain.model.AddFriend">
+        update t_add_friend
+        <set>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="friendId != null">
+                friend_id = #{friendId,jdbcType=BIGINT},
+            </if>
+            <if test="addType != null">
+                add_type = #{addType,jdbcType=CHAR},
+            </if>
+            <if test="isAgree != null">
+                is_agree = #{isAgree,jdbcType=TINYINT},
+            </if>
+            <if test="remark != null">
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="gmtCreate != null">
+                gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="gmtModified != null">
+                gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+            </if>
+            <if test="isDeleted != null">
+                is_deleted = #{isDeleted,jdbcType=BIT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.xdaocloud.futurechain.model.AddFriend">
+        update t_add_friend
+        set user_id = #{userId,jdbcType=BIGINT},
+        friend_id = #{friendId,jdbcType=BIGINT},
+        add_type = #{addType,jdbcType=CHAR},
+        is_agree = #{isAgree,jdbcType=TINYINT},
+        remark = #{remark,jdbcType=VARCHAR},
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+        is_deleted = #{isDeleted,jdbcType=BIT}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+
+    <select id="findListByParam" parameterType="com.xdaocloud.futurechain.model.AddFriend" resultMap="BaseResultMap">
+        SELECT * FROM t_add_friend
+        <where>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=BIGINT}
+            </if>
+            <if test="friendId != null">
+                AND friend_id = #{friendId,jdbcType=BIGINT}
+            </if>
+            <if test="remark != null">
+                AND remark = #{remark,jdbcType=VARCHAR}
+            </if>
+            <if test="addType != null">
+                AND add_type = #{addType,jdbcType=CHAR}
+            </if>
+            <if test="isAgree != null">
+                AND is_agree = #{isAgree,jdbcType=TINYINT}
+            </if>
+            <if test="gmtCreate != null">
+                AND gmt_create = #{gmtCreate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="gmtModified != null">
+                AND gmt_modified = #{gmtModified,jdbcType=TIMESTAMP}
+            </if>
+            <if test="isDeleted != null">
+                AND is_deleted = #{isDeleted,jdbcType=BIT}
+            </if>
+        </where>
+    </select>
+
+    <select id="getFriendApplyByUserId" parameterType="java.lang.Long"
+            resultType="com.xdaocloud.futurechain.dto.resp.friend.FriendApplyResponse">
+        SELECT
+            f.id AS addFriendId,
+            f.user_id AS friendId,
+            f.add_type AS addType,
+            f.remark AS  remark,
+            f.is_agree AS isAgree,
+            f.is_deleted AS isDeleted,
+            u.user_no AS friendNo,
+            u.nickname AS nickname,
+            u.avatar AS avatar,
+            f.gmt_create AS gmtCreate
+        FROM
+            t_add_friend f
+        INNER JOIN t_user u ON f.user_id = u.id
+        WHERE
+            f.friend_id = #{friendId,jdbcType=BIGINT}
+        ORDER BY f.id DESC limit 20;
+  </select>
+
+
+    <update id="updateIsAgree">
+update t_add_friend set is_agree = #{type} , gmt_modified = SYSDATE() ,is_deleted = 1  where user_id = #{userId}  and friend_id = #{friendUserId} and is_deleted = 0
+    </update>
+
+    <select id="findOneByUserIdAndFriendId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        SELECT * FROM t_add_friend WHERE  user_id = #{userId}  and friend_id = #{friendId} ORDER BY id DESC limit 1
+    </select>
+
+    <select id="findOneByUserIdOrFriendId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        SELECT * FROM t_add_friend WHERE ( user_id = #{userId} and friend_id = #{friendId}) OR ( user_id = #{friendId} and friend_id = #{userId}) ORDER BY id DESC limit 1
+    </select>
+
+    <select id="selectByuserIdAndfriendUserId" resultType="java.lang.Integer">
+        select count(1) from t_add_friend f where f.user_id = #{userId} and f.friend_id = #{friendUserId} and f.is_agree = 0 and  f.is_deleted = 0
+    </select>
+
+    <update id="updateByuserIdAndfriendUserId">
+      UPDATE t_add_friend f set f.gmt_modified = SYSDATE() where f.user_id = #{userId} and f.friend_id = #{friendUserId} and f.is_agree = 0 and  f.is_deleted = 0
+
+    </update>
+</mapper>

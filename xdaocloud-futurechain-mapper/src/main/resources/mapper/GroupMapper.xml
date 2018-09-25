@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xdaocloud.futurechain.mapper.GroupMapper">
+    <resultMap id="BaseResultMap" type="com.xdaocloud.futurechain.model.Group">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="industry_id" jdbcType="BIGINT" property="industryId"/>
+        <result column="app_id" jdbcType="VARCHAR" property="appId"/>
+        <result column="group_id" jdbcType="VARCHAR" property="groupId"/>
+        <result column="group_type" jdbcType="TINYINT" property="groupType"/>
+        <result column="sort" jdbcType="SMALLINT" property="sort"/>
+        <result column="parent_id" jdbcType="BIGINT" property="parentId"/>
+        <result column="group_intro" jdbcType="VARCHAR" property="groupIntro"/>
+        <result column="group_name" jdbcType="VARCHAR" property="groupName"/>
+        <result column="group_notice" jdbcType="VARCHAR" property="groupNotice"/>
+        <result column="owner" jdbcType="VARCHAR" property="owner"/>
+        <result column="manager" jdbcType="VARCHAR" property="manager"/>
+        <result column="group_avatar" jdbcType="VARCHAR" property="groupAvatar"/>
+        <result column="restrict_num" jdbcType="INTEGER" property="restrictNum"/>
+        <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate"/>
+        <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified"/>
+        <result column="is_deleted" jdbcType="TINYINT" property="isDeleted"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, industry_id, app_id, group_id, group_type, sort, parent_id, group_intro, group_name,
+        group_notice, owner, manager, group_avatar, restrict_num, gmt_create, gmt_modified,
+        is_deleted
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_group
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from t_group
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.xdaocloud.futurechain.model.Group">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into t_group (industry_id, app_id, group_id,
+        group_type, sort, parent_id,
+        group_intro, group_name, group_notice,
+        owner, manager, group_avatar,
+        restrict_num, gmt_create, gmt_modified,
+        is_deleted)
+        values (#{industryId,jdbcType=BIGINT}, #{appId,jdbcType=VARCHAR}, #{groupId,jdbcType=VARCHAR},
+        #{groupType,jdbcType=TINYINT}, #{sort,jdbcType=SMALLINT}, #{parentId,jdbcType=BIGINT},
+        #{groupIntro,jdbcType=VARCHAR}, #{groupName,jdbcType=VARCHAR}, #{groupNotice,jdbcType=VARCHAR},
+        #{owner,jdbcType=VARCHAR}, #{manager,jdbcType=VARCHAR}, #{groupAvatar,jdbcType=VARCHAR},
+        #{restrictNum,jdbcType=INTEGER}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP},
+        #{isDeleted,jdbcType=TINYINT})
+    </insert>
+    <insert id="insertSelective" parameterType="com.xdaocloud.futurechain.model.Group">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into t_group
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="industryId != null">
+                industry_id,
+            </if>
+            <if test="appId != null">
+                app_id,
+            </if>
+            <if test="groupId != null">
+                group_id,
+            </if>
+            <if test="groupType != null">
+                group_type,
+            </if>
+            <if test="sort != null">
+                sort,
+            </if>
+            <if test="parentId != null">
+                parent_id,
+            </if>
+            <if test="groupIntro != null">
+                group_intro,
+            </if>
+            <if test="groupName != null">
+                group_name,
+            </if>
+            <if test="groupNotice != null">
+                group_notice,
+            </if>
+            <if test="owner != null">
+                owner,
+            </if>
+            <if test="manager != null">
+                manager,
+            </if>
+            <if test="groupAvatar != null">
+                group_avatar,
+            </if>
+            <if test="restrictNum != null">
+                restrict_num,
+            </if>
+            <if test="gmtCreate != null">
+                gmt_create,
+            </if>
+            <if test="gmtModified != null">
+                gmt_modified,
+            </if>
+            <if test="isDeleted != null">
+                is_deleted,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="industryId != null">
+                #{industryId,jdbcType=BIGINT},
+            </if>
+            <if test="appId != null">
+                #{appId,jdbcType=VARCHAR},
+            </if>
+            <if test="groupId != null">
+                #{groupId,jdbcType=VARCHAR},
+            </if>
+            <if test="groupType != null">
+                #{groupType,jdbcType=TINYINT},
+            </if>
+            <if test="sort != null">
+                #{sort,jdbcType=SMALLINT},
+            </if>
+            <if test="parentId != null">
+                #{parentId,jdbcType=BIGINT},
+            </if>
+            <if test="groupIntro != null">
+                #{groupIntro,jdbcType=VARCHAR},
+            </if>
+            <if test="groupName != null">
+                #{groupName,jdbcType=VARCHAR},
+            </if>
+            <if test="groupNotice != null">
+                #{groupNotice,jdbcType=VARCHAR},
+            </if>
+            <if test="owner != null">
+                #{owner,jdbcType=VARCHAR},
+            </if>
+            <if test="manager != null">
+                #{manager,jdbcType=VARCHAR},
+            </if>
+            <if test="groupAvatar != null">
+                #{groupAvatar,jdbcType=VARCHAR},
+            </if>
+            <if test="restrictNum != null">
+                #{restrictNum,jdbcType=INTEGER},
+            </if>
+            <if test="gmtCreate != null">
+                #{gmtCreate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="gmtModified != null">
+                #{gmtModified,jdbcType=TIMESTAMP},
+            </if>
+            <if test="isDeleted != null">
+                #{isDeleted,jdbcType=TINYINT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.xdaocloud.futurechain.model.Group">
+        update t_group
+        <set>
+            <if test="industryId != null">
+                industry_id = #{industryId,jdbcType=BIGINT},
+            </if>
+            <if test="appId != null">
+                app_id = #{appId,jdbcType=VARCHAR},
+            </if>
+            <if test="groupId != null">
+                group_id = #{groupId,jdbcType=VARCHAR},
+            </if>
+            <if test="groupType != null">
+                group_type = #{groupType,jdbcType=TINYINT},
+            </if>
+            <if test="sort != null">
+                sort = #{sort,jdbcType=SMALLINT},
+            </if>
+            <if test="parentId != null">
+                parent_id = #{parentId,jdbcType=BIGINT},
+            </if>
+            <if test="groupIntro != null">
+                group_intro = #{groupIntro,jdbcType=VARCHAR},
+            </if>
+            <if test="groupName != null">
+                group_name = #{groupName,jdbcType=VARCHAR},
+            </if>
+            <if test="groupNotice != null">
+                group_notice = #{groupNotice,jdbcType=VARCHAR},
+            </if>
+            <if test="owner != null">
+                owner = #{owner,jdbcType=VARCHAR},
+            </if>
+            <if test="manager != null">
+                manager = #{manager,jdbcType=VARCHAR},
+            </if>
+            <if test="groupAvatar != null">
+                group_avatar = #{groupAvatar,jdbcType=VARCHAR},
+            </if>
+            <if test="restrictNum != null">
+                restrict_num = #{restrictNum,jdbcType=INTEGER},
+            </if>
+            <if test="gmtCreate != null">
+                gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="gmtModified != null">
+                gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+            </if>
+            <if test="isDeleted != null">
+                is_deleted = #{isDeleted,jdbcType=TINYINT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.xdaocloud.futurechain.model.Group">
+        update t_group
+        set industry_id = #{industryId,jdbcType=BIGINT},
+        app_id = #{appId,jdbcType=VARCHAR},
+        group_id = #{groupId,jdbcType=VARCHAR},
+        group_type = #{groupType,jdbcType=TINYINT},
+        sort = #{sort,jdbcType=SMALLINT},
+        parent_id = #{parentId,jdbcType=BIGINT},
+        group_intro = #{groupIntro,jdbcType=VARCHAR},
+        group_name = #{groupName,jdbcType=VARCHAR},
+        group_notice = #{groupNotice,jdbcType=VARCHAR},
+        owner = #{owner,jdbcType=VARCHAR},
+        manager = #{manager,jdbcType=VARCHAR},
+        group_avatar = #{groupAvatar,jdbcType=VARCHAR},
+        restrict_num = #{restrictNum,jdbcType=INTEGER},
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+        is_deleted = #{isDeleted,jdbcType=TINYINT}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <select id="findListByUserId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+     SELECT * FROM t_group WHERE owner_id = #{userId}
+  </select>
+
+    <select id="findListByGroupIds" parameterType="java.util.List" resultMap="BaseResultMap">
+        SELECT * FROM t_group WHERE group_id IN
+        <foreach item="item" index="index" collection="list"
+                 open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
+    <select id="findOne" parameterType="java.lang.String" resultMap="BaseResultMap">
+        SELECT * FROM t_groupid_userno WHERE group_id = #{groupId} AND user_no = {userNo}
+    </select>
+
+
+    <select id="findUserIdsByGroupId" parameterType="java.lang.String" resultType="java.lang.Long">
+        SELECT user_no FROM t_groupid_userno WHERE group_id = #{groupId}
+    </select>
+
+    <select id="findGroupIdsByUserNo" parameterType="java.lang.String" resultType="java.lang.Long">
+        SELECT group_id FROM t_groupid_userno WHERE user_no = #{userNo}
+    </select>
+
+    <insert id="saveGroupIdUserNo" parameterType="java.lang.Object">
+          insert into t_groupid_userno (user_no,group_id) values (#{userNo},#{groupId})
+    </insert>
+
+    <select id="findCount" parameterType="java.lang.Object" resultType="java.lang.Integer">
+      SELECT count(1) FROM t_groupid_userno WHERE user_no =#{userNo} AND group_id = #{groupId};
+    </select>
+
+    <select id="findUsersByGroupId" parameterType="java.lang.String"
+            resultType="com.xdaocloud.futurechain.dto.resp.friend.GroupResponse">
+        SELECT
+            u.id,
+            u.nickname,
+            u.mobile_number AS mobileNumber,
+            u.avatar,
+            u.invite_code AS inviteCode,
+            u.user_no AS userNo,
+            gu.group_remark AS remark
+        FROM t_user u JOIN t_groupid_userno gu ON gu.group_id = #{groupId} AND gu.user_no =  u.user_no
+    </select>
+
+    <select id="findOneByGroupId" parameterType="java.lang.String" resultMap="BaseResultMap">
+        SELECT * FROM t_group WHERE group_id = #{groupId} AND is_deleted = FALSE
+    </select>
+
+    <delete id="deleteMembersByGroupId" parameterType="java.lang.String">
+      delete from t_group_mebers
+       where group_id = #{groupId}
+    </delete>
+
+    <delete id="quit" parameterType="java.lang.String">
+      delete from t_group_mebers
+       where group_id = #{groupId} AND accid = #{accid}
+    </delete>
+
+    <insert id="addMembers" parameterType="java.lang.String">
+        INSERT into t_group_mebers (group_id,accid) VALUE (#{groupId},#{accid})
+    </insert>
+
+    <delete id="removeMembers" parameterType="java.lang.String">
+       delete from t_group_mebers
+       where group_id = #{groupId} AND accid = #{accid}
+    </delete>
+</mapper>

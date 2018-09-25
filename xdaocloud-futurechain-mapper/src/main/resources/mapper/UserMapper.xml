@@ -1,0 +1,1271 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xdaocloud.futurechain.mapper.UserMapper">
+    <resultMap id="BaseResultMap" type="com.xdaocloud.futurechain.model.User">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="username" jdbcType="CHAR" property="username"/>
+        <result column="password_md5" jdbcType="VARCHAR" property="passwordMd5"/>
+        <result column="mobile_number" jdbcType="CHAR" property="mobileNumber"/>
+        <result column="transaction_password" jdbcType="VARCHAR" property="transactionPassword"/>
+        <result column="nickname" jdbcType="CHAR" property="nickname"/>
+        <result column="avatar" jdbcType="VARCHAR" property="avatar"/>
+        <result column="register_status" jdbcType="TINYINT" property="registerStatus"/>
+        <result column="friend_chain_root_user_id" jdbcType="BIGINT" property="friendChainRootUserId"/>
+        <result column="register_invite_user_id" jdbcType="BIGINT" property="registerInviteUserId"/>
+        <result column="register_invite_code" jdbcType="CHAR" property="registerInviteCode"/>
+        <result column="invite_code" jdbcType="CHAR" property="inviteCode"/>
+        <result column="ore" jdbcType="BIGINT" property="ore"/>
+        <result column="name" jdbcType="CHAR" property="name"/>
+        <result column="sex" jdbcType="VARCHAR" property="sex"/>
+        <result column="birthday" jdbcType="DATE" property="birthday"/>
+        <result column="idcard" jdbcType="CHAR" property="idcard"/>
+        <result column="idcard_positive" jdbcType="VARCHAR" property="idcardPositive"/>
+        <result column="idcard_negative" jdbcType="VARCHAR" property="idcardNegative"/>
+        <result column="signature" jdbcType="VARCHAR" property="signature"/>
+        <result column="profession" jdbcType="VARCHAR" property="profession"/>
+        <result column="email" jdbcType="CHAR" property="email"/>
+        <result column="agent" jdbcType="TINYINT" property="agent"/>
+        <result column="agree_time" jdbcType="TIMESTAMP" property="agreeTime"/>
+        <result column="last_login_time" jdbcType="TIMESTAMP" property="lastLoginTime"/>
+        <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate"/>
+        <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified"/>
+        <result column="status" jdbcType="TINYINT" property="status"/>
+        <result column="is_deleted" jdbcType="TINYINT" property="isDeleted"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, username, password_md5, mobile_number, transaction_password, nickname, avatar,
+        register_status, friend_chain_root_user_id, register_invite_user_id, register_invite_code,
+        invite_code, ore, name, sex, birthday, idcard, idcard_positive, idcard_negative,
+        signature, profession, email, agent, agree_time, last_login_time, gmt_create, gmt_modified,
+        status, is_deleted
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_user
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from t_user
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.xdaocloud.futurechain.model.User">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into t_user (username, password_md5, mobile_number,
+        transaction_password, nickname, avatar,
+        register_status, friend_chain_root_user_id, register_invite_user_id,
+        register_invite_code, invite_code, ore,
+        name, sex, birthday, idcard,
+        idcard_positive, idcard_negative, signature,
+        profession, email, agent,
+        agree_time, last_login_time, gmt_create,
+        gmt_modified, status, is_deleted
+        )
+        values (#{username,jdbcType=CHAR}, #{passwordMd5,jdbcType=VARCHAR}, #{mobileNumber,jdbcType=CHAR},
+        #{transactionPassword,jdbcType=VARCHAR}, #{nickname,jdbcType=CHAR}, #{avatar,jdbcType=VARCHAR},
+        #{registerStatus,jdbcType=TINYINT}, #{friendChainRootUserId,jdbcType=BIGINT},
+        #{registerInviteUserId,jdbcType=BIGINT},
+        #{registerInviteCode,jdbcType=CHAR}, #{inviteCode,jdbcType=CHAR}, #{ore,jdbcType=BIGINT},
+        #{name,jdbcType=CHAR}, #{sex,jdbcType=VARCHAR}, #{birthday,jdbcType=DATE}, #{idcard,jdbcType=CHAR},
+        #{idcardPositive,jdbcType=VARCHAR}, #{idcardNegative,jdbcType=VARCHAR}, #{signature,jdbcType=VARCHAR},
+        #{profession,jdbcType=VARCHAR}, #{email,jdbcType=CHAR}, #{agent,jdbcType=TINYINT},
+        #{agreeTime,jdbcType=TIMESTAMP}, #{lastLoginTime,jdbcType=TIMESTAMP}, #{gmtCreate,jdbcType=TIMESTAMP},
+        #{gmtModified,jdbcType=TIMESTAMP}, #{status,jdbcType=TINYINT}, #{isDeleted,jdbcType=TINYINT}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="com.xdaocloud.futurechain.model.User">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into t_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="username != null">
+                username,
+            </if>
+            <if test="passwordMd5 != null">
+                password_md5,
+            </if>
+            <if test="mobileNumber != null">
+                mobile_number,
+            </if>
+            <if test="transactionPassword != null">
+                transaction_password,
+            </if>
+            <if test="nickname != null">
+                nickname,
+            </if>
+            <if test="avatar != null">
+                avatar,
+            </if>
+            <if test="registerStatus != null">
+                register_status,
+            </if>
+            <if test="friendChainRootUserId != null">
+                friend_chain_root_user_id,
+            </if>
+            <if test="registerInviteUserId != null">
+                register_invite_user_id,
+            </if>
+            <if test="registerInviteCode != null">
+                register_invite_code,
+            </if>
+            <if test="inviteCode != null">
+                invite_code,
+            </if>
+            <if test="ore != null">
+                ore,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="sex != null">
+                sex,
+            </if>
+            <if test="birthday != null">
+                birthday,
+            </if>
+            <if test="idcard != null">
+                idcard,
+            </if>
+            <if test="idcardPositive != null">
+                idcard_positive,
+            </if>
+            <if test="idcardNegative != null">
+                idcard_negative,
+            </if>
+            <if test="signature != null">
+                signature,
+            </if>
+            <if test="profession != null">
+                profession,
+            </if>
+            <if test="email != null">
+                email,
+            </if>
+            <if test="agent != null">
+                agent,
+            </if>
+            <if test="agreeTime != null">
+                agree_time,
+            </if>
+            <if test="lastLoginTime != null">
+                last_login_time,
+            </if>
+            <if test="gmtCreate != null">
+                gmt_create,
+            </if>
+            <if test="gmtModified != null">
+                gmt_modified,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="isDeleted != null">
+                is_deleted,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="username != null">
+                #{username,jdbcType=CHAR},
+            </if>
+            <if test="passwordMd5 != null">
+                #{passwordMd5,jdbcType=VARCHAR},
+            </if>
+            <if test="mobileNumber != null">
+                #{mobileNumber,jdbcType=CHAR},
+            </if>
+            <if test="transactionPassword != null">
+                #{transactionPassword,jdbcType=VARCHAR},
+            </if>
+            <if test="nickname != null">
+                #{nickname,jdbcType=CHAR},
+            </if>
+            <if test="avatar != null">
+                #{avatar,jdbcType=VARCHAR},
+            </if>
+            <if test="registerStatus != null">
+                #{registerStatus,jdbcType=TINYINT},
+            </if>
+            <if test="friendChainRootUserId != null">
+                #{friendChainRootUserId,jdbcType=BIGINT},
+            </if>
+            <if test="registerInviteUserId != null">
+                #{registerInviteUserId,jdbcType=BIGINT},
+            </if>
+            <if test="registerInviteCode != null">
+                #{registerInviteCode,jdbcType=CHAR},
+            </if>
+            <if test="inviteCode != null">
+                #{inviteCode,jdbcType=CHAR},
+            </if>
+            <if test="ore != null">
+                #{ore,jdbcType=BIGINT},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=CHAR},
+            </if>
+            <if test="sex != null">
+                #{sex,jdbcType=VARCHAR},
+            </if>
+            <if test="birthday != null">
+                #{birthday,jdbcType=DATE},
+            </if>
+            <if test="idcard != null">
+                #{idcard,jdbcType=CHAR},
+            </if>
+            <if test="idcardPositive != null">
+                #{idcardPositive,jdbcType=VARCHAR},
+            </if>
+            <if test="idcardNegative != null">
+                #{idcardNegative,jdbcType=VARCHAR},
+            </if>
+            <if test="signature != null">
+                #{signature,jdbcType=VARCHAR},
+            </if>
+            <if test="profession != null">
+                #{profession,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                #{email,jdbcType=CHAR},
+            </if>
+            <if test="agent != null">
+                #{agent,jdbcType=TINYINT},
+            </if>
+            <if test="agreeTime != null">
+                #{agreeTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastLoginTime != null">
+                #{lastLoginTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="gmtCreate != null">
+                #{gmtCreate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="gmtModified != null">
+                #{gmtModified,jdbcType=TIMESTAMP},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=TINYINT},
+            </if>
+            <if test="isDeleted != null">
+                #{isDeleted,jdbcType=TINYINT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.xdaocloud.futurechain.model.User">
+        update t_user
+        <set>
+            <if test="username != null">
+                username = #{username,jdbcType=CHAR},
+            </if>
+            <if test="passwordMd5 != null">
+                password_md5 = #{passwordMd5,jdbcType=VARCHAR},
+            </if>
+            <if test="mobileNumber != null">
+                mobile_number = #{mobileNumber,jdbcType=CHAR},
+            </if>
+            <if test="transactionPassword != null">
+                transaction_password = #{transactionPassword,jdbcType=VARCHAR},
+            </if>
+            <if test="nickname != null">
+                nickname = #{nickname,jdbcType=CHAR},
+            </if>
+            <if test="avatar != null">
+                avatar = #{avatar,jdbcType=VARCHAR},
+            </if>
+            <if test="registerStatus != null">
+                register_status = #{registerStatus,jdbcType=TINYINT},
+            </if>
+            <if test="friendChainRootUserId != null">
+                friend_chain_root_user_id = #{friendChainRootUserId,jdbcType=BIGINT},
+            </if>
+            <if test="registerInviteUserId != null">
+                register_invite_user_id = #{registerInviteUserId,jdbcType=BIGINT},
+            </if>
+            <if test="registerInviteCode != null">
+                register_invite_code = #{registerInviteCode,jdbcType=CHAR},
+            </if>
+            <if test="inviteCode != null">
+                invite_code = #{inviteCode,jdbcType=CHAR},
+            </if>
+            <if test="ore != null">
+                ore = #{ore,jdbcType=BIGINT},
+            </if>
+            <if test="name != null">
+                name = #{name,jdbcType=CHAR},
+            </if>
+            <if test="sex != null">
+                sex = #{sex,jdbcType=VARCHAR},
+            </if>
+            <if test="birthday != null">
+                birthday = #{birthday,jdbcType=DATE},
+            </if>
+            <if test="idcard != null">
+                idcard = #{idcard,jdbcType=CHAR},
+            </if>
+            <if test="idcardPositive != null">
+                idcard_positive = #{idcardPositive,jdbcType=VARCHAR},
+            </if>
+            <if test="idcardNegative != null">
+                idcard_negative = #{idcardNegative,jdbcType=VARCHAR},
+            </if>
+            <if test="signature != null">
+                signature = #{signature,jdbcType=VARCHAR},
+            </if>
+            <if test="profession != null">
+                profession = #{profession,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                email = #{email,jdbcType=CHAR},
+            </if>
+            <if test="agent != null">
+                agent = #{agent,jdbcType=TINYINT},
+            </if>
+            <if test="agreeTime != null">
+                agree_time = #{agreeTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastLoginTime != null">
+                last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="gmtCreate != null">
+                gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="gmtModified != null">
+                gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=TINYINT},
+            </if>
+            <if test="isDeleted != null">
+                is_deleted = #{isDeleted,jdbcType=TINYINT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.xdaocloud.futurechain.model.User">
+        update t_user
+        set username = #{username,jdbcType=CHAR},
+        password_md5 = #{passwordMd5,jdbcType=VARCHAR},
+        mobile_number = #{mobileNumber,jdbcType=CHAR},
+        transaction_password = #{transactionPassword,jdbcType=VARCHAR},
+        nickname = #{nickname,jdbcType=CHAR},
+        avatar = #{avatar,jdbcType=VARCHAR},
+        register_status = #{registerStatus,jdbcType=TINYINT},
+        friend_chain_root_user_id = #{friendChainRootUserId,jdbcType=BIGINT},
+        register_invite_user_id = #{registerInviteUserId,jdbcType=BIGINT},
+        register_invite_code = #{registerInviteCode,jdbcType=CHAR},
+        invite_code = #{inviteCode,jdbcType=CHAR},
+        ore = #{ore,jdbcType=BIGINT},
+        name = #{name,jdbcType=CHAR},
+        sex = #{sex,jdbcType=VARCHAR},
+        birthday = #{birthday,jdbcType=DATE},
+        idcard = #{idcard,jdbcType=CHAR},
+        idcard_positive = #{idcardPositive,jdbcType=VARCHAR},
+        idcard_negative = #{idcardNegative,jdbcType=VARCHAR},
+        signature = #{signature,jdbcType=VARCHAR},
+        profession = #{profession,jdbcType=VARCHAR},
+        email = #{email,jdbcType=CHAR},
+        agent = #{agent,jdbcType=TINYINT},
+        agree_time = #{agreeTime,jdbcType=TIMESTAMP},
+        last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP},
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+        status = #{status,jdbcType=TINYINT},
+        is_deleted = #{isDeleted,jdbcType=TINYINT}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <select id="findByMobileMumber" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select u.* from t_user u where u.mobile_number = #{mobileNumber} AND u.is_deleted = FALSE ;
+  </select>
+
+    <select id="findByInviteCode" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select u.* from t_user u where u.invite_code = #{inviteCode} AND u.is_deleted = FALSE ;
+  </select>
+
+    <select id="selectInvitedUserCount" resultType="Integer">
+    SELECT COUNT(1) FROM `t_user` WHERE register_invite_user_id = #{userid} AND is_deleted = FALSE
+  </select>
+
+    <update id="addOreByUserid" parameterType="java.lang.Object">
+   UPDATE t_user set ore = ore+#{ore} WHERE id = #{userid};
+  </update>
+
+    <select id="findOreByUserId" parameterType="java.lang.Long" resultType="java.lang.Long">
+   select u.ore from t_user u where u.id = #{userid} AND u.is_deleted = FALSE ;
+  </select>
+
+
+    <select id="findGroupByUserId" parameterType="java.lang.Long"
+            resultType="com.xdaocloud.futurechain.dto.resp.friend.GroupResponse">
+    SELECT
+     u.id,
+    u.nickname,
+    u.mobile_number AS mobileNumber,
+    u.avatar,
+    u.invite_code AS inviteCode,
+    u.user_no AS userNo
+     FROM t_user u
+   /* left join t_friend w ON u.id = f.user_id*/
+     WHERE u.is_deleted = FALSE AND u.friend_chain_root_user_id IN
+    ( SELECT friend_chain_root_user_id FROM t_user WHERE is_deleted = FALSE AND id = #{userid})
+  </select>
+
+    <select id="findOneByParam" parameterType="com.xdaocloud.futurechain.model.User" resultMap="BaseResultMap">
+        SELECT * FROM t_user
+        <where>
+            <if test="userNo != null">
+                user_no = #{userNo,jdbcType=INTEGER}
+            </if>
+            <if test="username != null">
+                AND username = #{username,jdbcType=CHAR}
+            </if>
+            <if test="passwordMd5 != null">
+                AND password_md5 = #{passwordMd5,jdbcType=CHAR}
+            </if>
+            <if test="mobileNumber != null">
+                AND mobile_number = #{mobileNumber,jdbcType=CHAR}
+            </if>
+            <if test="salt != null">
+                AND salt = #{salt,jdbcType=CHAR}
+            </if>
+            <if test="nickname != null">
+                AND nickname = #{nickname,jdbcType=CHAR}
+            </if>
+            <if test="avatar != null">
+                AND avatar = #{avatar,jdbcType=VARCHAR}
+            </if>
+            <if test="easemobAccount != null">
+                AND easemob_account = #{easemobAccount,jdbcType=CHAR}
+            </if>
+            <if test="easemobPassword != null">
+                AND easemob_password = #{easemobPassword,jdbcType=CHAR}
+            </if>
+            <if test="easemobGrounpId != null">
+                AND easemob_grounp_id = #{easemobGrounpId,jdbcType=CHAR}
+            </if>
+            <if test="easemobStatus != null">
+                AND easemob_status = #{easemobStatus,jdbcType=BIT}
+            </if>
+            <if test="registerStatus != null">
+                AND register_status = #{registerStatus,jdbcType=BIT}
+            </if>
+            <if test="friendChainRootUserId != null">
+                AND friend_chain_root_user_id = #{friendChainRootUserId,jdbcType=BIGINT}
+            </if>
+            <if test="registerInviteUserId != null">
+                AND register_invite_user_id = #{registerInviteUserId,jdbcType=BIGINT}
+            </if>
+            <if test="registerInviteCode != null">
+                AND register_invite_code = #{registerInviteCode,jdbcType=CHAR}
+            </if>
+            <if test="inviteCode != null">
+                AND invite_code = #{inviteCode,jdbcType=CHAR}
+            </if>
+            <if test="ore != null">
+                AND ore = #{ore,jdbcType=BIGINT}
+            </if>
+            <if test="name != null">
+                AND name = #{name,jdbcType=CHAR}
+            </if>
+            <if test="sex != null">
+                AND sex = #{sex,jdbcType=BIT}
+            </if>
+            <if test="birthday != null">
+                AND birthday = #{birthday,jdbcType=DATE}
+            </if>
+            <if test="idcard != null">
+                AND idcard = #{idcard,jdbcType=CHAR}
+            </if>
+            <if test="idcardPositive != null">
+                AND idcard_positive = #{idcardPositive,jdbcType=VARCHAR}
+            </if>
+            <if test="idcardNegative != null">
+                AND idcard_negative = #{idcardNegative,jdbcType=VARCHAR}
+            </if>
+            <if test="signature != null">
+                AND signature = #{signature,jdbcType=VARCHAR}
+            </if>
+            <if test="profession != null">
+                AND profession = #{profession,jdbcType=VARCHAR}
+            </if>
+            <if test="email != null">
+                AND email = #{email,jdbcType=CHAR}
+            </if>
+            <if test="lastLoginTime != null">
+                AND last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="gmtCreate != null">
+                AND gmt_create = #{gmtCreate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="gmtModified != null">
+                AND gmt_modified = #{gmtModified,jdbcType=TIMESTAMP}
+            </if>
+            <if test="status != null">
+                AND status = #{status,jdbcType=BIT}
+            </if>
+            <if test="isDeleted != null">
+                AND is_deleted = #{isDeleted,jdbcType=BIT}
+            </if>
+        </where>
+
+    </select>
+
+    <select id="findListByParam" parameterType="com.xdaocloud.futurechain.model.User" resultMap="BaseResultMap">
+        SELECT * FROM t_user
+        <where>
+            <if test="userNo != null">
+                user_no = #{userNo,jdbcType=INTEGER}
+            </if>
+            <if test="username != null">
+                AND username = #{username,jdbcType=CHAR}
+            </if>
+            <if test="passwordMd5 != null">
+                AND password_md5 = #{passwordMd5,jdbcType=CHAR}
+            </if>
+            <if test="mobileNumber != null">
+                AND mobile_number = #{mobileNumber,jdbcType=CHAR}
+            </if>
+            <if test="salt != null">
+                AND salt = #{salt,jdbcType=CHAR}
+            </if>
+            <if test="nickname != null">
+                AND nickname = #{nickname,jdbcType=CHAR}
+            </if>
+            <if test="avatar != null">
+                AND avatar = #{avatar,jdbcType=VARCHAR}
+            </if>
+            <if test="easemobAccount != null">
+                AND easemob_account = #{easemobAccount,jdbcType=CHAR}
+            </if>
+            <if test="easemobPassword != null">
+                AND easemob_password = #{easemobPassword,jdbcType=CHAR}
+            </if>
+            <if test="easemobGrounpId != null">
+                AND easemob_grounp_id = #{easemobGrounpId,jdbcType=CHAR}
+            </if>
+            <if test="easemobStatus != null">
+                AND easemob_status = #{easemobStatus,jdbcType=BIT}
+            </if>
+            <if test="registerStatus != null">
+                AND register_status = #{registerStatus,jdbcType=BIT}
+            </if>
+            <if test="friendChainRootUserId != null">
+                AND friend_chain_root_user_id = #{friendChainRootUserId,jdbcType=BIGINT}
+            </if>
+            <if test="registerInviteUserId != null">
+                AND register_invite_user_id = #{registerInviteUserId,jdbcType=BIGINT}
+            </if>
+            <if test="registerInviteCode != null">
+                AND register_invite_code = #{registerInviteCode,jdbcType=CHAR}
+            </if>
+            <if test="inviteCode != null">
+                AND invite_code = #{inviteCode,jdbcType=CHAR}
+            </if>
+            <if test="ore != null">
+                AND ore = #{ore,jdbcType=BIGINT}
+            </if>
+            <if test="name != null">
+                AND name = #{name,jdbcType=CHAR}
+            </if>
+            <if test="sex != null">
+                AND sex = #{sex,jdbcType=BIT}
+            </if>
+            <if test="birthday != null">
+                AND birthday = #{birthday,jdbcType=DATE}
+            </if>
+            <if test="idcard != null">
+                AND idcard = #{idcard,jdbcType=CHAR}
+            </if>
+            <if test="idcardPositive != null">
+                AND idcard_positive = #{idcardPositive,jdbcType=VARCHAR}
+            </if>
+            <if test="idcardNegative != null">
+                AND idcard_negative = #{idcardNegative,jdbcType=VARCHAR}
+            </if>
+            <if test="signature != null">
+                AND signature = #{signature,jdbcType=VARCHAR}
+            </if>
+            <if test="profession != null">
+                AND profession = #{profession,jdbcType=VARCHAR}
+            </if>
+            <if test="email != null">
+                AND email = #{email,jdbcType=CHAR}
+            </if>
+            <if test="lastLoginTime != null">
+                AND last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="gmtCreate != null">
+                AND gmt_create = #{gmtCreate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="gmtModified != null">
+                AND gmt_modified = #{gmtModified,jdbcType=TIMESTAMP}
+            </if>
+            <if test="status != null">
+                AND status = #{status,jdbcType=BIT}
+            </if>
+            <if test="isDeleted != null">
+                AND is_deleted = #{isDeleted,jdbcType=BIT}
+            </if>
+        </where>
+
+    </select>
+
+    <select id="findCountByParam" parameterType="com.xdaocloud.futurechain.model.User" resultType="java.lang.Integer">
+        SELECT count(0) FROM t_user
+        <where>
+            <if test="userNo != null">
+                user_no = #{userNo,jdbcType=INTEGER}
+            </if>
+            <if test="username != null">
+                AND username = #{username,jdbcType=CHAR}
+            </if>
+            <if test="passwordMd5 != null">
+                AND password_md5 = #{passwordMd5,jdbcType=CHAR}
+            </if>
+            <if test="mobileNumber != null">
+                AND mobile_number = #{mobileNumber,jdbcType=CHAR}
+            </if>
+            <if test="salt != null">
+                AND salt = #{salt,jdbcType=CHAR}
+            </if>
+            <if test="nickname != null">
+                AND nickname = #{nickname,jdbcType=CHAR}
+            </if>
+            <if test="avatar != null">
+                AND avatar = #{avatar,jdbcType=VARCHAR}
+            </if>
+            <if test="easemobAccount != null">
+                AND easemob_account = #{easemobAccount,jdbcType=CHAR}
+            </if>
+            <if test="easemobPassword != null">
+                AND easemob_password = #{easemobPassword,jdbcType=CHAR}
+            </if>
+            <if test="easemobGrounpId != null">
+                AND easemob_grounp_id = #{easemobGrounpId,jdbcType=CHAR}
+            </if>
+            <if test="easemobStatus != null">
+                AND easemob_status = #{easemobStatus,jdbcType=BIT}
+            </if>
+            <if test="registerStatus != null">
+                AND register_status = #{registerStatus,jdbcType=BIT}
+            </if>
+            <if test="friendChainRootUserId != null">
+                AND friend_chain_root_user_id = #{friendChainRootUserId,jdbcType=BIGINT}
+            </if>
+            <if test="registerInviteUserId != null">
+                AND register_invite_user_id = #{registerInviteUserId,jdbcType=BIGINT}
+            </if>
+            <if test="registerInviteCode != null">
+                AND register_invite_code = #{registerInviteCode,jdbcType=CHAR}
+            </if>
+            <if test="inviteCode != null">
+                AND invite_code = #{inviteCode,jdbcType=CHAR}
+            </if>
+            <if test="ore != null">
+                AND ore = #{ore,jdbcType=BIGINT}
+            </if>
+            <if test="name != null">
+                AND name = #{name,jdbcType=CHAR}
+            </if>
+            <if test="sex != null">
+                AND sex = #{sex,jdbcType=BIT}
+            </if>
+            <if test="birthday != null">
+                AND birthday = #{birthday,jdbcType=DATE}
+            </if>
+            <if test="idcard != null">
+                AND idcard = #{idcard,jdbcType=CHAR}
+            </if>
+            <if test="idcardPositive != null">
+                AND idcard_positive = #{idcardPositive,jdbcType=VARCHAR}
+            </if>
+            <if test="idcardNegative != null">
+                AND idcard_negative = #{idcardNegative,jdbcType=VARCHAR}
+            </if>
+            <if test="signature != null">
+                AND signature = #{signature,jdbcType=VARCHAR}
+            </if>
+            <if test="profession != null">
+                AND profession = #{profession,jdbcType=VARCHAR}
+            </if>
+            <if test="email != null">
+                AND email = #{email,jdbcType=CHAR}
+            </if>
+            <if test="lastLoginTime != null">
+                AND last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="gmtCreate != null">
+                AND gmt_create = #{gmtCreate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="gmtModified != null">
+                AND gmt_modified = #{gmtModified,jdbcType=TIMESTAMP}
+            </if>
+            <if test="status != null">
+                AND status = #{status,jdbcType=BIT}
+            </if>
+            <if test="isDeleted != null">
+                AND is_deleted = #{isDeleted,jdbcType=BIT}
+            </if>
+        </where>
+    </select>
+
+    <select id="findUOreRankingAll" parameterType="java.lang.Integer"
+            resultType="com.xdaocloud.futurechain.dto.resp.user.UserOreResponse">
+        SELECT u.id,u.ore,u.nickname,u.avatar FROM t_user u WHERE register_status =1 ORDER BY ore DESC limit #{page} , #{size};
+    </select>
+
+    <select id="findOreRankingByUserId" parameterType="java.lang.Long"
+            resultType="com.xdaocloud.futurechain.dto.resp.user.UserOreRankingResponse">
+        SELECT u.id,u.ore,u.nickname,u.avatar, (SELECT COUNT(1) FROM t_user u1 WHERE u1.ore > u.ore)+1 AS ranking FROM t_user u WHERE u.id = #{userId};
+    </select>
+
+    <select id="findOreRankingFriends" parameterType="java.util.List"
+            resultType="com.xdaocloud.futurechain.dto.resp.user.UserOreResponse">
+        SELECT u.id,u.nickname,u.ore,u.avatar,
+        (SELECT COUNT(1) FROM t_user u1 WHERE u1.ore >= u.ore AND
+        u1.id IN
+        <foreach item="item" index="index" collection="list"
+                 open="(" separator="," close=")">
+            #{item}
+        </foreach>) AS ranking
+        FROM t_user u WHERE register_status=1 AND u.id IN
+        <foreach item="item" index="index" collection="list"
+                 open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        ORDER BY u.ore DESC limit #{page},#{size}
+    </select>
+
+
+    <select id="findOreRankingInFriendsByUserId"
+            resultType="com.xdaocloud.futurechain.dto.resp.user.UserOreRankingResponse">
+        SELECT u.id,u.ore,u.nickname,u.avatar,
+        (SELECT COUNT(1) FROM t_user u1 WHERE u1.ore >= u.ore AND
+        u1.id IN
+        <foreach item="item" index="index" collection="list"
+                 open="(" separator="," close=")">
+            #{item}
+        </foreach>) AS ranking
+        FROM t_user u WHERE u.id = #{userId}
+
+    </select>
+
+
+    <select id="findLikeByMobileMumber" parameterType="java.lang.String"
+            resultType="com.xdaocloud.futurechain.dto.resp.user.UserInfoResponse">
+        SELECT
+        id AS userid,
+        nickname,
+        avatar,
+        user_no AS userNo
+        FROM t_user  WHERE mobile_number LIKE #{mobileNumber}
+    </select>
+
+    <select id="getInvitationFriends" parameterType="java.lang.Object"
+            resultType="com.xdaocloud.futurechain.dto.resp.user.UserInfoResponse">
+      SELECT
+        u.id AS userid,
+        u.nickname,
+        u.avatar,
+        u.mobile_number AS mobileNumber,
+        u.user_no AS userNo,
+        u.invite_code AS inviteCode,
+        u.gmt_create AS gmtCreate,
+        if( (SELECT COUNT(1) FROM t_friend f WHERE (#{userId} = f.user_id AND f.friend_id = u.id) OR ( u.id= f.user_id AND f.friend_id =#{userId}) AND is_deleted = FALSE)=1,1,0) AS is_friend
+        FROM t_user u WHERE u.register_invite_code = #{inviteCode} AND u.register_status =1 ORDER BY u.id DESC limit #{page},#{size}
+    </select>
+
+
+    <select id="findMobileNumberByIdCard" parameterType="java.lang.String" resultType="java.lang.String">
+      SELECT
+        mobile_number
+      FROM t_user  WHERE idcard = #{idcard}
+    </select>
+
+
+    <!--嵌套查询下线-->
+    <select id="findChildrenUserByInviteCode" parameterType="java.lang.String" resultMap="children_userIds">
+      SELECT id,invite_code,name,mobile_number  FROM t_user  WHERE register_invite_code = #{inviteCode}  AND is_deleted = FALSE
+    </select>
+
+    <!--嵌套查询-->
+    <resultMap type="com.xdaocloud.futurechain.dto.user.UserChildrenDTO" id="children_userIds">
+        <id column="id" property="id"/>
+        <result column="invite_code" property="inviteCode"/>
+        <result column="name" property="name"/>
+        <result column="mobile_number" property="mobileNumber"/>
+        <!-- property: 指的是集合属性的值, ofType：指的是集合中元素的类型,column：嵌套查询条件 -->
+        <association column="invite_code" property="childrenUserIds"
+                     select="findChildrenUserByInviteCode">
+            <id column="id" property="id"/>
+            <result column="invite_code" property="inviteCode"/>
+            <result column="name" property="name"/>
+            <result column="mobile_number" property="mobileNumber"/>
+        </association>
+    </resultMap>
+
+    <select id="findUserIdsByInviteCode" parameterType="java.lang.String"
+            resultType="com.xdaocloud.futurechain.dto.user.UserChildrenDTO">
+        SELECT u.id,u.invite_code AS inviteCode FROM t_user u  WHERE u.register_invite_code = #{inviteCode}  AND u.is_deleted = FALSE
+    </select>
+
+
+    <select id="findOpenMsgByUserIds" parameterType="java.lang.Long"
+            resultType="com.xdaocloud.futurechain.dto.resp.friend.GroupResponse">
+        SELECT
+        u.id,
+        u.nickname,
+        u.mobile_number AS mobileNumber,
+        u.avatar,
+        u.invite_code AS inviteCode,
+        u.user_no AS userNo
+        FROM t_user u WHERE u.id IN
+        <foreach item="item" index="index" collection="userIds"
+                 open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
+    <select id="findOpenMsgByUserNos" parameterType="java.lang.String"
+            resultType="com.xdaocloud.futurechain.dto.resp.friend.GroupResponse">
+        SELECT
+        u.id,
+        u.nickname,
+        u.mobile_number AS mobileNumber,
+        u.avatar,
+        u.invite_code AS inviteCode,
+        u.user_no AS userNo
+        FROM t_user u WHERE
+        <if test="userNos != null and userNos.size()>0">
+            u.user_no IN
+            <foreach item="item" index="index" collection="userNos"
+                     open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+    </select>
+
+
+    <select id="findFriendLike" parameterType="java.lang.String"
+            resultType="com.xdaocloud.futurechain.dto.resp.user.UserInfoResponse">
+        SELECT
+        u.id AS userid,
+        u.mobile_number AS mobileNumber,
+        u.nickname,
+        u.avatar,
+        u.user_no AS userNo,
+        u.invite_code AS inviteCode
+        FROM t_user u WHERE (u.mobile_number LIKE "%${condition}%" OR u.nickname LIKE "%${condition}%")
+        <if test="ids != null and ids.size()>0">
+            AND u.id NOT IN
+            <foreach collection="ids" index="index" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        limit #{page},#{size}
+    </select>
+
+    <select id="getFollowList" parameterType="java.lang.Object"
+            resultType="com.xdaocloud.futurechain.dto.resp.circle.FollowResponse">
+		SELECT
+			u.id userId,u.avatar headUrl,u.nickname name,u.signature motto
+		FROM
+			t_user u
+		LEFT JOIN t_follow f ON f.passive_user_id = u.id
+		WHERE
+			f.user_id = #{userId}
+		AND
+			u.is_deleted = FALSE
+		AND 
+			f.is_delete = FALSE
+		limit #{page},#{size}
+	</select>
+
+    <select id="getUsers" parameterType="java.lang.Integer"
+            resultType="com.xdaocloud.futurechain.dto.resp.user.UserInfoResponse">
+        SELECT
+        u.id AS userid,
+        u.mobile_number AS mobileNumber,
+        u.nickname,
+        u.avatar,
+        u.user_no AS userNo,
+        u.agent,
+        u.name,
+        u.gmt_create AS registerTime,
+        w.wallet_name AS walletName
+         FROM t_user u INNER JOIN t_eos_wallet w ON u.id = w.user_id WHERE u.register_status = TRUE limit #{page},#{size}
+    </select>
+
+    <select id="getUsersByAgent" parameterType="java.lang.Integer"
+            resultType="com.xdaocloud.futurechain.dto.resp.user.UserInfoResponse">
+        SELECT
+        u.id AS userid,
+        u.mobile_number AS mobileNumber,
+        u.nickname,
+        u.avatar,
+        u.user_no AS userNo,
+        u.agent,
+        u.name,
+        u.gmt_create AS registerTime,
+        w.wallet_name AS walletName
+        FROM t_user u INNER JOIN t_eos_wallet w ON u.id = w.user_id
+        WHERE u.register_status = TRUE
+        <if test="list != null || list.size() > 0">
+            AND u.agent IN
+            <foreach item="item" index="index" collection="list"
+                     open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        limit #{page},#{size}
+    </select>
+
+    <select id="getUsersByPhone" parameterType="java.lang.Object"
+            resultType="com.xdaocloud.futurechain.dto.resp.user.UserInfoResponse">
+        SELECT
+        u.id AS userid,
+        u.mobile_number AS mobileNumber,
+        u.nickname,
+        u.avatar,
+        u.user_no AS userNo,
+        u.agent,
+        u.name,
+        u.gmt_create AS registerTime
+         FROM t_user u WHERE  u.mobile_number = #{phone}  limit #{page},#{size}
+    </select>
+
+    <select id="findCount" resultType="java.lang.Integer">
+        SELECT COUNT(1) FROM t_user WHERE register_status = true
+    </select>
+
+    <select id="findCountByAgent" resultType="java.lang.Integer" parameterType="java.lang.Object">
+        SELECT COUNT(1) FROM t_user WHERE register_status = true
+        <if test="list != null || list.size() > 0">
+            AND agent IN
+            <foreach item="item" index="index" collection="list"
+                     open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+    </select>
+
+    <!--***************************************************************************************************************************************************-->
+
+    <select id="findUserOreList" resultType="com.xdaocloud.futurechain.dto.resp.user.UserOreResponse">
+        SELECT u.id,u.ore, u.nickname FROM t_user u ORDER BY ore DESC limit 20;
+    </select>
+
+    <select id="selectByPhoneList" resultType="java.lang.String">
+        select mobile_number mobileNumber from t_user where register_status = 1 AND mobile_number in
+        <foreach collection="mobileList" index="index" item="item" open="(" separator="," close=")">
+            #{item.phone}
+        </foreach>
+
+    </select>
+
+    <select id="selectByPhoneUserList" resultType="java.util.Map">
+        select t.mobile_number mobileNumber,t.invite_code inviteCode ,avatar,
+        CASE (select count(1) from t_friend f where (f.user_id = #{userId} and f.friend_id = t.id) or (f.user_id = t.id
+        and f.friend_id = #{userId}) and f.is_deleted = 0 )
+        WHEN 1 THEN true WHEN
+        0 THEN false END isFriend ,
+        CASE (select ff.is_agree from t_add_friend ff where ff.user_id = #{userId} and ff.friend_id = t.id and
+        ff.is_deleted = 0 ) WHEN 0 THEN false ELSE true END isAddFriend
+        from t_user t where t.register_status = 1 AND t.id != #{userId} and t.mobile_number in
+        <foreach collection="mobileList" index="index" item="item" open="(" separator="," close=")">
+            #{item.phone}
+        </foreach>
+    </select>
+
+    <update id="updateSignature">
+        UPDATE  t_user set signature = #{signature} ,gmt_modified = SYSDATE() where id = #{userId}
+    </update>
+    <update id="updateNickname">
+        UPDATE  t_user set nickname = #{nickname} , gmt_modified = SYSDATE() where id = #{userId}
+    </update>
+
+    <update id="updateIdcardOrName">
+        UPDATE  t_user set name = #{name} ,idcard = #{idcard} ,gmt_modified = SYSDATE()  where id = #{userId}
+    </update>
+
+    <update id="updateIndustry">
+        UPDATE  t_user set profession = #{industryId}  ,gmt_modified = SYSDATE()  where id = #{userId}
+    </update>
+
+    <select id="findListByAgent" parameterType="java.lang.Integer"
+            resultType="com.xdaocloud.futurechain.dto.resp.user.UserInfoResponse">
+
+       SELECT
+        u.id AS userid,
+        u.mobile_number AS mobileNumber,
+        u.nickname,
+        u.avatar,
+        u.user_no AS userNo,
+        u.agent,
+        u.agree_time AS agreeTime,
+        u.name,
+        u.gmt_create AS registerTime,
+        u.invite_code AS inviteCode
+         FROM t_user u WHERE register_status = true AND agent = #{agent}
+    </select>
+
+    <select id="findListByAgentAndPhone" parameterType="java.lang.Object"
+            resultType="com.xdaocloud.futurechain.dto.resp.user.UserInfoResponse">
+      SELECT
+            u.id AS userid,
+            u.mobile_number AS mobileNumber,
+            u.nickname,
+            u.avatar,
+            u.user_no AS userNo,
+            u.agent,
+            u.agree_time AS agreeTime,
+            u.name,
+            u.gmt_create AS registerTime,
+            u.invite_code AS inviteCode
+         FROM t_user u WHERE register_status = true AND agent = #{agent} AND mobile_number = #{phone}
+    </select>
+
+    <select id="findListByAgents" parameterType="java.lang.Object"
+            resultType="com.xdaocloud.futurechain.dto.resp.user.UserInfoResponse">
+
+        SELECT
+        u.id AS userid,
+        u.mobile_number AS mobileNumber,
+        u.nickname,
+        u.avatar,
+        u.user_no AS userNo,
+        u.agent,
+        u.agree_time AS agreeTime,
+        u.name,
+        u.gmt_create AS registerTime,
+        u.invite_code AS inviteCode
+        FROM t_user u WHERE register_status = true AND agent IN
+        <foreach item="item" index="index" collection="agents"
+                 open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+    <select id="findListByAgentsAndPhone" parameterType="java.lang.Object"
+            resultType="com.xdaocloud.futurechain.dto.resp.user.UserInfoResponse">
+
+        SELECT
+        u.id AS userid,
+        u.mobile_number AS mobileNumber,
+        u.nickname,
+        u.avatar,
+        u.user_no AS userNo,
+        u.agent,
+        u.agree_time AS agreeTime,
+        u.name,
+        u.gmt_create AS registerTime,
+        u.invite_code AS inviteCode
+        FROM t_user u WHERE u.register_status = true AND u.mobile_number = #{phone} AND u.agent IN
+        <foreach item="item" index="index" collection="agents"
+                 open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
+    <select id="findInviteCodeByUserId" parameterType="java.lang.Long" resultType="java.lang.String">
+      SELECT  invite_code FROM t_user WHERE id = #{userId}
+    </select>
+
+
+    <insert id="save" parameterType="com.xdaocloud.futurechain.model.User">
+        insert into t_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="username != null">
+                username,
+            </if>
+            <if test="passwordMd5 != null">
+                password_md5,
+            </if>
+            <if test="mobileNumber != null">
+                mobile_number,
+            </if>
+            <if test="transactionPassword != null">
+                transaction_password,
+            </if>
+            <if test="nickname != null">
+                nickname,
+            </if>
+            <if test="avatar != null">
+                avatar,
+            </if>
+            <if test="registerStatus != null">
+                register_status,
+            </if>
+            <if test="friendChainRootUserId != null">
+                friend_chain_root_user_id,
+            </if>
+            <if test="registerInviteUserId != null">
+                register_invite_user_id,
+            </if>
+            <if test="registerInviteCode != null">
+                register_invite_code,
+            </if>
+            <if test="inviteCode != null">
+                invite_code,
+            </if>
+            <if test="ore != null">
+                ore,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="sex != null">
+                sex,
+            </if>
+            <if test="birthday != null">
+                birthday,
+            </if>
+            <if test="idcard != null">
+                idcard,
+            </if>
+            <if test="idcardPositive != null">
+                idcard_positive,
+            </if>
+            <if test="idcardNegative != null">
+                idcard_negative,
+            </if>
+            <if test="signature != null">
+                signature,
+            </if>
+            <if test="profession != null">
+                profession,
+            </if>
+            <if test="email != null">
+                email,
+            </if>
+            <if test="agent != null">
+                agent,
+            </if>
+            <if test="agreeTime != null">
+                agree_time,
+            </if>
+            <if test="lastLoginTime != null">
+                last_login_time,
+            </if>
+            <if test="gmtCreate != null">
+                gmt_create,
+            </if>
+            <if test="gmtModified != null">
+                gmt_modified,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="isDeleted != null">
+                is_deleted,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="username != null">
+                #{username,jdbcType=CHAR},
+            </if>
+            <if test="passwordMd5 != null">
+                #{passwordMd5,jdbcType=VARCHAR},
+            </if>
+            <if test="mobileNumber != null">
+                #{mobileNumber,jdbcType=CHAR},
+            </if>
+            <if test="transactionPassword != null">
+                #{transactionPassword,jdbcType=VARCHAR},
+            </if>
+
+            <if test="nickname != null">
+                #{nickname,jdbcType=CHAR},
+            </if>
+            <if test="avatar != null">
+                #{avatar,jdbcType=VARCHAR},
+            </if>
+
+            <if test="registerStatus != null">
+                #{registerStatus,jdbcType=TINYINT},
+            </if>
+            <if test="friendChainRootUserId != null">
+                #{friendChainRootUserId,jdbcType=BIGINT},
+            </if>
+            <if test="registerInviteUserId != null">
+                #{registerInviteUserId,jdbcType=BIGINT},
+            </if>
+            <if test="registerInviteCode != null">
+                #{registerInviteCode,jdbcType=CHAR},
+            </if>
+            <if test="inviteCode != null">
+                #{inviteCode,jdbcType=CHAR},
+            </if>
+            <if test="ore != null">
+                #{ore,jdbcType=BIGINT},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=CHAR},
+            </if>
+            <if test="sex != null">
+                #{sex,jdbcType=CHAR},
+            </if>
+            <if test="birthday != null">
+                #{birthday,jdbcType=DATE},
+            </if>
+            <if test="idcard != null">
+                #{idcard,jdbcType=CHAR},
+            </if>
+            <if test="idcardPositive != null">
+                #{idcardPositive,jdbcType=VARCHAR},
+            </if>
+            <if test="idcardNegative != null">
+                #{idcardNegative,jdbcType=VARCHAR},
+            </if>
+            <if test="signature != null">
+                #{signature,jdbcType=VARCHAR},
+            </if>
+            <if test="profession != null">
+                #{profession,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                #{email,jdbcType=CHAR},
+            </if>
+            <if test="agent != null">
+                #{agent,jdbcType=TINYINT},
+            </if>
+            <if test="agreeTime != null">
+                #{agreeTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastLoginTime != null">
+                #{lastLoginTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="gmtCreate != null">
+                #{gmtCreate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="gmtModified != null">
+                #{gmtModified,jdbcType=TIMESTAMP},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=TINYINT},
+            </if>
+            <if test="isDeleted != null">
+                #{isDeleted,jdbcType=TINYINT},
+            </if>
+        </trim>
+    </insert>
+
+    <select id="findPhoneById" parameterType="java.lang.Long" resultType="java.lang.String">
+        SELECT mobile_number FROM t_user WHERE id =#{id}
+    </select>
+
+    <select id="findTransactionPassWord" parameterType="java.lang.Long" resultType="java.lang.String">
+           SELECT transaction_password FROM t_user WHERE id =#{id}
+    </select>
+
+    <select id="findIdByPhone" parameterType="java.lang.String" resultType="java.lang.Long">
+        SELECT id FROM t_user WHERE mobile_number =#{phone}
+    </select>
+</mapper>

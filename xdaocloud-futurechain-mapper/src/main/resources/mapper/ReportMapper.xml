@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xdaocloud.futurechain.mapper.ReportMapper">
+  <resultMap id="BaseResultMap" type="com.xdaocloud.futurechain.model.Report">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="circle_id" jdbcType="BIGINT" property="circleId" />
+    <result column="rep_content" jdbcType="VARCHAR" property="repContent" />
+    <result column="audit_results" jdbcType="TINYINT" property="auditResults" />
+    <result column="audit_user_id" jdbcType="BIGINT" property="auditUserId" />
+    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+    <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
+    <result column="is_delete" jdbcType="BIT" property="isDelete" />
+  </resultMap>
+  
+  <sql id="Base_Column_List">
+    id, user_id, circle_id, rep_content, audit_results, audit_user_id, gmt_create, gmt_modified, 
+    is_delete
+  </sql>
+  
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_report
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_report
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  
+  <insert id="insert" parameterType="com.xdaocloud.futurechain.model.Report">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_report (user_id, circle_id, rep_content, 
+      audit_results, audit_user_id, gmt_create, 
+      gmt_modified, is_delete)
+    values (#{userId,jdbcType=BIGINT}, #{circleId,jdbcType=BIGINT}, #{repContent,jdbcType=VARCHAR}, 
+      #{auditResults,jdbcType=TINYINT}, #{auditUserId,jdbcType=BIGINT}, #{gmtCreate,jdbcType=TIMESTAMP}, 
+      #{gmtModified,jdbcType=TIMESTAMP}, #{isDelete,jdbcType=BIT})
+  </insert>
+  
+  <insert id="insertSelective" parameterType="com.xdaocloud.futurechain.model.Report">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_report
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="circleId != null">
+        circle_id,
+      </if>
+      <if test="repContent != null">
+        rep_content,
+      </if>
+      <if test="auditResults != null">
+        audit_results,
+      </if>
+      <if test="auditUserId != null">
+        audit_user_id,
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create,
+      </if>
+      <if test="gmtModified != null">
+        gmt_modified,
+      </if>
+      <if test="isDelete != null">
+        is_delete,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="circleId != null">
+        #{circleId,jdbcType=BIGINT},
+      </if>
+      <if test="repContent != null">
+        #{repContent,jdbcType=VARCHAR},
+      </if>
+      <if test="auditResults != null">
+        #{auditResults,jdbcType=TINYINT},
+      </if>
+      <if test="auditUserId != null">
+        #{auditUserId,jdbcType=BIGINT},
+      </if>
+      <if test="gmtCreate != null">
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null">
+        #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDelete != null">
+        #{isDelete,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.xdaocloud.futurechain.model.Report">
+    update t_report
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="circleId != null">
+        circle_id = #{circleId,jdbcType=BIGINT},
+      </if>
+      <if test="repContent != null">
+        rep_content = #{repContent,jdbcType=VARCHAR},
+      </if>
+      <if test="auditResults != null">
+        audit_results = #{auditResults,jdbcType=TINYINT},
+      </if>
+      <if test="auditUserId != null">
+        audit_user_id = #{auditUserId,jdbcType=BIGINT},
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null">
+        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDelete != null">
+        is_delete = #{isDelete,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <update id="updateByPrimaryKey" parameterType="com.xdaocloud.futurechain.model.Report">
+    update t_report
+    set user_id = #{userId,jdbcType=BIGINT},
+      circle_id = #{circleId,jdbcType=BIGINT},
+      rep_content = #{repContent,jdbcType=VARCHAR},
+      audit_results = #{auditResults,jdbcType=TINYINT},
+      audit_user_id = #{auditUserId,jdbcType=BIGINT},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      is_delete = #{isDelete,jdbcType=BIT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

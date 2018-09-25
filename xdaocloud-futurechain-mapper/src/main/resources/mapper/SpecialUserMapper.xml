@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xdaocloud.futurechain.mapper.SpecialUserMapper">
+    <resultMap id="BaseResultMap" type="com.xdaocloud.futurechain.model.SpecialUser">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="username" jdbcType="CHAR" property="username" />
+        <result column="mobile_number" jdbcType="CHAR" property="mobileNumber" />
+        <result column="invite_code" jdbcType="CHAR" property="inviteCode" />
+        <result column="name" jdbcType="CHAR" property="name" />
+        <result column="idcard" jdbcType="CHAR" property="idcard" />
+        <result column="sex" jdbcType="BIT" property="sex" />
+        <result column="peferee" jdbcType="CHAR" property="peferee" />
+        <result column="peferee_no" jdbcType="CHAR" property="pefereeNo" />
+        <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+        <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
+        <result column="is_deleted" jdbcType="BIT" property="isDeleted" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, username, mobile_number, invite_code, name, idcard, sex, peferee, peferee_no,
+        gmt_create, gmt_modified, is_deleted
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from t_special_user
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from t_special_user
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.xdaocloud.futurechain.model.SpecialUser">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into t_special_user (username, mobile_number, invite_code,
+        name, idcard, sex, peferee,
+        peferee_no, gmt_create, gmt_modified,
+        is_deleted)
+        values (#{username,jdbcType=CHAR}, #{mobileNumber,jdbcType=CHAR}, #{inviteCode,jdbcType=CHAR},
+        #{name,jdbcType=CHAR}, #{idcard,jdbcType=CHAR}, #{sex,jdbcType=BIT}, #{peferee,jdbcType=CHAR},
+        #{pefereeNo,jdbcType=CHAR}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP},
+        #{isDeleted,jdbcType=BIT})
+    </insert>
+    <insert id="insertSelective" parameterType="com.xdaocloud.futurechain.model.SpecialUser">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into t_special_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="username != null">
+                username,
+            </if>
+            <if test="mobileNumber != null">
+                mobile_number,
+            </if>
+            <if test="inviteCode != null">
+                invite_code,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="idcard != null">
+                idcard,
+            </if>
+            <if test="sex != null">
+                sex,
+            </if>
+            <if test="peferee != null">
+                peferee,
+            </if>
+            <if test="pefereeNo != null">
+                peferee_no,
+            </if>
+            <if test="gmtCreate != null">
+                gmt_create,
+            </if>
+            <if test="gmtModified != null">
+                gmt_modified,
+            </if>
+            <if test="isDeleted != null">
+                is_deleted,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="username != null">
+                #{username,jdbcType=CHAR},
+            </if>
+            <if test="mobileNumber != null">
+                #{mobileNumber,jdbcType=CHAR},
+            </if>
+            <if test="inviteCode != null">
+                #{inviteCode,jdbcType=CHAR},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=CHAR},
+            </if>
+            <if test="idcard != null">
+                #{idcard,jdbcType=CHAR},
+            </if>
+            <if test="sex != null">
+                #{sex,jdbcType=BIT},
+            </if>
+            <if test="peferee != null">
+                #{peferee,jdbcType=CHAR},
+            </if>
+            <if test="pefereeNo != null">
+                #{pefereeNo,jdbcType=CHAR},
+            </if>
+            <if test="gmtCreate != null">
+                #{gmtCreate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="gmtModified != null">
+                #{gmtModified,jdbcType=TIMESTAMP},
+            </if>
+            <if test="isDeleted != null">
+                #{isDeleted,jdbcType=BIT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.xdaocloud.futurechain.model.SpecialUser">
+        update t_special_user
+        <set>
+            <if test="username != null">
+                username = #{username,jdbcType=CHAR},
+            </if>
+            <if test="mobileNumber != null">
+                mobile_number = #{mobileNumber,jdbcType=CHAR},
+            </if>
+            <if test="inviteCode != null">
+                invite_code = #{inviteCode,jdbcType=CHAR},
+            </if>
+            <if test="name != null">
+                name = #{name,jdbcType=CHAR},
+            </if>
+            <if test="idcard != null">
+                idcard = #{idcard,jdbcType=CHAR},
+            </if>
+            <if test="sex != null">
+                sex = #{sex,jdbcType=BIT},
+            </if>
+            <if test="peferee != null">
+                peferee = #{peferee,jdbcType=CHAR},
+            </if>
+            <if test="pefereeNo != null">
+                peferee_no = #{pefereeNo,jdbcType=CHAR},
+            </if>
+            <if test="gmtCreate != null">
+                gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="gmtModified != null">
+                gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+            </if>
+            <if test="isDeleted != null">
+                is_deleted = #{isDeleted,jdbcType=BIT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.xdaocloud.futurechain.model.SpecialUser">
+        update t_special_user
+        set username = #{username,jdbcType=CHAR},
+        mobile_number = #{mobileNumber,jdbcType=CHAR},
+        invite_code = #{inviteCode,jdbcType=CHAR},
+        name = #{name,jdbcType=CHAR},
+        idcard = #{idcard,jdbcType=CHAR},
+        sex = #{sex,jdbcType=BIT},
+        peferee = #{peferee,jdbcType=CHAR},
+        peferee_no = #{pefereeNo,jdbcType=CHAR},
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+        is_deleted = #{isDeleted,jdbcType=BIT}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+
+
+    <select id="findOneByParam" parameterType="com.xdaocloud.futurechain.model.SpecialUser" resultMap="BaseResultMap">
+        SELECT * FROM t_special_user
+        <where>
+            <if test="username != null">
+                username =  #{username}
+            </if>
+            <if test="mobileNumber != null">
+                AND mobile_number = #{mobileNumber}
+            </if>
+            <if test="inviteCode != null">
+                AND  invite_code = #{inviteCode}
+            </if>
+            <if test="name != null">
+                AND  name =  #{name}
+            </if>
+            <if test="idcard != null">
+                AND  idcard =  #{idcard}
+            </if>
+            <if test="sex != null">
+                AND  sex = #{sex}
+            </if>
+            <if test="peferee != null">
+                AND  peferee = #{peferee}
+            </if>
+            <if test="pefereeNo != null">
+                AND  peferee_no = #{pefereeNo}
+            </if>
+            <if test="gmtCreate != null">
+                AND gmt_create = #{gmtCreate}
+            </if>
+            <if test="gmtModified != null">
+                AND gmt_modified = #{gmtModified}
+            </if>
+            <if test="isDeleted != null">
+                AND is_deleted = #{isDeleted}
+            </if>
+        </where>
+    </select>
+
+</mapper>

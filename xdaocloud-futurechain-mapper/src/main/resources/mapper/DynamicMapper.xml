@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xdaocloud.futurechain.mapper.DynamicMapper">
+  <resultMap id="BaseResultMap" type="com.xdaocloud.futurechain.model.Dynamic">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="circle_id" jdbcType="BIGINT" property="circleId" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="dy_content" jdbcType="VARCHAR" property="dyContent" />
+    <result column="dy_like" jdbcType="LONGVARCHAR" property="dyLike" />
+    <result column="dy_image" jdbcType="LONGVARCHAR" property="dyImage" />
+    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+    <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
+    <result column="is_deleted" jdbcType="BIT" property="isDeleted" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    id, circle_id, user_id, dy_content, gmt_create, gmt_modified, is_deleted
+  </sql>
+  <sql id="Blob_Column_List">
+    dy_like, dy_image
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_dynamic
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_dynamic
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.xdaocloud.futurechain.model.Dynamic">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_dynamic (circle_id, user_id, dy_content, 
+      gmt_create, gmt_modified, is_deleted, 
+      dy_like, dy_image)
+    values (#{circleId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{dyContent,jdbcType=VARCHAR}, 
+      #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}, #{isDeleted,jdbcType=BIT}, 
+      #{dyLike,jdbcType=LONGVARCHAR}, #{dyImage,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xdaocloud.futurechain.model.Dynamic">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_dynamic
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="circleId != null">
+        circle_id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="dyContent != null">
+        dy_content,
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create,
+      </if>
+      <if test="gmtModified != null">
+        gmt_modified,
+      </if>
+      <if test="isDeleted != null">
+        is_deleted,
+      </if>
+      <if test="dyLike != null">
+        dy_like,
+      </if>
+      <if test="dyImage != null">
+        dy_image,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="circleId != null">
+        #{circleId,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="dyContent != null">
+        #{dyContent,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtCreate != null">
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null">
+        #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=BIT},
+      </if>
+      <if test="dyLike != null">
+        #{dyLike,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="dyImage != null">
+        #{dyImage,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xdaocloud.futurechain.model.Dynamic">
+    update t_dynamic
+    <set>
+      <if test="circleId != null">
+        circle_id = #{circleId,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="dyContent != null">
+        dy_content = #{dyContent,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null">
+        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDeleted != null">
+        is_deleted = #{isDeleted,jdbcType=BIT},
+      </if>
+      <if test="dyLike != null">
+        dy_like = #{dyLike,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="dyImage != null">
+        dy_image = #{dyImage,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.xdaocloud.futurechain.model.Dynamic">
+    update t_dynamic
+    set circle_id = #{circleId,jdbcType=BIGINT},
+      user_id = #{userId,jdbcType=BIGINT},
+      dy_content = #{dyContent,jdbcType=VARCHAR},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      is_deleted = #{isDeleted,jdbcType=BIT},
+      dy_like = #{dyLike,jdbcType=LONGVARCHAR},
+      dy_image = #{dyImage,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xdaocloud.futurechain.model.Dynamic">
+    update t_dynamic
+    set circle_id = #{circleId,jdbcType=BIGINT},
+      user_id = #{userId,jdbcType=BIGINT},
+      dy_content = #{dyContent,jdbcType=VARCHAR},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      is_deleted = #{isDeleted,jdbcType=BIT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

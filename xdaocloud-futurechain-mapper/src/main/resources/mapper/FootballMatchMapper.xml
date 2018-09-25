@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xdaocloud.futurechain.mapper.FootballMatchMapper">
+    <resultMap id="BaseResultMap" type="com.xdaocloud.futurechain.model.FootballMatch">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="user_id" jdbcType="BIGINT" property="userId"/>
+        <result column="team_a" jdbcType="BIGINT" property="teamA"/>
+        <result column="team_b" jdbcType="BIGINT" property="teamB"/>
+        <result column="team_name_a" jdbcType="CHAR" property="teamNameA"/>
+        <result column="team_name_b" jdbcType="CHAR" property="teamNameB"/>
+        <result column="concede" jdbcType="INTEGER" property="concede"/>
+        <result column="score_a" jdbcType="INTEGER" property="scoreA"/>
+        <result column="score_b" jdbcType="INTEGER" property="scoreB"/>
+        <result column="win" jdbcType="INTEGER" property="win"/>
+        <result column="concede_win" jdbcType="INTEGER" property="concedeWin"/>
+        <result column="type" jdbcType="INTEGER" property="type"/>
+        <result column="field" jdbcType="VARCHAR" property="field"/>
+        <result column="custom_sum" jdbcType="DECIMAL" property="customSum"/>
+        <result column="start_time" jdbcType="TIMESTAMP" property="startTime"/>
+        <result column="end_time" jdbcType="TIMESTAMP" property="endTime"/>
+        <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate"/>
+        <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified"/>
+        <result column="is_deleted" jdbcType="BIT" property="isDeleted"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, user_id, team_a, team_b, team_name_a, team_name_b, concede, score_a, score_b,
+    win, concede_win, type, field, custom_sum, start_time, end_time, gmt_create, gmt_modified,
+    is_deleted
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_football_match
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_football_match
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+    <insert id="insert" parameterType="com.xdaocloud.futurechain.model.FootballMatch">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into t_football_match (user_id, team_a, team_b,
+        team_name_a, team_name_b, concede,
+        score_a, score_b, win,
+        concede_win, type, field,
+        custom_sum, start_time, end_time,
+        gmt_create, gmt_modified, is_deleted
+        )
+        values (#{userId,jdbcType=BIGINT}, #{teamA,jdbcType=BIGINT}, #{teamB,jdbcType=BIGINT},
+        #{teamNameA,jdbcType=CHAR}, #{teamNameB,jdbcType=CHAR}, #{concede,jdbcType=INTEGER},
+        #{scoreA,jdbcType=INTEGER}, #{scoreB,jdbcType=INTEGER}, #{win,jdbcType=INTEGER},
+        #{concedeWin,jdbcType=INTEGER}, #{type,jdbcType=INTEGER}, #{field,jdbcType=VARCHAR},
+        #{customSum,jdbcType=DECIMAL}, #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP},
+        #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}, #{isDeleted,jdbcType=BIT}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="com.xdaocloud.futurechain.model.FootballMatch">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into t_football_match
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="teamA != null">
+                team_a,
+            </if>
+            <if test="teamB != null">
+                team_b,
+            </if>
+            <if test="teamNameA != null">
+                team_name_a,
+            </if>
+            <if test="teamNameB != null">
+                team_name_b,
+            </if>
+            <if test="concede != null">
+                concede,
+            </if>
+            <if test="scoreA != null">
+                score_a,
+            </if>
+            <if test="scoreB != null">
+                score_b,
+            </if>
+            <if test="win != null">
+                win,
+            </if>
+            <if test="concedeWin != null">
+                concede_win,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="field != null">
+                field,
+            </if>
+            <if test="customSum != null">
+                custom_sum,
+            </if>
+            <if test="startTime != null">
+                start_time,
+            </if>
+            <if test="endTime != null">
+                end_time,
+            </if>
+            <if test="gmtCreate != null">
+                gmt_create,
+            </if>
+            <if test="gmtModified != null">
+                gmt_modified,
+            </if>
+            <if test="isDeleted != null">
+                is_deleted,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="teamA != null">
+                #{teamA,jdbcType=BIGINT},
+            </if>
+            <if test="teamB != null">
+                #{teamB,jdbcType=BIGINT},
+            </if>
+            <if test="teamNameA != null">
+                #{teamNameA,jdbcType=CHAR},
+            </if>
+            <if test="teamNameB != null">
+                #{teamNameB,jdbcType=CHAR},
+            </if>
+            <if test="concede != null">
+                #{concede,jdbcType=INTEGER},
+            </if>
+            <if test="scoreA != null">
+                #{scoreA,jdbcType=INTEGER},
+            </if>
+            <if test="scoreB != null">
+                #{scoreB,jdbcType=INTEGER},
+            </if>
+            <if test="win != null">
+                #{win,jdbcType=INTEGER},
+            </if>
+            <if test="concedeWin != null">
+                #{concedeWin,jdbcType=INTEGER},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=INTEGER},
+            </if>
+            <if test="field != null">
+                #{field,jdbcType=VARCHAR},
+            </if>
+            <if test="customSum != null">
+                #{customSum,jdbcType=DECIMAL},
+            </if>
+            <if test="startTime != null">
+                #{startTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endTime != null">
+                #{endTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="gmtCreate != null">
+                #{gmtCreate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="gmtModified != null">
+                #{gmtModified,jdbcType=TIMESTAMP},
+            </if>
+            <if test="isDeleted != null">
+                #{isDeleted,jdbcType=BIT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.xdaocloud.futurechain.model.FootballMatch">
+        update t_football_match
+        <set>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="teamA != null">
+                team_a = #{teamA,jdbcType=BIGINT},
+            </if>
+            <if test="teamB != null">
+                team_b = #{teamB,jdbcType=BIGINT},
+            </if>
+            <if test="teamNameA != null">
+                team_name_a = #{teamNameA,jdbcType=CHAR},
+            </if>
+            <if test="teamNameB != null">
+                team_name_b = #{teamNameB,jdbcType=CHAR},
+            </if>
+            <if test="concede != null">
+                concede = #{concede,jdbcType=INTEGER},
+            </if>
+            <if test="scoreA != null">
+                score_a = #{scoreA,jdbcType=INTEGER},
+            </if>
+            <if test="scoreB != null">
+                score_b = #{scoreB,jdbcType=INTEGER},
+            </if>
+            <if test="win != null">
+                win = #{win,jdbcType=INTEGER},
+            </if>
+            <if test="concedeWin != null">
+                concede_win = #{concedeWin,jdbcType=INTEGER},
+            </if>
+            <if test="type != null">
+                type = #{type,jdbcType=INTEGER},
+            </if>
+            <if test="field != null">
+                field = #{field,jdbcType=VARCHAR},
+            </if>
+            <if test="customSum != null">
+                custom_sum = #{customSum,jdbcType=DECIMAL},
+            </if>
+            <if test="startTime != null">
+                start_time = #{startTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endTime != null">
+                end_time = #{endTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="gmtCreate != null">
+                gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="gmtModified != null">
+                gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+            </if>
+            <if test="isDeleted != null">
+                is_deleted = #{isDeleted,jdbcType=BIT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.xdaocloud.futurechain.model.FootballMatch">
+    update t_football_match
+    set user_id = #{userId,jdbcType=BIGINT},
+      team_a = #{teamA,jdbcType=BIGINT},
+      team_b = #{teamB,jdbcType=BIGINT},
+      team_name_a = #{teamNameA,jdbcType=CHAR},
+      team_name_b = #{teamNameB,jdbcType=CHAR},
+      concede = #{concede,jdbcType=INTEGER},
+      score_a = #{scoreA,jdbcType=INTEGER},
+      score_b = #{scoreB,jdbcType=INTEGER},
+      win = #{win,jdbcType=INTEGER},
+      concede_win = #{concedeWin,jdbcType=INTEGER},
+      type = #{type,jdbcType=INTEGER},
+      field = #{field,jdbcType=VARCHAR},
+      custom_sum = #{customSum,jdbcType=DECIMAL},
+      start_time = #{startTime,jdbcType=TIMESTAMP},
+      end_time = #{endTime,jdbcType=TIMESTAMP},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      is_deleted = #{isDeleted,jdbcType=BIT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+
+    <select id="findListByType" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+     SELECT * FROM t_football_match WHERE type = #{type} ORDER BY start_time;
+  </select>
+
+    <select id="findListByTypeAndStartTime" parameterType="java.lang.Object" resultMap="BaseResultMap">
+    SELECT * FROM t_football_match WHERE type = #{type} AND start_time > #{startTime}  ORDER BY start_time ASC
+  </select>
+
+    <insert id="addFootballMatch" parameterType="java.util.Map">
+        insert into t_football_match (team_a,team_b,team_name_a,team_name_b,concede,score_a,score_b,win,concede_win,type,field,start_time,gmt_create,gmt_modified,is_deleted) VALUES
+        (#{map.team_a},#{map.team_b},(select team_name from t_football_team where id = #{map.team_a}),(select team_name from t_football_team where id = #{map.team_b}),#{map.concede},
+        #{map.score_a},#{map.score_b},0,0,1,#{map.field},#{map.start_time},SYSDATE(),SYSDATE(),0)
+    </insert>
+
+    <select id="footballMatchList" resultType="java.util.Map">
+        select fm.id footballMatchId , fta.country teamNameA ,ftb.country teamNameB ,fm.start_time startTime ,fm.field field  ,CASE WHEN  fm.end_time is  null THEN  0 else 1 end as state ,fm.concede
+from t_football_match fm LEFT JOIN  t_football_team fta  on fm.team_a = fta.id LEFT JOIN t_football_team ftb  on fm.team_b = ftb.id
+where ftb.is_deleted = 0 and fta.is_deleted = 0 and fm.is_deleted = 0
+    </select>
+
+    <update id="updateByFootballMatchId">
+        update t_football_match set concede_win = #{win}  , gmt_modified  = SYSDATE() ,end_time = #{endTime} , score_a = #{scoreA}  , score_b = #{scoreB} where  id = #{footballMatchId} and is_deleted = 0
+    </update>
+
+    <update id="updateConcede" >
+        UPDATE  t_football_match set concede = #{concede} , gmt_modified = SYSDATE() where   id = #{teamMemberId}
+    </update>
+</mapper>

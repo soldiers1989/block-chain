@@ -1,0 +1,992 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xdaocloud.futurechain.mapper.CircleMapper">
+    <resultMap id="BaseResultMap" type="com.xdaocloud.futurechain.model.Circle">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="app_id" jdbcType="VARCHAR" property="appId" />
+        <result column="user_id" jdbcType="BIGINT" property="userId" />
+        <result column="industry_id" jdbcType="BIGINT" property="industryId" />
+        <result column="rewards_user_number" jdbcType="INTEGER" property="rewardsUserNumber" />
+        <result column="rewards_number" jdbcType="DECIMAL" property="rewardsNumber" />
+        <result column="surplus_rewards_number" jdbcType="INTEGER" property="surplusRewardsNumber" />
+        <result column="deduction_number" jdbcType="DECIMAL" property="deductionNumber" />
+        <result column="article_type" jdbcType="TINYINT" property="articleType" />
+        <result column="article_category" jdbcType="TINYINT" property="articleCategory" />
+        <result column="circle_id" jdbcType="BIGINT" property="circleId" />
+        <result column="feelings" jdbcType="VARCHAR" property="feelings" />
+        <result column="audit_result" jdbcType="TINYINT" property="auditResult" />
+        <result column="article_status" jdbcType="TINYINT" property="articleStatus" />
+        <result column="total_retransmission" jdbcType="BIGINT" property="totalRetransmission" />
+        <result column="total_discuss" jdbcType="BIGINT" property="totalDiscuss" />
+        <result column="total_praise" jdbcType="BIGINT" property="totalPraise" />
+        <result column="total_reading" jdbcType="BIGINT" property="totalReading" />
+        <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+        <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
+        <result column="is_deleted" jdbcType="TINYINT" property="isDeleted" />
+        <result column="content" jdbcType="LONGVARCHAR" property="content" />
+        <result column="file_address" jdbcType="LONGVARCHAR" property="fileAddress" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, app_id, user_id, industry_id, rewards_user_number, rewards_number, surplus_rewards_number,
+        deduction_number, article_type, article_category, circle_id, feelings, audit_result,
+        article_status, total_retransmission, total_discuss, total_praise, total_reading,
+        gmt_create, gmt_modified, is_deleted,content, file_address
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from t_circle
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from t_circle
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.xdaocloud.futurechain.model.Circle">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into t_circle (app_id, user_id, industry_id,
+        rewards_user_number, rewards_number, surplus_rewards_number,
+        deduction_number, article_type, article_category,
+        circle_id, feelings, audit_result,
+        article_status, total_retransmission, total_discuss,
+        total_praise, total_reading, gmt_create,
+        gmt_modified, is_deleted, content,
+        file_address)
+        values (#{appId,jdbcType=VARCHAR}, #{userId,jdbcType=BIGINT}, #{industryId,jdbcType=BIGINT},
+        #{rewardsUserNumber,jdbcType=INTEGER}, #{rewardsNumber,jdbcType=DECIMAL}, #{surplusRewardsNumber,jdbcType=INTEGER},
+        #{deductionNumber,jdbcType=DECIMAL}, #{articleType,jdbcType=TINYINT}, #{articleCategory,jdbcType=TINYINT},
+        #{circleId,jdbcType=BIGINT}, #{feelings,jdbcType=VARCHAR}, #{auditResult,jdbcType=TINYINT},
+        #{articleStatus,jdbcType=TINYINT}, #{totalRetransmission,jdbcType=BIGINT}, #{totalDiscuss,jdbcType=BIGINT},
+        #{totalPraise,jdbcType=BIGINT}, #{totalReading,jdbcType=BIGINT}, #{gmtCreate,jdbcType=TIMESTAMP},
+        #{gmtModified,jdbcType=TIMESTAMP}, #{isDeleted,jdbcType=TINYINT}, #{content,jdbcType=LONGVARCHAR},
+        #{fileAddress,jdbcType=LONGVARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.xdaocloud.futurechain.model.Circle">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into t_circle
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="appId != null">
+                app_id,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="industryId != null">
+                industry_id,
+            </if>
+            <if test="rewardsUserNumber != null">
+                rewards_user_number,
+            </if>
+            <if test="rewardsNumber != null">
+                rewards_number,
+            </if>
+            <if test="surplusRewardsNumber != null">
+                surplus_rewards_number,
+            </if>
+            <if test="deductionNumber != null">
+                deduction_number,
+            </if>
+            <if test="articleType != null">
+                article_type,
+            </if>
+            <if test="articleCategory != null">
+                article_category,
+            </if>
+            <if test="circleId != null">
+                circle_id,
+            </if>
+            <if test="feelings != null">
+                feelings,
+            </if>
+            <if test="auditResult != null">
+                audit_result,
+            </if>
+            <if test="articleStatus != null">
+                article_status,
+            </if>
+            <if test="totalRetransmission != null">
+                total_retransmission,
+            </if>
+            <if test="totalDiscuss != null">
+                total_discuss,
+            </if>
+            <if test="totalPraise != null">
+                total_praise,
+            </if>
+            <if test="totalReading != null">
+                total_reading,
+            </if>
+            <if test="gmtCreate != null">
+                gmt_create,
+            </if>
+            <if test="gmtModified != null">
+                gmt_modified,
+            </if>
+            <if test="isDeleted != null">
+                is_deleted,
+            </if>
+            <if test="content != null">
+                content,
+            </if>
+            <if test="fileAddress != null">
+                file_address,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="appId != null">
+                #{appId,jdbcType=VARCHAR},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="industryId != null">
+                #{industryId,jdbcType=BIGINT},
+            </if>
+            <if test="rewardsUserNumber != null">
+                #{rewardsUserNumber,jdbcType=INTEGER},
+            </if>
+            <if test="rewardsNumber != null">
+                #{rewardsNumber,jdbcType=DECIMAL},
+            </if>
+            <if test="surplusRewardsNumber != null">
+                #{surplusRewardsNumber,jdbcType=INTEGER},
+            </if>
+            <if test="deductionNumber != null">
+                #{deductionNumber,jdbcType=DECIMAL},
+            </if>
+            <if test="articleType != null">
+                #{articleType,jdbcType=TINYINT},
+            </if>
+            <if test="articleCategory != null">
+                #{articleCategory,jdbcType=TINYINT},
+            </if>
+            <if test="circleId != null">
+                #{circleId,jdbcType=BIGINT},
+            </if>
+            <if test="feelings != null">
+                #{feelings,jdbcType=VARCHAR},
+            </if>
+            <if test="auditResult != null">
+                #{auditResult,jdbcType=TINYINT},
+            </if>
+            <if test="articleStatus != null">
+                #{articleStatus,jdbcType=TINYINT},
+            </if>
+            <if test="totalRetransmission != null">
+                #{totalRetransmission,jdbcType=BIGINT},
+            </if>
+            <if test="totalDiscuss != null">
+                #{totalDiscuss,jdbcType=BIGINT},
+            </if>
+            <if test="totalPraise != null">
+                #{totalPraise,jdbcType=BIGINT},
+            </if>
+            <if test="totalReading != null">
+                #{totalReading,jdbcType=BIGINT},
+            </if>
+            <if test="gmtCreate != null">
+                #{gmtCreate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="gmtModified != null">
+                #{gmtModified,jdbcType=TIMESTAMP},
+            </if>
+            <if test="isDeleted != null">
+                #{isDeleted,jdbcType=TINYINT},
+            </if>
+            <if test="content != null">
+                #{content,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="fileAddress != null">
+                #{fileAddress,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.xdaocloud.futurechain.model.Circle">
+        update t_circle
+        <set>
+            <if test="appId != null">
+                app_id = #{appId,jdbcType=VARCHAR},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="industryId != null">
+                industry_id = #{industryId,jdbcType=BIGINT},
+            </if>
+            <if test="rewardsUserNumber != null">
+                rewards_user_number = #{rewardsUserNumber,jdbcType=INTEGER},
+            </if>
+            <if test="rewardsNumber != null">
+                rewards_number = #{rewardsNumber,jdbcType=DECIMAL},
+            </if>
+            <if test="surplusRewardsNumber != null">
+                surplus_rewards_number = #{surplusRewardsNumber,jdbcType=INTEGER},
+            </if>
+            <if test="deductionNumber != null">
+                deduction_number = #{deductionNumber,jdbcType=DECIMAL},
+            </if>
+            <if test="articleType != null">
+                article_type = #{articleType,jdbcType=TINYINT},
+            </if>
+            <if test="articleCategory != null">
+                article_category = #{articleCategory,jdbcType=TINYINT},
+            </if>
+            <if test="circleId != null">
+                circle_id = #{circleId,jdbcType=BIGINT},
+            </if>
+            <if test="feelings != null">
+                feelings = #{feelings,jdbcType=VARCHAR},
+            </if>
+            <if test="auditResult != null">
+                audit_result = #{auditResult,jdbcType=TINYINT},
+            </if>
+            <if test="articleStatus != null">
+                article_status = #{articleStatus,jdbcType=TINYINT},
+            </if>
+            <if test="totalRetransmission != null">
+                total_retransmission = #{totalRetransmission,jdbcType=BIGINT},
+            </if>
+            <if test="totalDiscuss != null">
+                total_discuss = #{totalDiscuss,jdbcType=BIGINT},
+            </if>
+            <if test="totalPraise != null">
+                total_praise = #{totalPraise,jdbcType=BIGINT},
+            </if>
+            <if test="totalReading != null">
+                total_reading = #{totalReading,jdbcType=BIGINT},
+            </if>
+            <if test="gmtCreate != null">
+                gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="gmtModified != null">
+                gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+            </if>
+            <if test="isDeleted != null">
+                is_deleted = #{isDeleted,jdbcType=TINYINT},
+            </if>
+            <if test="content != null">
+                content = #{content,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="fileAddress != null">
+                file_address = #{fileAddress,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.xdaocloud.futurechain.model.Circle">
+        update t_circle
+        set app_id = #{appId,jdbcType=VARCHAR},
+        user_id = #{userId,jdbcType=BIGINT},
+        industry_id = #{industryId,jdbcType=BIGINT},
+        rewards_user_number = #{rewardsUserNumber,jdbcType=INTEGER},
+        rewards_number = #{rewardsNumber,jdbcType=DECIMAL},
+        surplus_rewards_number = #{surplusRewardsNumber,jdbcType=INTEGER},
+        deduction_number = #{deductionNumber,jdbcType=DECIMAL},
+        article_type = #{articleType,jdbcType=TINYINT},
+        article_category = #{articleCategory,jdbcType=TINYINT},
+        circle_id = #{circleId,jdbcType=BIGINT},
+        feelings = #{feelings,jdbcType=VARCHAR},
+        audit_result = #{auditResult,jdbcType=TINYINT},
+        article_status = #{articleStatus,jdbcType=TINYINT},
+        total_retransmission = #{totalRetransmission,jdbcType=BIGINT},
+        total_discuss = #{totalDiscuss,jdbcType=BIGINT},
+        total_praise = #{totalPraise,jdbcType=BIGINT},
+        total_reading = #{totalReading,jdbcType=BIGINT},
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+        is_deleted = #{isDeleted,jdbcType=TINYINT},
+        content = #{content,jdbcType=LONGVARCHAR},
+        file_address = #{fileAddress,jdbcType=LONGVARCHAR}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.xdaocloud.futurechain.model.Circle">
+        update t_circle
+        set app_id = #{appId,jdbcType=VARCHAR},
+        user_id = #{userId,jdbcType=BIGINT},
+        industry_id = #{industryId,jdbcType=BIGINT},
+        rewards_user_number = #{rewardsUserNumber,jdbcType=INTEGER},
+        rewards_number = #{rewardsNumber,jdbcType=DECIMAL},
+        surplus_rewards_number = #{surplusRewardsNumber,jdbcType=INTEGER},
+        deduction_number = #{deductionNumber,jdbcType=DECIMAL},
+        article_type = #{articleType,jdbcType=TINYINT},
+        article_category = #{articleCategory,jdbcType=TINYINT},
+        circle_id = #{circleId,jdbcType=BIGINT},
+        feelings = #{feelings,jdbcType=VARCHAR},
+        audit_result = #{auditResult,jdbcType=TINYINT},
+        article_status = #{articleStatus,jdbcType=TINYINT},
+        total_retransmission = #{totalRetransmission,jdbcType=BIGINT},
+        total_discuss = #{totalDiscuss,jdbcType=BIGINT},
+        total_praise = #{totalPraise,jdbcType=BIGINT},
+        total_reading = #{totalReading,jdbcType=BIGINT},
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+        is_deleted = #{isDeleted,jdbcType=TINYINT}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <select id="getCircleListByPopular" parameterType="java.lang.Object"
+            resultType="com.xdaocloud.futurechain.dto.resp.circle.CircleDisplayResponse">
+        SELECT
+        c.id id,
+        c.gmt_create gmtModified,
+        u.id userId,
+        u.nickname userName,
+        c.article_category isForwarding,
+        i.industry_name tagName,
+        c.content content,
+        c.feelings forwardingContent,
+        u.avatar userHead,
+        c.file_address fileAddress,
+        CASE c.user_id = #{userId}
+        WHEN true THEN IFNULL(CONCAT('-',FORMAT(c.rewards_number,2)),CONCAT('+',FORMAT(c.deduction_number,2)))
+        WHEN false THEN IFNULL(CONCAT('+',FORMAT(c.rewards_number,2)),CONCAT('-',FORMAT(c.deduction_number,2)))
+        END price,
+        c.total_retransmission forwarding,
+        c.total_discuss discuss,
+        c.total_praise good,
+        c.circle_id originalId
+        FROM
+        t_circle c
+        LEFT JOIN t_user u ON c.user_id = u.id
+        LEFT JOIN t_industry_type i ON c.industry_id = i.id
+
+        WHERE app_id = {appId} AND
+        c.is_deleted = FALSE
+        <if test="industryId != null">
+            AND c.industry_id IN
+            <foreach collection="industryId" index="index" item="item"
+                     open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        <if test="searchContent != null and searchContent != ''">
+            AND ( c.content LIKE CONCAT(CONCAT('%',#{searchContent},'%')) OR c.feelings LIKE
+            CONCAT(CONCAT('%',#{searchContent},'%')) )
+        </if>
+
+        AND
+        u.is_deleted = FALSE
+        AND
+        c.article_status = FALSE
+        AND
+        c.audit_result = '1'
+        GROUP BY c.id
+        ORDER BY c.gmt_create DESC
+        LIMIT #{page} , #{size}
+    </select>
+
+    <select id="getCircleListByFriend" parameterType="java.lang.Object"
+            resultType="com.xdaocloud.futurechain.dto.resp.circle.CircleDisplayResponse">
+        SELECT
+        c.id id,
+        c.gmt_create gmtModified,
+        u.id userId,
+        u.nickname userName,
+        c.article_category isForwarding,
+        i.industry_name tagName,
+        c.content content,
+        c.feelings forwardingContent,
+        u.avatar userHead,
+        c.file_address fileAddress,
+        CASE c.user_id = #{userId}
+        WHEN true THEN IFNULL(CONCAT('-',FORMAT(c.rewards_number,2)),CONCAT('+',FORMAT(c.deduction_number,2)))
+        WHEN false THEN IFNULL(CONCAT('+',FORMAT(c.rewards_number,2)),CONCAT('-',FORMAT(c.deduction_number,2)))
+        END price,
+        c.total_retransmission forwarding,
+        c.total_discuss discuss,
+        c.total_praise good,
+        c.circle_id originalId
+        FROM
+        t_circle c WHERE app_id = #{appId}
+        LEFT JOIN t_industry_type i ON c.industry_id = i.id
+        LEFT JOIN t_user u ON u.id = c.user_id
+        WHERE
+        c.is_deleted = FALSE
+
+        <if test="userIDList != null">
+            AND u.id IN
+            <foreach collection="userIDList" index="index" item="item"
+                     open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        <if test="industryId != null">
+            AND c.industry_id IN
+            <foreach collection="industryId" index="index" item="item"
+                     open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+
+        <if test="searchContent != null and searchContent != ''">
+            AND ( c.content LIKE CONCAT(CONCAT('%',#{searchContent},'%')) OR c.feelings LIKE
+            CONCAT(CONCAT('%',#{searchContent},'%')) )
+        </if>
+        AND
+        c.is_deleted = FALSE
+
+        AND
+        u.is_deleted = FALSE
+        AND
+        c.article_status = FALSE
+        AND
+        c.audit_result = '1'
+        ORDER BY c.gmt_modified DESC
+        LIMIT #{page} , #{size}
+    </select>
+
+    <select id="getCircleListByAttention" parameterType="java.lang.Object"
+            resultType="com.xdaocloud.futurechain.dto.resp.circle.CircleDisplayResponse">
+        SELECT
+        c.id id,
+        c.gmt_create gmtModified,
+        u.id userId,
+        u.nickname userName,
+        c.article_category isForwarding,
+        i.industry_name tagName,
+        c.content content,
+        c.feelings forwardingContent,
+        u.avatar userHead,
+        c.file_address fileAddress,
+        CASE c.user_id = #{userId}
+        WHEN true THEN IFNULL(CONCAT('-',FORMAT(c.rewards_number,2)),CONCAT('+',FORMAT(c.deduction_number,2)))
+        WHEN false THEN IFNULL(CONCAT('+',FORMAT(c.rewards_number,2)),CONCAT('-',FORMAT(c.deduction_number,2)))
+        END price,
+        c.total_retransmission forwarding,
+        c.total_discuss discuss,
+        c.total_praise good,
+        c.circle_id originalId
+        FROM
+        t_circle c
+        LEFT JOIN t_follow f ON f.passive_user_id = c.user_id
+        LEFT JOIN t_user u ON f.passive_user_id = u.id
+        LEFT JOIN t_industry_type i ON c.industry_id = i.id
+        WHERE app_id= #{appId}
+        f.user_id = #{userId}
+        <if test="industryId != null">
+            AND c.industry_id IN
+            <foreach collection="industryId" index="index" item="item"
+                     open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+
+        <if test="searchContent != null and searchContent != ''">
+            AND ( c.content LIKE CONCAT(CONCAT('%',#{searchContent},'%')) OR c.feelings LIKE
+            CONCAT(CONCAT('%',#{searchContent},'%')) )
+        </if>
+        AND
+        c.is_deleted = FALSE
+        AND
+        f.is_delete = FALSE
+        AND
+        u.is_deleted = FALSE
+        AND
+        c.article_status = FALSE
+        AND
+        c.audit_result = '1'
+        ORDER BY c.gmt_modified DESC
+        LIMIT #{page} , #{size}
+    </select>
+
+    <select id="selectCircleDetails" resultType="java.util.Map">
+select u.id userId,c.gmt_create gmtModified, u.avatar, u.nickname ,c.id circleId, i.industry_name industryName , c.content ,c.file_address fileAddress,c.total_reading totalReading ,c.total_discuss totalDiscuss ,c.total_praise totalPraise ,c.total_retransmission totalRetransmission from t_circle c LEFT JOIN t_user u ON c.user_id = u.id
+LEFT JOIN t_industry_type i on c.industry_id = i.id  where c.id = #{circleId}  and c.is_deleted = 0 and i.is_delete = 0 and u.is_deleted = 0
+    </select>
+
+
+    <select id="selectReadFriendNum" resultType="java.lang.Long">
+        SELECT
+        COUNT(1)
+        FROM
+        t_reading_record r
+        WHERE
+        r.circle_id = #{circleId}
+        <if test="userIDList != null">
+            AND r.user_id IN
+            <foreach collection="userIDList" index="index" item="item"
+                     open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        and r.is_delete = FALSE
+    </select>
+
+    <select id="findMyCircleList" parameterType="java.lang.Object"
+            resultType="com.xdaocloud.futurechain.dto.resp.circle.CircleDisplayResponse">
+        SELECT
+        c.id id,
+        c.audit_result status,
+        c.gmt_create gmtModified,
+        u.id userId,
+        u.nickname userName,
+        c.article_category isForwarding,
+        i.industry_name tagName,
+        c.content content,
+        c.feelings forwardingContent,
+        u.avatar userHead,
+        c.file_address fileAddress,
+        CASE c.user_id = #{userId}
+        WHEN true THEN IFNULL(CONCAT('-',FORMAT(c.rewards_number,2)),CONCAT('+',FORMAT(c.deduction_number,2)))
+        WHEN false THEN IFNULL(CONCAT('+',FORMAT(c.rewards_number,2)),CONCAT('-',FORMAT(c.deduction_number,2)))
+        END price,
+        c.total_retransmission forwarding,
+        c.total_discuss discuss,
+        c.total_praise good,
+        c.audit_result status,
+        c.circle_id originalId
+        FROM
+        t_circle c
+        LEFT JOIN t_user u ON u.id = c.user_id
+        LEFT JOIN t_industry_type i ON c.industry_id = i.id
+        WHERE
+        c.user_id = #{userId}
+        <if test="searchContent != null and searchContent != ''">
+            AND ( c.content LIKE CONCAT(CONCAT('%',#{searchContent},'%')) OR c.feelings LIKE
+            CONCAT(CONCAT('%',#{searchContent},'%')) )
+        </if>
+        AND
+        c.is_deleted = FALSE
+        AND
+        u.is_deleted = FALSE
+        AND
+        c.article_status = FALSE
+        ORDER BY c.gmt_modified DESC
+        LIMIT #{page} , #{size}
+    </select>
+
+    <select id="findOriginalCircle" parameterType="java.lang.Object"
+            resultType="com.xdaocloud.futurechain.dto.resp.circle.CircleDisplayResponse">
+    SELECT
+		c.id id,
+		c.gmt_create gmtModified,
+		c.article_category isForwarding,
+		i.industry_name tagName,
+		c.content content,
+		c.file_address fileAddress,
+		CASE c.user_id = #{userId}
+				WHEN true THEN IFNULL(CONCAT('-',FORMAT(c.rewards_number,2)),CONCAT('+',FORMAT(c.deduction_number,2)))
+				WHEN false THEN IFNULL(CONCAT('+',FORMAT(c.rewards_number,2)),CONCAT('-',FORMAT(c.deduction_number,2)))
+			 END price,
+		c.total_retransmission forwarding,
+		c.total_discuss discuss,
+		c.total_praise good,
+		c.circle_id originalId
+	FROM
+		t_circle c
+	LEFT JOIN t_industry_type i ON c.industry_id = i.id
+	WHERE
+		c.id = #{circleId}
+	AND
+	    c.article_status = FALSE
+	AND
+        c.is_deleted = FALSE
+	ORDER BY c.gmt_create DESC
+  </select>
+
+    <select id="findMyCollectList" parameterType="java.lang.Object"
+            resultType="com.xdaocloud.futurechain.dto.resp.circle.CircleDisplayResponse">
+    SELECT
+		c.id id,
+		c.audit_result  status,
+		c.gmt_create gmtModified,
+		c.article_category isForwarding,
+		u.id userId,
+		u.nickname userName,
+		c.article_category isForwarding,
+		i.industry_name tagName,
+		c.content content,
+		c.feelings forwardingContent,
+		u.avatar userHead,
+		c.file_address fileAddress,
+		CASE c.user_id = #{userId}
+				WHEN true THEN IFNULL(CONCAT('-',FORMAT(c.rewards_number,2)),CONCAT('+',FORMAT(c.deduction_number,2)))
+				WHEN false THEN IFNULL(CONCAT('+',FORMAT(c.rewards_number,2)),CONCAT('-',FORMAT(c.deduction_number,2)))
+			 END price,
+		c.total_retransmission forwarding,
+		c.total_discuss discuss,
+		c.total_praise good,
+		c.circle_id originalId
+	FROM
+		t_circle c
+	LEFT JOIN t_collect collect ON collect.circle_id = c.id
+	LEFT JOIN t_user u ON u.id = c.user_id
+	LEFT JOIN t_industry_type i ON c.industry_id = i.id
+	WHERE
+		collect.user_id = #{userId}
+	AND
+        collect.is_delete = FALSE
+	AND
+        c.is_deleted = FALSE
+	AND
+        u.is_deleted = FALSE
+    AND
+    	c.article_status = FALSE
+   	AND
+   		c.audit_result = '1'
+	ORDER BY c.gmt_modified DESC
+	LIMIT #{page} , #{size}
+  </select>
+
+    <select id="findMyDropCircleList" parameterType="java.lang.Object"
+            resultType="com.xdaocloud.futurechain.dto.resp.circle.CircleDisplayResponse">
+    SELECT
+		c.id id,
+		c.audit_result  status,
+		c.gmt_create gmtModified,
+		c.article_category isForwarding,
+		u.id userId,
+		u.nickname userName,
+		c.article_category isForwarding,
+		i.industry_name tagName,
+		c.content content,
+		c.feelings forwardingContent,
+		u.avatar userHead,
+		c.file_address fileAddress,
+		CASE c.user_id = #{userId}
+				WHEN true THEN IFNULL(CONCAT('-',FORMAT(c.rewards_number,2)),CONCAT('+',FORMAT(c.deduction_number,2)))
+				WHEN false THEN IFNULL(CONCAT('+',FORMAT(c.rewards_number,2)),CONCAT('-',FORMAT(c.deduction_number,2)))
+			 END price,
+		c.total_retransmission forwarding,
+		c.total_discuss discuss,
+		c.total_praise good,
+		c.audit_result status,
+		c.circle_id originalId,
+		c.rewards_user_number rewardsUserNumber
+	FROM
+		t_circle c
+	LEFT JOIN t_user u ON u.id = c.user_id
+	LEFT JOIN t_industry_type i ON c.industry_id = i.id
+	WHERE
+		c.user_id = #{userId}
+	AND
+        c.is_deleted = FALSE
+	AND
+        u.is_deleted = FALSE
+    AND
+    	c.article_status = TRUE
+	ORDER BY c.gmt_modified DESC
+	LIMIT #{page} , #{size}
+  </select>
+
+    <update id="updatePraiseOrDiscussByCcircleId">
+        UPDATE t_circle set
+        <if test="type == 0">
+            total_praise = total_praise-1
+        </if>
+        <if test="type == 1">
+            total_praise = total_praise+1
+        </if>
+        <if test="type == 2">
+            total_discuss = total_discuss+1
+        </if>
+        <if test="type == 3">
+            total_retransmission = total_retransmission+1
+        </if>
+        where id = #{circleId}
+    </update>
+
+    <select id="getReadRankingList" parameterType="java.lang.Object"
+            resultType="com.xdaocloud.futurechain.dto.resp.circle.RankingResponse">
+        SELECT
+        any_value(u.id) userId,any_value(u.nickname) userName,any_value(u.avatar) headUrl
+        FROM
+        t_user u
+        LEFT JOIN t_circle c ON u.id = c.user_id
+        LEFT JOIN t_reading_record r ON c.id = r.id
+        LEFT JOIN t_industry i ON i.id = u.profession
+        WHERE
+        1 = 1
+        <if test="type == 0">
+            AND
+            (r.gmt_create <![CDATA[ >= ]]> (select subdate(curdate(),date_format(curdate(),'%w')-1))
+            AND
+            r.gmt_create <![CDATA[ <= ]]> (select subdate(curdate(),date_format(curdate(),'%w')-7)))
+        </if>
+
+        <if test="type == 1">
+            AND
+            (r.gmt_create <![CDATA[ >= ]]> (select DATE_ADD(curdate(),interval - day(curdate())+1 day))
+            AND
+            r.gmt_create <![CDATA[ <= ]]> (select last_day(curdate())))
+        </if>
+
+        <if test="industryId != null">
+            AND i.id IN
+            <foreach collection="industryId" index="index" item="item"
+                     open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        AND
+        c.is_deleted = FALSE
+        AND
+        u.is_deleted = FALSE
+        GROUP BY u.id
+        ORDER BY (SELECT COUNT(rr.id) FROM t_reading_record rr LEFT JOIN t_circle c ON c.id = rr.circle_id WHERE
+        rr.is_delete = '0' AND c.is_deleted = '0' AND c.user_id = u.id) desc
+        LIMIT #{page} , #{size}
+    </select>
+
+    <select id="getFansRankingList" parameterType="java.lang.Object"
+            resultType="com.xdaocloud.futurechain.dto.resp.circle.RankingResponse">
+        SELECT
+        any_value(u.id) userId,any_value(u.nickname) userName,any_value(u.avatar) headUrl
+        FROM
+        t_user u
+        LEFT JOIN t_follow f ON u.id = f.passive_user_id
+        LEFT JOIN t_industry i ON i.id = u.profession
+        WHERE
+        1 = 1
+        <if test="type == 2">
+            AND
+            (r.gmt_create <![CDATA[ >= ]]> (select subdate(curdate(),date_format(curdate(),'%w')-1))
+            AND
+            r.gmt_create <![CDATA[ <= ]]> (select subdate(curdate(),date_format(curdate(),'%w')-7)))
+        </if>
+
+        <if test="type == 3">
+            AND
+            (r.gmt_create <![CDATA[ >= ]]> (select DATE_ADD(curdate(),interval - day(curdate())+1 day))
+            AND
+            r.gmt_create <![CDATA[ <= ]]> (select last_day(curdate())))
+        </if>
+
+        <if test="industryId != null">
+            AND i.id IN
+            <foreach collection="industryId" index="index" item="item"
+                     open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        AND
+        f.is_delete = FALSE
+        AND
+        u.is_deleted = FALSE
+        GROUP BY u.id
+        ORDER BY (SELECT COUNT(ff.id) FROM t_follow ff LEFT JOIN t_user uu ON uu.id = ff.passive_user_id WHERE
+        ff.is_delete = FALSE AND uu.is_deleted = FALSE AND uu.id = u.id) desc
+        LIMIT #{page} , #{size}
+    </select>
+
+    <select id="selectReleaseTotal" parameterType="java.lang.Long" resultType="java.lang.Long">
+    SELECT
+		COUNT(id) 
+	FROM
+		t_circle c
+	WHERE
+		c.user_id = #{userId}
+	AND
+        c.is_deleted = FALSE
+  </select>
+
+    <select id="findUserCircleList" parameterType="java.lang.Object"
+            resultType="com.xdaocloud.futurechain.dto.resp.circle.CircleDisplayResponse">
+        SELECT
+        c.id id,
+        u.id userId,
+        c.gmt_create gmtModified,
+        u.nickname userName,
+        c.article_category isForwarding,
+        i.industry_name tagName,
+        c.content content,
+        c.feelings forwardingContent,
+        u.avatar userHead,
+        c.file_address fileAddress,
+        CASE c.user_id = #{userId}
+        WHEN true THEN IFNULL(CONCAT('-',FORMAT(c.rewards_number,2)),CONCAT('+',FORMAT(c.deduction_number,2)))
+        WHEN false THEN IFNULL(CONCAT('+',FORMAT(c.rewards_number,2)),CONCAT('-',FORMAT(c.deduction_number,2)))
+        END price,
+        c.total_retransmission forwarding,
+        c.total_discuss discuss,
+        c.total_praise good,
+        c.audit_result status,
+        c.circle_id originalId
+        FROM
+        t_circle c
+        LEFT JOIN t_user u ON u.id = c.user_id
+        LEFT JOIN t_industry_type i ON c.industry_id = i.id
+        WHERE
+        c.user_id = #{userId}
+        <if test="searchContent != null and searchContent != ''">
+            AND ( c.content LIKE CONCAT(CONCAT('%',#{searchContent},'%')) OR c.feelings LIKE
+            CONCAT(CONCAT('%',#{searchContent},'%')) )
+        </if>
+        AND
+        c.is_deleted = FALSE
+        AND
+        u.is_deleted = FALSE
+        AND
+        c.article_status = FALSE
+        AND
+        c.audit_result = '1'
+        ORDER BY c.gmt_create DESC
+        LIMIT #{page} , #{size}
+    </select>
+
+    <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_circle
+        where id = #{circleId} and is_deleted = false and article_status = TRUE
+    </select>
+
+
+    <select id="selectWebCircleListCount" parameterType="com.xdaocloud.futurechain.dto.req.circle.WebCircleListRequest"
+            resultType="java.lang.Integer">
+        SELECT
+        count(1)
+        FROM
+        t_circle c
+        LEFT JOIN t_report r ON c.id = r.circle_id
+        LEFT JOIN t_user u ON c.user_id = u.id
+        WHERE
+        c.is_deleted = FALSE and c.article_category = 0
+        <if test="content != null and content != ''">
+            AND c.content LIKE CONCAT(CONCAT('%',#{content},'%'))
+        </if>
+        <if test="phoneNumber != null and phoneNumber != ''">
+            AND u.mobile_number LIKE CONCAT(CONCAT('%',#{phoneNumber},'%'))
+        </if>
+        <if test="stateType == 1">
+            AND c.article_status = false
+        </if>
+        <if test="stateType == 2">
+            AND c.article_status = true
+        </if>
+
+
+        <if test="auditStatus == 1">
+            AND c.audit_result = 1
+        </if>
+        <if test="auditStatus == 2">
+            AND c.audit_result =0
+        </if>
+        <if test="auditStatus == 3">
+            AND c.audit_result = 3
+        </if>
+
+        <if test="reportType == 1 ">
+            and r.id is not null
+        </if>
+        <if test="reportType == 2 ">
+            and r.id is null
+        </if>
+    </select>
+
+    <select id="selectWebCircleList" resultType="java.util.Map"
+            parameterType="com.xdaocloud.futurechain.dto.req.circle.WebCircleListRequest">
+        SELECT
+        u.nickname nicKname,
+        u.name name,
+        u.mobile_number mobileNumber,
+        c.gmt_modified gmtModified,
+        c.content,
+        c.total_reading totalReading,
+        c.total_retransmission totalRetransmission,
+        c.audit_result auditStatus,
+        c.article_status stateType,
+        CASE
+        WHEN r.id IS NULL THEN
+        2
+        ELSE
+        1
+        END reportType,
+        c.id circleId
+        FROM
+        t_circle c
+        LEFT JOIN t_report r ON c.id = r.circle_id
+        LEFT JOIN t_user u ON c.user_id = u.id
+        WHERE
+        c.is_deleted = FALSE and c.article_category = 0
+        <if test="content != null and content != ''">
+            AND c.content LIKE CONCAT(CONCAT('%',#{content},'%'))
+        </if>
+        <if test="phoneNumber != null and phoneNumber != ''">
+            AND u.mobile_number LIKE CONCAT(CONCAT('%',#{phoneNumber},'%'))
+        </if>
+        <if test="stateType == 1">
+            AND c.article_status = false
+        </if>
+        <if test="stateType == 2">
+            AND c.article_status = true
+        </if>
+
+
+        <if test="auditStatus == 1">
+            AND c.audit_result = 1
+        </if>
+        <if test="auditStatus == 2">
+            AND c.audit_result =0
+        </if>
+        <if test="auditStatus == 3">
+            AND c.audit_result = 3
+        </if>
+        <if test="reportType == 1 ">
+            and r.id is not null
+        </if>
+        <if test="reportType == 2 ">
+            and r.id is null
+        </if>
+        ORDER BY
+        c.gmt_modified DESC
+        LIMIT #{page} , #{size}
+    </select>
+
+    <select id="selectByArticleStatus" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_circle where is_deleted = FALSE and audit_result = 1 and id = #{circleId}
+    </select>
+
+    <select id="selectByArticle" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_circle
+        where id = #{circleId} AND is_deleted = FALSE and audit_result = 0
+    </select>
+
+    <select id="selectWebCircleDetails" resultType="java.util.Map">
+        SELECT
+        u.id userId,
+      c.audit_result auditStatus,
+       CASE
+          WHEN r.id IS NULL THEN
+              2
+          ELSE
+              1
+          END reportType,
+      c.article_status stateType,
+          c.gmt_create gmtModified,
+          u.avatar,
+          u.nickname,
+          u. NAME,
+          c.id circleId,
+          i.industry_name industryName,
+          c.content,
+          c.file_address fileAddress,
+          c.total_reading totalReading,
+          c.total_discuss totalDiscuss,
+          c.total_praise totalPraise,
+          c.total_retransmission totalRetransmission
+      FROM
+          t_circle c
+      LEFT JOIN t_user u ON c.user_id = u.id
+      LEFT JOIN t_industry_type i ON c.industry_id = i.id
+      LEFT JOIN t_report r ON c.id = r.circle_id
+      where c.id = #{circleId}  and c.is_deleted = 0 and i.is_delete = 0 and u.is_deleted = 0
+    </select>
+
+    <select id="selectWebByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_circle
+        where id = #{circleId} AND is_deleted = FALSE
+    </select>
+</mapper>

@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xdaocloud.futurechain.mapper.CollectMapper">
+  <resultMap id="BaseResultMap" type="com.xdaocloud.futurechain.model.Collect">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="circle_id" jdbcType="BIGINT" property="circleId" />
+    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+    <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
+    <result column="is_delete" jdbcType="BIT" property="isDelete" />
+  </resultMap>
+  
+  <sql id="Base_Column_List">
+    id, user_id, circle_id, gmt_create, gmt_modified, is_delete
+  </sql>
+  
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_collect
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_collect
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  
+  <insert id="insert" parameterType="com.xdaocloud.futurechain.model.Collect">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_collect (user_id, circle_id, gmt_create, 
+      gmt_modified, is_delete)
+    values (#{userId,jdbcType=BIGINT}, #{circleId,jdbcType=BIGINT}, #{gmtCreate,jdbcType=TIMESTAMP}, 
+      #{gmtModified,jdbcType=TIMESTAMP}, #{isDelete,jdbcType=BIT})
+  </insert>
+  
+  <insert id="insertSelective" parameterType="com.xdaocloud.futurechain.model.Collect">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_collect
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="circleId != null">
+        circle_id,
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create,
+      </if>
+      <if test="gmtModified != null">
+        gmt_modified,
+      </if>
+      <if test="isDelete != null">
+        is_delete,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="circleId != null">
+        #{circleId,jdbcType=BIGINT},
+      </if>
+      <if test="gmtCreate != null">
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null">
+        #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDelete != null">
+        #{isDelete,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.xdaocloud.futurechain.model.Collect">
+    update t_collect
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="circleId != null">
+        circle_id = #{circleId,jdbcType=BIGINT},
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null">
+        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDelete != null">
+        is_delete = #{isDelete,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <update id="updateByPrimaryKey" parameterType="com.xdaocloud.futurechain.model.Collect">
+    update t_collect
+    set user_id = #{userId,jdbcType=BIGINT},
+      circle_id = #{circleId,jdbcType=BIGINT},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      is_delete = #{isDelete,jdbcType=BIT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <select id="selectCount" parameterType="com.xdaocloud.futurechain.model.Collect" resultType="java.lang.Long">
+  	SELECT 
+  		COUNT(id) 
+	FROM 
+		t_collect 
+	WHERE
+		1 = 1
+	<if test="userId != null">
+     AND  user_id = #{userId}
+    </if>
+    <if test="circleId != null">
+     AND  circle_id = #{circleId}
+    </if>
+    <if test="gmtCreate != null">
+     AND  gmt_create = #{gmtCreate}
+    </if>
+    <if test="gmtModified != null">
+     AND  gmt_modified = #{gmtModified}
+    </if>
+    <if test="isDelete != null">
+     AND is_delete = #{isDelete}
+    </if>
+  </select>
+  
+  <select id="selectCollectId" parameterType="com.xdaocloud.futurechain.model.Collect" resultType="java.lang.Long">
+  	SELECT 
+  		id
+	FROM 
+		t_collect 
+	WHERE
+		1 = 1
+	<if test="userId != null">
+     AND  user_id = #{userId}
+    </if>
+    <if test="circleId != null">
+     AND  circle_id = #{circleId}
+    </if>
+    <if test="gmtCreate != null">
+     AND  gmt_create = #{gmtCreate}
+    </if>
+    <if test="gmtModified != null">
+     AND  gmt_modified = #{gmtModified}
+    </if>
+    <if test="isDelete != null">
+     AND is_delete = #{isDelete}
+    </if>
+  </select>
+
+  <select id="selectCountByUserIdAndCircleId" resultType="java.lang.Integer" >
+    select count(1) from t_collect where    user_id = #{userId} AND  circle_id = #{circleId} AND is_delete = FALSE
+  </select>
+</mapper>

@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xdaocloud.futurechain.mapper.OrdersMapper">
+    <resultMap id="BaseResultMap" type="com.xdaocloud.futurechain.model.Orders">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="user_id" jdbcType="BIGINT" property="userId"/>
+        <result column="order_no" jdbcType="CHAR" property="orderNo"/>
+        <result column="trade_no" jdbcType="CHAR" property="tradeNo"/>
+        <result column="payment_type" jdbcType="VARCHAR" property="paymentType"/>
+        <result column="buy_price" jdbcType="DECIMAL" property="buyPrice"/>
+        <result column="amount" jdbcType="DECIMAL" property="amount"/>
+        <result column="fee" jdbcType="DECIMAL" property="fee"/>
+        <result column="product_code" jdbcType="CHAR" property="productCode"/>
+        <result column="trade_desc" jdbcType="VARCHAR" property="tradeDesc"/>
+        <result column="state" jdbcType="TINYINT" property="state"/>
+        <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate"/>
+        <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified"/>
+        <result column="is_deleted" jdbcType="BIT" property="isDeleted"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, user_id, order_no, trade_no, payment_type, buy_price, amount, fee, product_code,
+        trade_desc, state, gmt_create, gmt_modified, is_deleted
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_orders
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from t_orders
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.xdaocloud.futurechain.model.Orders">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into t_orders (user_id, order_no, trade_no,
+        payment_type, buy_price, amount,
+        fee, product_code, trade_desc,
+        state, gmt_create, gmt_modified,
+        is_deleted)
+        values (#{userId,jdbcType=BIGINT}, #{orderNo,jdbcType=CHAR}, #{tradeNo,jdbcType=CHAR},
+        #{paymentType,jdbcType=VARCHAR}, #{buyPrice,jdbcType=DECIMAL}, #{amount,jdbcType=DECIMAL},
+        #{fee,jdbcType=DECIMAL}, #{productCode,jdbcType=CHAR}, #{tradeDesc,jdbcType=VARCHAR},
+        #{state,jdbcType=TINYINT}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP},
+        #{isDeleted,jdbcType=BIT})
+    </insert>
+    <insert id="insertSelective" parameterType="com.xdaocloud.futurechain.model.Orders">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into t_orders
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="orderNo != null">
+                order_no,
+            </if>
+            <if test="tradeNo != null">
+                trade_no,
+            </if>
+            <if test="paymentType != null">
+                payment_type,
+            </if>
+            <if test="buyPrice != null">
+                buy_price,
+            </if>
+            <if test="amount != null">
+                amount,
+            </if>
+            <if test="fee != null">
+                fee,
+            </if>
+            <if test="productCode != null">
+                product_code,
+            </if>
+            <if test="tradeDesc != null">
+                trade_desc,
+            </if>
+            <if test="state != null">
+                state,
+            </if>
+            <if test="gmtCreate != null">
+                gmt_create,
+            </if>
+            <if test="gmtModified != null">
+                gmt_modified,
+            </if>
+            <if test="isDeleted != null">
+                is_deleted,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="orderNo != null">
+                #{orderNo,jdbcType=CHAR},
+            </if>
+            <if test="tradeNo != null">
+                #{tradeNo,jdbcType=CHAR},
+            </if>
+            <if test="paymentType != null">
+                #{paymentType,jdbcType=VARCHAR},
+            </if>
+            <if test="buyPrice != null">
+                #{buyPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="amount != null">
+                #{amount,jdbcType=DECIMAL},
+            </if>
+            <if test="fee != null">
+                #{fee,jdbcType=DECIMAL},
+            </if>
+            <if test="productCode != null">
+                #{productCode,jdbcType=CHAR},
+            </if>
+            <if test="tradeDesc != null">
+                #{tradeDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="state != null">
+                #{state,jdbcType=TINYINT},
+            </if>
+            <if test="gmtCreate != null">
+                #{gmtCreate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="gmtModified != null">
+                #{gmtModified,jdbcType=TIMESTAMP},
+            </if>
+            <if test="isDeleted != null">
+                #{isDeleted,jdbcType=BIT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.xdaocloud.futurechain.model.Orders">
+        update t_orders
+        <set>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="orderNo != null">
+                order_no = #{orderNo,jdbcType=CHAR},
+            </if>
+            <if test="tradeNo != null">
+                trade_no = #{tradeNo,jdbcType=CHAR},
+            </if>
+            <if test="paymentType != null">
+                payment_type = #{paymentType,jdbcType=VARCHAR},
+            </if>
+            <if test="buyPrice != null">
+                buy_price = #{buyPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="amount != null">
+                amount = #{amount,jdbcType=DECIMAL},
+            </if>
+            <if test="fee != null">
+                fee = #{fee,jdbcType=DECIMAL},
+            </if>
+            <if test="productCode != null">
+                product_code = #{productCode,jdbcType=CHAR},
+            </if>
+            <if test="tradeDesc != null">
+                trade_desc = #{tradeDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="state != null">
+                state = #{state,jdbcType=TINYINT},
+            </if>
+            <if test="gmtCreate != null">
+                gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="gmtModified != null">
+                gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+            </if>
+            <if test="isDeleted != null">
+                is_deleted = #{isDeleted,jdbcType=BIT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.xdaocloud.futurechain.model.Orders">
+    update t_orders
+    set user_id = #{userId,jdbcType=BIGINT},
+      order_no = #{orderNo,jdbcType=CHAR},
+      trade_no = #{tradeNo,jdbcType=CHAR},
+      payment_type = #{paymentType,jdbcType=VARCHAR},
+      buy_price = #{buyPrice,jdbcType=DECIMAL},
+      amount = #{amount,jdbcType=DECIMAL},
+      fee = #{fee,jdbcType=DECIMAL},
+      product_code = #{productCode,jdbcType=CHAR},
+      trade_desc = #{tradeDesc,jdbcType=VARCHAR},
+      state = #{state,jdbcType=TINYINT},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      is_deleted = #{isDeleted,jdbcType=BIT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+    <select id="findByUserId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    SELECT * FROM t_orders WHERE user_id = #{userid} AND is_deleted = 0;
+  </select>
+
+    <select id="findByOrderNo" parameterType="java.lang.String" resultMap="BaseResultMap">
+        SELECT * FROM t_orders WHERE order_no = #{orderNo} AND is_deleted = 0;
+  </select>
+
+    <select id="findSumFeeByUserId" parameterType="java.lang.Long" resultType="java.math.BigDecimal">
+    SELECT SUM(fee) FROM t_orders WHERE state=1 AND is_deleted = 0 AND user_id = #{userId};
+  </select>
+
+
+    <select id="findSumEosByUserIds" parameterType="java.util.List" resultType="java.math.BigDecimal">
+        SELECT SUM(amount) FROM t_orders WHERE state=1 AND is_deleted = 0 AND
+        user_id in
+        <foreach item="item" index="index" collection="userIds"
+                 open="(" separator="," close=")">
+            #{item}
+        </foreach>;
+    </select>
+
+    <select id="findSumRmbByUserIds" parameterType="java.util.List" resultType="java.math.BigDecimal">
+        SELECT SUM(fee) FROM t_orders WHERE state=1 AND is_deleted = 0 AND
+        user_id in
+        <foreach item="item" index="index" collection="userIds"
+                 open="(" separator="," close=")">
+            #{item}
+        </foreach>;
+    </select>
+
+    <select id="findSumFeeByUserIds" parameterType="java.util.List" resultType="java.math.BigDecimal">
+        SELECT SUM(fee) FROM t_orders WHERE state=1 AND is_deleted = 0 AND
+        user_id in
+        <foreach item="item" index="index" collection="userIds"
+                 open="(" separator="," close=")">
+            #{item}
+        </foreach>;
+    </select>
+
+    <select id="selectSumFee" parameterType="java.lang.Long" resultType="java.math.BigDecimal">
+      select sum(fee)  from t_orders  where user_id = #{userid} and state = 1 and is_deleted = 0
+    </select>
+
+    <select id="findAllSumBuyRecord" resultType="com.xdaocloud.futurechain.dto.orders.BuyRecordDTO">
+        SELECT SUM(amount) AS eosSum, user_id AS userId FROM t_orders WHERE state = 1  AND  is_deleted = FALSE GROUP BY user_id;
+    </select>
+
+    <select id="findSumAmountByUserId" parameterType="java.lang.Object" resultType="java.math.BigDecimal">
+        SELECT SUM(amount) FROM t_orders WHERE state = 1  AND  is_deleted = FALSE AND user_id = #{userid};
+    </select>
+
+    <select id="findSumFeeAndEos" parameterType="java.lang.Integer"
+            resultType="com.xdaocloud.futurechain.dto.orders.BuyRecordDTO">
+           SELECT
+            o.amount AS eosSum,
+            o.fee AS moneySum,
+            o.user_id AS userId,
+            o.gmt_create  AS  buyTime,
+            u.name,
+            u.mobile_number AS mobileNumber
+            FROM t_orders o INNER JOIN t_user u ON o.user_id = u.id WHERE o.state = 1 AND o.is_deleted = FALSE ORDER BY o.fee DESC limit #{page},#{size};
+    </select>
+
+    <select id="findCount" resultType="java.lang.Integer">
+        SELECT COUNT(1) FROM t_orders WHERE state = 1
+    </select>
+
+    <select id="findListByState" parameterType="java.lang.Integer"   resultType="com.xdaocloud.futurechain.dto.orders.BuyRecordDTO">
+         SELECT
+            o.id,
+            o.amount AS eosSum,
+            o.fee AS moneySum,
+            o.user_id AS userId,
+            o.gmt_create  AS  buyTime,
+            u.name,
+            u.mobile_number AS mobileNumber,
+            u.nickname
+            FROM t_orders o INNER JOIN t_user u ON o.user_id = u.id WHERE o.state = #{state} AND o.is_deleted = FALSE ;
+    </select>
+
+    <select id="findListByStateAndPhone" parameterType="java.lang.Object"   resultType="com.xdaocloud.futurechain.dto.orders.BuyRecordDTO">
+             SELECT
+            o.id,
+            o.amount AS eosSum,
+            o.fee AS moneySum,
+            o.user_id AS userId,
+            o.gmt_create  AS  buyTime,
+            u.name,
+            u.mobile_number AS mobileNumber,
+            u.nickname
+            FROM t_orders o INNER JOIN t_user u ON o.user_id = u.id AND u.mobile_number = #{phone} WHERE o.state = #{state} AND o.is_deleted = FALSE ;
+    </select>
+</mapper>

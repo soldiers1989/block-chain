@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xdaocloud.futurechain.mapper.AppLoginRecordMapper">
+  <resultMap id="BaseResultMap" type="com.xdaocloud.futurechain.model.AppLoginRecord">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="spbill_create_ip" jdbcType="CHAR" property="spbillCreateIp" />
+    <result column="mac" jdbcType="CHAR" property="mac" />
+    <result column="app_version" jdbcType="CHAR" property="appVersion" />
+    <result column="phone_system_version" jdbcType="CHAR" property="phoneSystemVersion" />
+    <result column="phone_model" jdbcType="CHAR" property="phoneModel" />
+    <result column="phone_company" jdbcType="CHAR" property="phoneCompany" />
+    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+    <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
+    <result column="is_deleted" jdbcType="BIT" property="isDeleted" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, user_id, spbill_create_ip, mac, app_version, phone_system_version, phone_model, 
+    phone_company, gmt_create, gmt_modified, is_deleted
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_app_login_record
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_app_login_record
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.xdaocloud.futurechain.model.AppLoginRecord">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_app_login_record (user_id, spbill_create_ip, mac, 
+      app_version, phone_system_version, phone_model, 
+      phone_company, gmt_create, gmt_modified, 
+      is_deleted)
+    values (#{userId,jdbcType=BIGINT}, #{spbillCreateIp,jdbcType=CHAR}, #{mac,jdbcType=CHAR}, 
+      #{appVersion,jdbcType=CHAR}, #{phoneSystemVersion,jdbcType=CHAR}, #{phoneModel,jdbcType=CHAR}, 
+      #{phoneCompany,jdbcType=CHAR}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}, 
+      #{isDeleted,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xdaocloud.futurechain.model.AppLoginRecord">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_app_login_record
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="spbillCreateIp != null">
+        spbill_create_ip,
+      </if>
+      <if test="mac != null">
+        mac,
+      </if>
+      <if test="appVersion != null">
+        app_version,
+      </if>
+      <if test="phoneSystemVersion != null">
+        phone_system_version,
+      </if>
+      <if test="phoneModel != null">
+        phone_model,
+      </if>
+      <if test="phoneCompany != null">
+        phone_company,
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create,
+      </if>
+      <if test="gmtModified != null">
+        gmt_modified,
+      </if>
+      <if test="isDeleted != null">
+        is_deleted,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="spbillCreateIp != null">
+        #{spbillCreateIp,jdbcType=CHAR},
+      </if>
+      <if test="mac != null">
+        #{mac,jdbcType=CHAR},
+      </if>
+      <if test="appVersion != null">
+        #{appVersion,jdbcType=CHAR},
+      </if>
+      <if test="phoneSystemVersion != null">
+        #{phoneSystemVersion,jdbcType=CHAR},
+      </if>
+      <if test="phoneModel != null">
+        #{phoneModel,jdbcType=CHAR},
+      </if>
+      <if test="phoneCompany != null">
+        #{phoneCompany,jdbcType=CHAR},
+      </if>
+      <if test="gmtCreate != null">
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null">
+        #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xdaocloud.futurechain.model.AppLoginRecord">
+    update t_app_login_record
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="spbillCreateIp != null">
+        spbill_create_ip = #{spbillCreateIp,jdbcType=CHAR},
+      </if>
+      <if test="mac != null">
+        mac = #{mac,jdbcType=CHAR},
+      </if>
+      <if test="appVersion != null">
+        app_version = #{appVersion,jdbcType=CHAR},
+      </if>
+      <if test="phoneSystemVersion != null">
+        phone_system_version = #{phoneSystemVersion,jdbcType=CHAR},
+      </if>
+      <if test="phoneModel != null">
+        phone_model = #{phoneModel,jdbcType=CHAR},
+      </if>
+      <if test="phoneCompany != null">
+        phone_company = #{phoneCompany,jdbcType=CHAR},
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null">
+        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDeleted != null">
+        is_deleted = #{isDeleted,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xdaocloud.futurechain.model.AppLoginRecord">
+    update t_app_login_record
+    set user_id = #{userId,jdbcType=BIGINT},
+      spbill_create_ip = #{spbillCreateIp,jdbcType=CHAR},
+      mac = #{mac,jdbcType=CHAR},
+      app_version = #{appVersion,jdbcType=CHAR},
+      phone_system_version = #{phoneSystemVersion,jdbcType=CHAR},
+      phone_model = #{phoneModel,jdbcType=CHAR},
+      phone_company = #{phoneCompany,jdbcType=CHAR},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      is_deleted = #{isDeleted,jdbcType=BIT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

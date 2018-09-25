@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xdaocloud.futurechain.mapper.EosTransactionMapper">
+    <resultMap id="BaseResultMap" type="com.xdaocloud.futurechain.model.EosTransaction">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="user_id" jdbcType="BIGINT" property="userId"/>
+        <result column="from_wallet" jdbcType="CHAR" property="fromWallet"/>
+        <result column="to_wallet" jdbcType="CHAR" property="toWallet"/>
+        <result column="amount" jdbcType="DECIMAL" property="amount"/>
+        <result column="tran_state" jdbcType="TINYINT" property="tranState"/>
+        <result column="tran_msg" jdbcType="VARCHAR" property="tranMsg"/>
+        <result column="tran_hash" jdbcType="VARCHAR" property="tranHash"/>
+        <result column="remarks" jdbcType="VARCHAR" property="remarks"/>
+        <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate"/>
+        <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified"/>
+        <result column="is_deleted" jdbcType="BIT" property="isDeleted"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, user_id, from_wallet, to_wallet, amount, tran_state, tran_msg, tran_hash, remarks, 
+    gmt_create, gmt_modified, is_deleted
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_eos_transaction
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_eos_transaction
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+    <insert id="insert" parameterType="com.xdaocloud.futurechain.model.EosTransaction">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into t_eos_transaction (user_id, from_wallet, to_wallet,
+        amount, tran_state, tran_msg,
+        tran_hash, remarks, gmt_create,
+        gmt_modified, is_deleted)
+        values (#{userId,jdbcType=BIGINT}, #{fromWallet,jdbcType=CHAR}, #{toWallet,jdbcType=CHAR},
+        #{amount,jdbcType=DECIMAL}, #{tranState,jdbcType=TINYINT}, #{tranMsg,jdbcType=VARCHAR},
+        #{tranHash,jdbcType=VARCHAR}, #{remarks,jdbcType=VARCHAR}, #{gmtCreate,jdbcType=TIMESTAMP},
+        #{gmtModified,jdbcType=TIMESTAMP}, #{isDeleted,jdbcType=BIT})
+    </insert>
+    <insert id="insertSelective" parameterType="com.xdaocloud.futurechain.model.EosTransaction">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into t_eos_transaction
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="fromWallet != null">
+                from_wallet,
+            </if>
+            <if test="toWallet != null">
+                to_wallet,
+            </if>
+            <if test="amount != null">
+                amount,
+            </if>
+            <if test="tranState != null">
+                tran_state,
+            </if>
+            <if test="tranMsg != null">
+                tran_msg,
+            </if>
+            <if test="tranHash != null">
+                tran_hash,
+            </if>
+            <if test="remarks != null">
+                remarks,
+            </if>
+            <if test="gmtCreate != null">
+                gmt_create,
+            </if>
+            <if test="gmtModified != null">
+                gmt_modified,
+            </if>
+            <if test="isDeleted != null">
+                is_deleted,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="fromWallet != null">
+                #{fromWallet,jdbcType=CHAR},
+            </if>
+            <if test="toWallet != null">
+                #{toWallet,jdbcType=CHAR},
+            </if>
+            <if test="amount != null">
+                #{amount,jdbcType=DECIMAL},
+            </if>
+            <if test="tranState != null">
+                #{tranState,jdbcType=TINYINT},
+            </if>
+            <if test="tranMsg != null">
+                #{tranMsg,jdbcType=VARCHAR},
+            </if>
+            <if test="tranHash != null">
+                #{tranHash,jdbcType=VARCHAR},
+            </if>
+            <if test="remarks != null">
+                #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="gmtCreate != null">
+                #{gmtCreate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="gmtModified != null">
+                #{gmtModified,jdbcType=TIMESTAMP},
+            </if>
+            <if test="isDeleted != null">
+                #{isDeleted,jdbcType=BIT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.xdaocloud.futurechain.model.EosTransaction">
+        update t_eos_transaction
+        <set>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="fromWallet != null">
+                from_wallet = #{fromWallet,jdbcType=CHAR},
+            </if>
+            <if test="toWallet != null">
+                to_wallet = #{toWallet,jdbcType=CHAR},
+            </if>
+            <if test="amount != null">
+                amount = #{amount,jdbcType=DECIMAL},
+            </if>
+            <if test="tranState != null">
+                tran_state = #{tranState,jdbcType=TINYINT},
+            </if>
+            <if test="tranMsg != null">
+                tran_msg = #{tranMsg,jdbcType=VARCHAR},
+            </if>
+            <if test="tranHash != null">
+                tran_hash = #{tranHash,jdbcType=VARCHAR},
+            </if>
+            <if test="remarks != null">
+                remarks = #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="gmtCreate != null">
+                gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="gmtModified != null">
+                gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+            </if>
+            <if test="isDeleted != null">
+                is_deleted = #{isDeleted,jdbcType=BIT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.xdaocloud.futurechain.model.EosTransaction">
+    update t_eos_transaction
+    set user_id = #{userId,jdbcType=BIGINT},
+      from_wallet = #{fromWallet,jdbcType=CHAR},
+      to_wallet = #{toWallet,jdbcType=CHAR},
+      amount = #{amount,jdbcType=DECIMAL},
+      tran_state = #{tranState,jdbcType=TINYINT},
+      tran_msg = #{tranMsg,jdbcType=VARCHAR},
+      tran_hash = #{tranHash,jdbcType=VARCHAR},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      is_deleted = #{isDeleted,jdbcType=BIT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+    <select id="findListByParam" parameterType="com.xdaocloud.futurechain.model.EosTransaction"
+            resultMap="BaseResultMap">
+
+        SELECT * FROM t_eos_transaction
+        <where>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=BIGINT}
+            </if>
+            <if test="fromWallet != null">
+                AND from_wallet = #{fromWallet,jdbcType=CHAR}
+            </if>
+            <if test="toWallet != null">
+                AND to_wallet = #{toWallet,jdbcType=CHAR}
+            </if>
+            <if test="amount != null">
+                AND amount = #{amount,jdbcType=DECIMAL}
+            </if>
+            <if test="tranState != null">
+                AND tran_state = #{tranState,jdbcType=TINYINT}
+            </if>
+            <if test="tranMsg != null">
+                AND tran_msg = #{tranMsg,jdbcType=VARCHAR}
+            </if>
+            <if test="tranHash != null">
+                AND tran_hash = #{tranHash,jdbcType=VARCHAR}
+            </if>
+            <if test="remarks != null">
+                AND remarks = #{remarks,jdbcType=VARCHAR}
+            </if>
+            <if test="gmtCreate != null">
+                AND gmt_create = #{gmtCreate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="gmtModified != null">
+                AND gmt_modified = #{gmtModified,jdbcType=TIMESTAMP}
+            </if>
+            <if test="isDeleted != null">
+                AND is_deleted = #{isDeleted,jdbcType=BIT}
+            </if>
+        </where>
+
+    </select>
+
+    <select id="findListByWalletName" parameterType="java.lang.String" resultMap="BaseResultMap">
+     SELECT
+        f.user_id,
+        f.from_wallet,
+        f.to_wallet,
+        f.amount,
+        f.tran_state,
+        f.tran_hash,
+        f.remarks,
+        f.gmt_create
+     FROM t_eos_transaction f WHERE f.from_wallet = #{walletName}  OR f.to_wallet = #{walletName} AND f.is_deleted = FALSE AND (tran_state = 1 OR tran_state= 7)
+  </select>
+
+    <select id="findListByFromWalletName" parameterType="java.lang.String" resultMap="BaseResultMap">
+      SELECT
+          f.user_id,
+          f.from_wallet,
+          f.to_wallet,
+          f.amount,
+          f.tran_state,
+          f.tran_hash,
+          f.remarks,
+       FROM t_eos_transaction f WHERE f.from_wallet = #{walletName} AND OR f.to_wallet = #{walletName} AND f.is_deleted = FALSE
+  </select>
+
+    <select id="findListByToWalletName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    SELECT * FROM t_eos_transaction WHERE from_wallet = #{walletName} AND is_deleted = FALSE
+   </select>
+
+    <select id="findSumByToWallet" parameterType="java.lang.String" resultType="java.math.BigDecimal">
+        SELECT SUM(amount) FROM t_eos_transaction WHERE to_wallet = #{walletName} AND tran_state=1 AND is_deleted = FALSE
+    </select>
+
+    <select id="findSumByFromWallet" parameterType="java.lang.String" resultType="java.math.BigDecimal">
+        SELECT SUM(amount) FROM t_eos_transaction WHERE from_wallet = #{walletName} AND tran_state=1 AND is_deleted = FALSE
+    </select>
+
+    <select id="findAllList" resultMap="BaseResultMap">
+        SELECT * FROM t_eos_transaction WHERE is_deleted = FALSE;
+    </select>
+
+    <select id="findSumByToWalletAndTranState" parameterType="java.lang.Object" resultType="java.math.BigDecimal">
+        SELECT SUM(amount) FROM t_eos_transaction WHERE to_wallet = #{walletName} AND is_deleted = FALSE AND tran_state = #{tranState}
+    </select>
+
+    <select id="findSumByFromWalletAndTranState" parameterType="java.lang.Object" resultType="java.math.BigDecimal">
+        SELECT SUM(amount) FROM t_eos_transaction WHERE from_wallet = #{walletName} AND is_deleted = FALSE AND tran_state = #{tranState}
+    </select>
+
+</mapper>

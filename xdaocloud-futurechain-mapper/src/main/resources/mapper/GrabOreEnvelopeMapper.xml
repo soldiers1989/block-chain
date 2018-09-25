@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xdaocloud.futurechain.mapper.GrabOreEnvelopeMapper">
+    <resultMap id="BaseResultMap" type="com.xdaocloud.futurechain.model.GrabOreEnvelope">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="user_id" jdbcType="BIGINT" property="userId"/>
+        <result column="ore_envelope_id" jdbcType="BIGINT" property="oreEnvelopeId"/>
+        <result column="random_number" jdbcType="DECIMAL" property="randomNumber"/>
+        <result column="state" jdbcType="BIT" property="state"/>
+        <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate"/>
+        <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified"/>
+        <result column="is_deleted" jdbcType="BIT" property="isDeleted"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, user_id, ore_envelope_id, random_number, state, gmt_create, gmt_modified, is_deleted
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_grab_ore_envelope
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from t_grab_ore_envelope
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.xdaocloud.futurechain.model.GrabOreEnvelope">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into t_grab_ore_envelope (user_id, ore_envelope_id, random_number,
+        state, gmt_create, gmt_modified,
+        is_deleted)
+        values (#{userId,jdbcType=BIGINT}, #{oreEnvelopeId,jdbcType=BIGINT}, #{randomNumber,jdbcType=DECIMAL},
+        #{state,jdbcType=BIT}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP},
+        #{isDeleted,jdbcType=BIT})
+    </insert>
+    <insert id="insertSelective" parameterType="com.xdaocloud.futurechain.model.GrabOreEnvelope">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into t_grab_ore_envelope
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="oreEnvelopeId != null">
+                ore_envelope_id,
+            </if>
+            <if test="randomNumber != null">
+                random_number,
+            </if>
+            <if test="state != null">
+                state,
+            </if>
+            <if test="gmtCreate != null">
+                gmt_create,
+            </if>
+            <if test="gmtModified != null">
+                gmt_modified,
+            </if>
+            <if test="isDeleted != null">
+                is_deleted,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="oreEnvelopeId != null">
+                #{oreEnvelopeId,jdbcType=BIGINT},
+            </if>
+            <if test="randomNumber != null">
+                #{randomNumber,jdbcType=DECIMAL},
+            </if>
+            <if test="state != null">
+                #{state,jdbcType=BIT},
+            </if>
+            <if test="gmtCreate != null">
+                #{gmtCreate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="gmtModified != null">
+                #{gmtModified,jdbcType=TIMESTAMP},
+            </if>
+            <if test="isDeleted != null">
+                #{isDeleted,jdbcType=BIT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.xdaocloud.futurechain.model.GrabOreEnvelope">
+        update t_grab_ore_envelope
+        <set>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="oreEnvelopeId != null">
+                ore_envelope_id = #{oreEnvelopeId,jdbcType=BIGINT},
+            </if>
+            <if test="randomNumber != null">
+                random_number = #{randomNumber,jdbcType=DECIMAL},
+            </if>
+            <if test="state != null">
+                state = #{state,jdbcType=BIT},
+            </if>
+            <if test="gmtCreate != null">
+                gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="gmtModified != null">
+                gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+            </if>
+            <if test="isDeleted != null">
+                is_deleted = #{isDeleted,jdbcType=BIT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.xdaocloud.futurechain.model.GrabOreEnvelope">
+    update t_grab_ore_envelope
+    set user_id = #{userId,jdbcType=BIGINT},
+      ore_envelope_id = #{oreEnvelopeId,jdbcType=BIGINT},
+      random_number = #{randomNumber,jdbcType=DECIMAL},
+      state = #{state,jdbcType=BIT},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      is_deleted = #{isDeleted,jdbcType=BIT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+
+    <select id="findCountByOreEnvelopeId" parameterType="java.lang.Long" resultType="java.lang.Integer">
+    SELECT COUNT(1) FROM t_grab_ore_envelope WHERE ore_envelope_id = #{oreEnvelopeId} AND  is_deleted = FALSE ;
+   </select>
+
+    <resultMap id="BaseResultDTO" type="com.xdaocloud.futurechain.dto.resp.ore.GrabOreEnvelopeDTO">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="user_id" jdbcType="BIGINT" property="userId"/>
+        <result column="ore_envelope_id" jdbcType="BIGINT" property="oreEnvelopeId"/>
+        <result column="random_number" jdbcType="INTEGER" property="randomNumber"/>
+        <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate"/>
+        <result column="nickname" jdbcType="VARCHAR" property="nickname"/>
+        <result column="avatar" jdbcType="VARCHAR" property="avatar"/>
+    </resultMap>
+
+    <select id="findByOreEnvelopeId" parameterType="java.lang.Long"
+            resultType="com.xdaocloud.futurechain.dto.resp.ore.GrabOreEnvelopeDTO">
+      SELECT t.id AS id,
+        t.user_id AS userId,
+        t.ore_envelope_id AS oreEnvelopeId,
+        t.random_number AS randomNumber,
+        t.gmt_create AS gmtCreate,
+        (SELECT nickname FROM t_user u1 WHERE u1.id =  t.user_id) AS  nickname,
+        (SELECT avatar FROM t_user u2 WHERE u2.id =  t.user_id) AS  avatar
+         FROM t_grab_ore_envelope t WHERE t.ore_envelope_id = #{oreEnvelopeId}  AND  t.is_deleted = FALSE ORDER BY random_number DESC ;
+    </select>
+
+    <select id="findCountByOreEnvelopeIdAndUserId" parameterType="java.lang.Long" resultType="java.lang.Integer">
+           SELECT COUNT(1) FROM t_grab_ore_envelope WHERE ore_envelope_id = #{oreEnvelopeId} AND user_id =#{userId}  AND is_deleted = FALSE ;
+    </select>
+
+    <select id="findRandomNumberByOreEnvelopeIdAndUserId" parameterType="java.lang.Long"
+            resultType="java.math.BigDecimal">
+        SELECT random_number FROM t_grab_ore_envelope WHERE ore_envelope_id = #{oreEnvelopeId} AND user_id =#{userId}  AND is_deleted = FALSE ;
+    </select>
+
+    <select id="findByOreEnvelopeIdAndUserId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+             SELECT * FROM t_grab_ore_envelope WHERE ore_envelope_id = #{oreEnvelopeId} AND user_id =#{userId}  AND is_deleted = FALSE ;
+    </select>
+
+    <select id="findSumByOreEnvelopeId" parameterType="java.lang.Long" resultType="java.math.BigDecimal">
+       SELECT SUM(random_number) FROM t_grab_ore_envelope WHERE ore_envelope_id = #{oreEnvelopeId}  AND is_deleted = FALSE;
+    </select>
+</mapper>

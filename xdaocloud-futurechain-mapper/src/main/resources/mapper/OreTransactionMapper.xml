@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xdaocloud.futurechain.mapper.OreTransactionMapper">
+    <resultMap id="BaseResultMap" type="com.xdaocloud.futurechain.model.OreTransaction">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="user_id" jdbcType="BIGINT" property="userId" />
+        <result column="amount" jdbcType="BIGINT" property="amount" />
+        <result column="way" jdbcType="CHAR" property="way" />
+        <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+        <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
+        <result column="is_deleted" jdbcType="BIT" property="isDeleted" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, user_id, amount, way, gmt_create, gmt_modified, is_deleted
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from t_ore_transaction
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from t_ore_transaction
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.xdaocloud.futurechain.model.OreTransaction">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into t_ore_transaction (user_id, amount, way,
+        gmt_create, gmt_modified, is_deleted
+        )
+        values (#{userId,jdbcType=BIGINT}, #{amount,jdbcType=BIGINT}, #{way,jdbcType=CHAR},
+        #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}, #{isDeleted,jdbcType=BIT}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="com.xdaocloud.futurechain.model.OreTransaction">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into t_ore_transaction
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="amount != null">
+                amount,
+            </if>
+            <if test="way != null">
+                way,
+            </if>
+            <if test="gmtCreate != null">
+                gmt_create,
+            </if>
+            <if test="gmtModified != null">
+                gmt_modified,
+            </if>
+            <if test="isDeleted != null">
+                is_deleted,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="amount != null">
+                #{amount,jdbcType=BIGINT},
+            </if>
+            <if test="way != null">
+                #{way,jdbcType=CHAR},
+            </if>
+            <if test="gmtCreate != null">
+                #{gmtCreate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="gmtModified != null">
+                #{gmtModified,jdbcType=TIMESTAMP},
+            </if>
+            <if test="isDeleted != null">
+                #{isDeleted,jdbcType=BIT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.xdaocloud.futurechain.model.OreTransaction">
+        update t_ore_transaction
+        <set>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="amount != null">
+                amount = #{amount,jdbcType=BIGINT},
+            </if>
+            <if test="way != null">
+                way = #{way,jdbcType=CHAR},
+            </if>
+            <if test="gmtCreate != null">
+                gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="gmtModified != null">
+                gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+            </if>
+            <if test="isDeleted != null">
+                is_deleted = #{isDeleted,jdbcType=BIT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.xdaocloud.futurechain.model.OreTransaction">
+        update t_ore_transaction
+        set user_id = #{userId,jdbcType=BIGINT},
+        amount = #{amount,jdbcType=BIGINT},
+        way = #{way,jdbcType=CHAR},
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+        is_deleted = #{isDeleted,jdbcType=BIT}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+
+    <resultMap id="RankingResultMap" type="com.xdaocloud.futurechain.dto.resp.ore.OreRankingDTO">
+        <result column="amount" jdbcType="BIGINT" property="amount"/>
+        <result column="mobile_number" jdbcType="CHAR" property="mobileMumber"/>
+        <result column="nickname" jdbcType="CHAR" property="nickname"/>
+    </resultMap>
+
+  <!--返回一周内获取矿石前10名的用户-->
+  <select id="findOreRanking" resultMap="RankingResultMap">
+      SELECT u.mobile_number, u.nickname, SUM(ore.amount) as amount
+       FROM t_ore_transaction ore JOIN t_user u ON u.id = ore.user_id
+       WHERE ore.amount>0
+         AND YEARWEEK(date_format(ore.gmt_create,'%Y-%m-%d')) = YEARWEEK(now())
+         AND ore.is_deleted = FALSE
+       GROUP BY ore.user_id
+       ORDER BY amount DESC limit 10;
+  </select>
+
+    <select id="findByUserId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        SELECT * FROM t_ore_transaction WHERE is_deleted = FALSE AND user_id  = #{userId,jdbcType=BIGINT};
+    </select>
+
+</mapper>

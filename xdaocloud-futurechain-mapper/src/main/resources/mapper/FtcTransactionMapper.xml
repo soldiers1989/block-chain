@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xdaocloud.futurechain.mapper.FtcTransactionMapper">
+  <resultMap id="BaseResultMap" type="com.xdaocloud.futurechain.model.FtcTransaction">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="from_wallet" jdbcType="CHAR" property="fromWallet" />
+    <result column="to_wallet" jdbcType="CHAR" property="toWallet" />
+    <result column="amount" jdbcType="DECIMAL" property="amount" />
+    <result column="gas" jdbcType="BIGINT" property="gas" />
+    <result column="gas_price" jdbcType="BIGINT" property="gasPrice" />
+    <result column="tran_state" jdbcType="TINYINT" property="tranState" />
+    <result column="tran_msg" jdbcType="VARCHAR" property="tranMsg" />
+    <result column="tran_nonce" jdbcType="BIGINT" property="tranNonce" />
+    <result column="tran_hash" jdbcType="CHAR" property="tranHash" />
+    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+    <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
+    <result column="is_delete" jdbcType="BIT" property="isDelete" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, user_id, from_wallet, to_wallet, amount, gas, gas_price, tran_state, tran_msg, 
+    tran_nonce, tran_hash, gmt_create, gmt_modified, is_delete
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_ftc_transaction
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_ftc_transaction
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.xdaocloud.futurechain.model.FtcTransaction">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_ftc_transaction (user_id, from_wallet, to_wallet, 
+      amount, gas, gas_price, 
+      tran_state, tran_msg, tran_nonce, 
+      tran_hash, gmt_create, gmt_modified, 
+      is_delete)
+    values (#{userId,jdbcType=BIGINT}, #{fromWallet,jdbcType=CHAR}, #{toWallet,jdbcType=CHAR}, 
+      #{amount,jdbcType=DECIMAL}, #{gas,jdbcType=BIGINT}, #{gasPrice,jdbcType=BIGINT},
+      #{tranState,jdbcType=TINYINT}, #{tranMsg,jdbcType=VARCHAR}, #{tranNonce,jdbcType=BIGINT}, 
+      #{tranHash,jdbcType=CHAR}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}, 
+      #{isDelete,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xdaocloud.futurechain.model.FtcTransaction">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_ftc_transaction
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="fromWallet != null">
+        from_wallet,
+      </if>
+      <if test="toWallet != null">
+        to_wallet,
+      </if>
+      <if test="amount != null">
+        amount,
+      </if>
+      <if test="gas != null">
+        gas,
+      </if>
+      <if test="gasPrice != null">
+        gas_price,
+      </if>
+      <if test="tranState != null">
+        tran_state,
+      </if>
+      <if test="tranMsg != null">
+        tran_msg,
+      </if>
+      <if test="tranNonce != null">
+        tran_nonce,
+      </if>
+      <if test="tranHash != null">
+        tran_hash,
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create,
+      </if>
+      <if test="gmtModified != null">
+        gmt_modified,
+      </if>
+      <if test="isDelete != null">
+        is_delete,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="fromWallet != null">
+        #{fromWallet,jdbcType=CHAR},
+      </if>
+      <if test="toWallet != null">
+        #{toWallet,jdbcType=CHAR},
+      </if>
+      <if test="amount != null">
+        #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="gas != null">
+        #{gas,jdbcType=BIGINT},
+      </if>
+      <if test="gasPrice != null">
+        #{gasPrice,jdbcType=BIGINT},
+      </if>
+      <if test="tranState != null">
+        #{tranState,jdbcType=TINYINT},
+      </if>
+      <if test="tranMsg != null">
+        #{tranMsg,jdbcType=VARCHAR},
+      </if>
+      <if test="tranNonce != null">
+        #{tranNonce,jdbcType=BIGINT},
+      </if>
+      <if test="tranHash != null">
+        #{tranHash,jdbcType=CHAR},
+      </if>
+      <if test="gmtCreate != null">
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null">
+        #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDelete != null">
+        #{isDelete,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xdaocloud.futurechain.model.FtcTransaction">
+    update t_ftc_transaction
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="fromWallet != null">
+        from_wallet = #{fromWallet,jdbcType=CHAR},
+      </if>
+      <if test="toWallet != null">
+        to_wallet = #{toWallet,jdbcType=CHAR},
+      </if>
+      <if test="amount != null">
+        amount = #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="gas != null">
+        gas = #{gas,jdbcType=BIGINT},
+      </if>
+      <if test="gasPrice != null">
+        gas_price = #{gasPrice,jdbcType=BIGINT},
+      </if>
+      <if test="tranState != null">
+        tran_state = #{tranState,jdbcType=TINYINT},
+      </if>
+      <if test="tranMsg != null">
+        tran_msg = #{tranMsg,jdbcType=VARCHAR},
+      </if>
+      <if test="tranNonce != null">
+        tran_nonce = #{tranNonce,jdbcType=BIGINT},
+      </if>
+      <if test="tranHash != null">
+        tran_hash = #{tranHash,jdbcType=CHAR},
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null">
+        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDelete != null">
+        is_delete = #{isDelete,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xdaocloud.futurechain.model.FtcTransaction">
+    update t_ftc_transaction
+    set user_id = #{userId,jdbcType=BIGINT},
+      from_wallet = #{fromWallet,jdbcType=CHAR},
+      to_wallet = #{toWallet,jdbcType=CHAR},
+      amount = #{amount,jdbcType=DECIMAL},
+      gas = #{gas,jdbcType=BIGINT},
+      gas_price = #{gasPrice,jdbcType=BIGINT},
+      tran_state = #{tranState,jdbcType=TINYINT},
+      tran_msg = #{tranMsg,jdbcType=VARCHAR},
+      tran_nonce = #{tranNonce,jdbcType=BIGINT},
+      tran_hash = #{tranHash,jdbcType=CHAR},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      is_delete = #{isDelete,jdbcType=BIT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="findByAddress"  resultMap="BaseResultMap">
+    SELECT * FROM t_ftc_transaction where from_wallet = #{address} AND is_delete =FALSE
+  </select>
+
+
+  <resultMap id="RankingResultMap" type="com.xdaocloud.futurechain.dto.resp.ore.FtcRankingDTO">
+    <result column="amount" jdbcType="BIGINT" property="amount"/>
+    <result column="mobile_number" jdbcType="CHAR" property="mobileMumber"/>
+    <result column="nickname" jdbcType="CHAR" property="nickname"/>
+  </resultMap>
+
+  <!--返回一周内获取FTC前10名的用户-->
+  <select id="findFtcRanking" resultMap="RankingResultMap">
+    SELECT
+    u.mobile_number,u.nickname,SUM(f.amount) AS amount
+    FROM t_ftc_transaction f
+    JOIN t_user u ON u.id = f.user_id
+    WHERE YEARWEEK(date_format(f.gmt_create, '%Y-%m-%d')) = YEARWEEK(now())
+    AND f.is_delete = FALSE
+    AND f.tran_state = '3'
+    GROUP BY f.user_id
+    ORDER BY amount DESC LIMIT 10;
+  </select>
+
+</mapper>
